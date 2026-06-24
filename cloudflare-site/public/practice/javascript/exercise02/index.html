@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 2 - 条件分岐</title>
+</head>
+<body>
+  <h1>JavaScript練習 - 問題2</h1>
+  <p>コンソールを開いて結果を確認してください（F12キー → Console）</p>
+
+  <script>
+    const age = 20;
+
+    if (age >= 18) {
+      console.log("成人です");
+    } else {
+      console.log("未成年です");
+    }
+
+    // 色々な年齢で試してみましょう
+    console.log("--- 他の例 ---");
+
+    const age2 = 15;
+    console.log(`年齢${age2}：${age2 >= 18 ? "成人です" : "未成年です"}`);
+
+    const age3 = 25;
+    console.log(`年齢${age3}：${age3 >= 18 ? "成人です" : "未成年です"}`);
+  </script>
+</body>
+</html>
