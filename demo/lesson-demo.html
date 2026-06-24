@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello World | TypeScript基礎</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --soft: #f9fafb;
+      --text: #18202f;
+      --muted: #5d6678;
+      --line: #d9dee8;
+      --primary: #1d4ed8;
+      --primary-soft: #e8f0ff;
+      --code-bg: #101827;
+      --code-text: #e5edf7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.75;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 56px;
+      padding: 0 24px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand { font-weight: 700; }
+
+    .topbar nav {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 220px;
+      min-height: calc(100vh - 56px);
+    }
+
+    .course-toc,
+    .page-toc {
+      position: sticky;
+      top: 0;
+      height: calc(100vh - 56px);
+      overflow: auto;
+      background: #fff;
+      padding: 22px;
+    }
+
+    .course-toc { border-right: 1px solid var(--line); }
+    .page-toc { border-left: 1px solid var(--line); }
+
+    .label {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .course-toc h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+    }
+
+    .course-toc ol,
+    .page-toc nav {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .course-toc a,
+    .page-toc a {
+      display: block;
+      border-radius: 7px;
+      padding: 8px 10px;
+      color: #334155;
+      font-size: 14px;
+    }
+
+    .course-toc a.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    main {
+      min-width: 0;
+      padding: 36px 40px 64px;
+    }
+
+    article {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 36px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 5vw, 48px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 34px 0 12px;
+      font-size: 26px;
+      line-height: 1.35;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .goal,
+    details {
+      margin-top: 18px;
+      padding: 18px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .goal {
+      background: var(--primary-soft);
+      border-color: #bfd2ff;
+    }
+
+    .code-title {
+      margin: 18px 0 0;
+      padding: 9px 12px;
+      border-radius: 8px 8px 0 0;
+      background: #1f2937;
+      color: #dbeafe;
+      font-size: 13px;
+    }
+
+    pre {
+      overflow: auto;
+      margin: 0;
+      padding: 18px;
+      border-radius: 0 0 8px 8px;
+      background: var(--code-bg);
+      color: var(--code-text);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .pager {
+      display: flex;
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .pager a {
+      flex: 1;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    @media (max-width: 1120px) {
+      .layout { grid-template-columns: 240px minmax(0, 1fr); }
+      .page-toc { display: none; }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px;
+      }
+
+      .topbar nav {
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .layout { grid-template-columns: 1fr; }
+
+      .course-toc {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 14px 16px;
+      }
+
+      .course-toc h2 { display: none; }
+
+      .course-toc ol {
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .course-toc a {
+        border: 1px solid var(--line);
+        white-space: nowrap;
+      }
+
+      main { padding: 18px 16px 44px; }
+      article { padding: 22px; }
+      .pager { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">School Curriculum</div>
+    <nav>
+      <a href="./home-demo.html">ホーム</a>
+      <a href="./course-demo.html">TypeScript基礎</a>
+      <a href="#">質問サポート</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="course-toc">
+      <p class="label">Course Menu</p>
+      <h2>TypeScript基礎</h2>
+      <ol>
+        <li><a href="./course-demo.html">コーストップ</a></li>
+        <li><a href="#">TypeScriptとは何か</a></li>
+        <li><a class="active" href="./lesson-demo.html">Hello World</a></li>
+        <li><a href="#">基本の型</a></li>
+        <li><a href="#">関数</a></li>
+        <li><a href="#">練習問題</a></li>
+      </ol>
+    </aside>
+
+    <main>
+      <article>
+        <div class="breadcrumb">ホーム / 入門 / TypeScript基礎 / Hello World</div>
+        <h1>Hello World</h1>
+        <p class="lead">
+          このページでは、TypeScriptファイルを作成し、コンパイルしてJavaScriptとして実行する流れを確認します。
+        </p>
+
+        <section class="goal">
+          <strong>学習目標</strong>
+          <ul>
+            <li>TypeScriptファイルを作成できる</li>
+            <li><code>tsc</code> でJavaScriptへ変換できる</li>
+            <li>型エラーが出たときに原因を探せる</li>
+          </ul>
+        </section>
+
+        <h2 id="write">最初のTypeScriptを書く</h2>
+        <p>
+          まずは文字列を変数に入れて、コンソールに表示します。TypeScriptでは、値の種類を型として明示できます。
+        </p>
+
+        <p class="code-title"><strong>src/index.ts</strong></p>
+        <pre><code>const message: string = "Hello, TypeScript";
+
+console.log(message);</code></pre>
+
+        <h2 id="explain">コード解説</h2>
+        <ul>
+          <li><code>const message</code> は、再代入しない変数を作ります。</li>
+          <li><code>: string</code> は、この変数には文字列が入ることを表します。</li>
+          <li><code>console.log</code> は、値をターミナルに表示します。</li>
+        </ul>
+
+        <h2 id="check">理解度チェック</h2>
+        <p><strong>Q1. <code>: string</code> は何を表していますか。</strong></p>
+        <details>
+          <summary>解答を見る</summary>
+          <p>変数に入る値が文字列であることを表しています。数値など別の型を代入すると、TypeScriptがエラーとして教えてくれます。</p>
+        </details>
+
+        <nav class="pager">
+          <a href="./course-demo.html">前へ: コーストップ</a>
+          <a href="#">次へ: 基本の型</a>
+        </nav>
+      </article>
+    </main>
+
+    <aside class="page-toc">
+      <p class="label">On this page</p>
+      <nav>
+        <a href="#write">最初のTypeScriptを書く</a>
+        <a href="#explain">コード解説</a>
+        <a href="#check">理解度チェック</a>
+      </nav>
+    </aside>
+  </div>
+</body>
+</html>
