@@ -1,0 +1,3 @@
+docs=118
+practice=190
+target=/Users/daiki/school-curriculum-platform/cloudflare-site/
