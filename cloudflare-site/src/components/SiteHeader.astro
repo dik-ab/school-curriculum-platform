@@ -1,0 +1,19 @@
+---
+const navItems = [
+  { href: '/', label: 'ホーム' },
+  { href: '/#path', label: '学習順' },
+  { href: '/#courses', label: 'カリキュラム' },
+  { href: '/#projects', label: '実践' }
+];
+---
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="School Curriculum home">
+    <span class="brand-mark">S</span>
+    <span>School Curriculum</span>
+  </a>
+  <nav class="global-nav" aria-label="Global navigation">
+    {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+</header>
+
