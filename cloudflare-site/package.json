@@ -1,0 +1,21 @@
+{
+  "name": "school-curriculum-cloudflare-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "migrate": "node scripts/migrate-content.mjs",
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro build",
+    "preview": "astro preview --host 0.0.0.0",
+    "verify:migration": "node scripts/verify-migration.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.0",
+    "astro": "^5.16.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+
