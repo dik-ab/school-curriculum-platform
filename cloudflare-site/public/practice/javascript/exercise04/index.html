@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 4 - 関数</title>
+</head>
+<body>
+  <h1>JavaScript練習 - 問題4</h1>
+  <p>コンソールを開いて結果を確認してください（F12キー → Console）</p>
+
+  <script>
+    function greet(name) {
+      return `こんにちは、${name}さん！`;
+    }
+
+    console.log(greet("太郎"));
+    console.log(greet("花子"));
+    console.log(greet("次郎"));
+
+    // アロー関数版
+    const greetArrow = (name) => `こんにちは、${name}さん！`;
+    console.log("\n--- アロー関数版 ---");
+    console.log(greetArrow("太郎"));
+  </script>
+</body>
+</html>
