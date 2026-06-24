@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>タイピングゲーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>タイピングゲーム</h1>
+    <div class="info">
+      <div id="scoreDisplay">スコア: 0</div>
+      <div id="timeDisplay">残り時間: 60秒</div>
+    </div>
+    <div id="wordDisplay" class="word-display">スタートボタンを押してください</div>
+    <input type="text" id="inputField" placeholder="ここに入力してください" autocomplete="off">
+    <button id="startButton">スタート</button>
+    <div id="result" style="display: none;">
+      <h2>ゲーム終了！</h2>
+      <p id="finalScore"></p>
+      <button id="restartButton">もう一度</button>
+    </div>
+  </div>
+
+  <script src="dist/index.js"></script>
+</body>
+</html>
