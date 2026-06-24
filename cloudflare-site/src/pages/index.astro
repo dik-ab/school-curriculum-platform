@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { phases } from '../data/courses';
+---
+
+<BaseLayout>
+  <main class="home-main">
+    <section class="hero">
+      <p class="eyebrow">Fullstack / Backend / Cloud / AI</p>
+      <h1>順番に積み上げる実装カリキュラム</h1>
+      <p class="lead">
+        入門、フロントエンド、バックエンド言語、データベース、フレームワーク、実践開発、運用とAIへ進みます。
+      </p>
+    </section>
+
+    <section id="path" class="path-panel" aria-label="推奨学習順">
+      <ol class="path-rail">
+        {phases.map((phase) => (
+          <li>
+            <span>{phase.number}</span>
+            <strong>{phase.title}</strong>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="courses" class="curriculum">
+      {phases.map((phase) => (
+        <section id={phase.id} class="phase">
+          <div class="phase-head">
+            <span>{phase.number}</span>
+            <div>
+              <h2>{phase.title}</h2>
+              <p>{phase.summary}</p>
+            </div>
+          </div>
+          <div class:list={['course-grid', phase.grid === 'wide' && 'wide', phase.grid === 'featured' && 'featured']}>
+            {phase.cards.map((card) => (
+              card.href ? (
+                <a class:list={['course-card', card.project && 'project']} data-accent={card.accent} href={card.href}>
+                  <span>{card.label}</span>
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                </a>
+              ) : (
+                <div class:list={['course-card', 'locked', card.project && 'project']} data-accent={card.accent} aria-disabled="true">
+                  <span>{card.label}</span>
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                </div>
+              )
+            ))}
+          </div>
+          {phase.stacks && (
+            <div class="stack-list" aria-label="実践課題の対象スタック">
+              {phase.stacks.map((stack) => <span>{stack}</span>)}
+            </div>
+          )}
+        </section>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
