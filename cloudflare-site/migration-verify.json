@@ -1,0 +1,22 @@
+{
+  "sourceMetrics": {
+    "markdown": 118,
+    "codeFences": 1772,
+    "mermaid": 156,
+    "details": 472,
+    "summaries": 472,
+    "checkboxes": 657,
+    "practice": 190
+  },
+  "targetMetrics": {
+    "markdown": 118,
+    "codeFences": 1772,
+    "mermaid": 156,
+    "details": 472,
+    "summaries": 472,
+    "checkboxes": 657,
+    "practice": 190
+  },
+  "missingDocs": [],
+  "missingPractice": []
+}
