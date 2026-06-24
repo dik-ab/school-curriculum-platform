@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 3 - 配列と繰り返し</title>
+</head>
+<body>
+  <h1>JavaScript練習 - 問題3</h1>
+  <p>コンソールを開いて結果を確認してください（F12キー → Console）</p>
+
+  <script>
+    const numbers = [10, 20, 30, 40, 50];
+    let sum = 0;
+
+    for (let num of numbers) {
+      sum += num;
+    }
+
+    console.log(`配列: [${numbers.join(", ")}]`);
+    console.log(`合計：${sum}`);
+
+    // 別の方法：reduceを使った実装
+    const sum2 = numbers.reduce((acc, num) => acc + num, 0);
+    console.log(`reduceを使った合計：${sum2}`);
+  </script>
+</body>
+</html>
