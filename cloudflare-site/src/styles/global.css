@@ -1,19 +1,23 @@
 :root {
-  --bg: #f4f6f3;
+  --bg: #f3f7f6;
   --surface: #ffffff;
-  --surface-soft: #f8faf7;
+  --surface-soft: #f7fbf9;
   --text: #17201b;
   --muted: #627066;
-  --line: #d8ded5;
+  --line: #d4e0dc;
   --ink: #26362d;
   --green: #235643;
   --green-soft: #e8f4ee;
-  --blue: #315b8d;
-  --blue-soft: #e8f0f8;
-  --amber: #8a5a16;
-  --amber-soft: #fff3dc;
-  --purple: #5c527f;
-  --purple-soft: #efedf7;
+  --blue: #25628f;
+  --blue-soft: #e4f2fb;
+  --amber: #936018;
+  --amber-soft: #fff1d7;
+  --purple: #6550a0;
+  --purple-soft: #f0ebff;
+  --teal: #0d766e;
+  --teal-soft: #ddf7f2;
+  --rose: #9b3f57;
+  --rose-soft: #fde8ef;
   --shadow: 0 10px 30px rgb(23 32 27 / 7%);
 }
 
@@ -28,7 +32,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--bg);
+  background:
+    linear-gradient(180deg, #eaf6f3 0, var(--bg) 280px),
+    var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.7;
@@ -162,7 +168,7 @@ h1 {
   justify-items: center;
   gap: 8px;
   padding: 14px 10px;
-  background: var(--surface-soft);
+  background: linear-gradient(180deg, #ffffff, var(--surface-soft));
   border: 1px solid var(--line);
   border-radius: 10px;
   text-align: center;
@@ -192,7 +198,7 @@ h1 {
 
 .phase {
   padding: 26px;
-  background: var(--surface);
+  background: linear-gradient(180deg, #ffffff, #fbfdfc);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow);
@@ -246,7 +252,7 @@ h1 {
   justify-items: center;
   gap: 8px;
   padding: 20px;
-  background: var(--surface-soft);
+  background: linear-gradient(180deg, #ffffff, var(--surface-soft));
   border: 1px solid var(--line);
   border-top: 4px solid var(--green);
   border-radius: 10px;
@@ -330,6 +336,24 @@ h1 {
   color: var(--purple);
 }
 
+.course-card:nth-child(5n + 2):not([data-accent="blue"]):not([data-accent="amber"]):not([data-accent="ink"]):not([data-accent="purple"]) {
+  border-top-color: var(--teal);
+}
+
+.course-card:nth-child(5n + 2):not([data-accent="blue"]):not([data-accent="amber"]):not([data-accent="ink"]):not([data-accent="purple"]) span {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.course-card:nth-child(5n + 3):not([data-accent="blue"]):not([data-accent="amber"]):not([data-accent="ink"]):not([data-accent="purple"]) {
+  border-top-color: var(--rose);
+}
+
+.course-card:nth-child(5n + 3):not([data-accent="blue"]):not([data-accent="amber"]):not([data-accent="ink"]):not([data-accent="purple"]) span {
+  background: var(--rose-soft);
+  color: var(--rose);
+}
+
 .course-card.project {
   min-height: 190px;
   padding: 24px;
@@ -373,7 +397,7 @@ h1 {
   top: 84px;
   align-self: start;
   padding: 20px;
-  background: var(--surface);
+  background: linear-gradient(180deg, #ffffff, #f9fcfb);
   border: 1px solid var(--line);
   border-radius: 14px;
 }
@@ -405,7 +429,7 @@ h1 {
 .doc-shell {
   min-width: 0;
   padding: 34px;
-  background: var(--surface);
+  background: linear-gradient(180deg, #ffffff, #fcfefd);
   border: 1px solid var(--line);
   border-radius: 14px;
 }
@@ -427,6 +451,7 @@ h1 {
 .prose h2 {
   margin-top: 36px;
   border-top: 1px solid var(--line);
+  border-image: linear-gradient(90deg, var(--green), var(--blue), transparent) 1;
   padding-top: 24px;
   font-size: 28px;
 }
@@ -469,6 +494,15 @@ h1 {
   border-left: 4px solid var(--green);
   padding: 12px 18px;
   background: var(--green-soft);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+}
+
+.prose li::marker {
+  color: var(--teal);
 }
 
 .prose details {
