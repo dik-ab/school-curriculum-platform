@@ -8,6 +8,141 @@ nav_order: 1
 
 フロントエンド開発の第一歩として、HTML（HyperText Markup Language）とCSS（Cascading Style Sheets）を学びましょう。
 
+このページは外部教材へのリンク集ではありません。Zennの教材も使いますが、このカリキュラムでは、Webアプリを作る前提で**最低限ここだけは自分で説明できる状態**を目指します。
+
+## このページのゴール
+
+- HTMLでページの構造を作れる
+- CSSで余白、色、文字サイズ、配置を調整できる
+- `class`を使って狙った要素だけにスタイルを当てられる
+- Flexboxで横並びや中央寄せを作れる
+- スマホ幅でも崩れにくいレイアウトを考えられる
+- ブラウザの開発者ツールでHTML/CSSの状態を確認できる
+
+## 必ず覚えること
+
+### 1. HTMLは「見た目」ではなく「意味」を書く
+
+HTMLでは、ただ文字を並べるのではなく、その情報が何なのかをタグで表します。
+
+```html
+<header>
+  <h1>Todoアプリ</h1>
+</header>
+
+<main>
+  <section>
+    <h2>今日やること</h2>
+    <ul>
+      <li>HTML/CSSを復習する</li>
+      <li>JavaScriptでクリック処理を書く</li>
+    </ul>
+  </section>
+</main>
+```
+
+- `h1` はページで一番大きな見出し
+- `section` は意味のあるまとまり
+- `ul` と `li` はリスト
+- `div` は意味を持たない汎用の箱
+
+迷ったら、まず「これは見出しなのか」「一覧なのか」「入力フォームなのか」と考えてタグを選びます。
+
+### 2. CSSは「どの要素に」「何を適用するか」を書く
+
+CSSはセレクタで対象を選び、プロパティで見た目を指定します。
+
+```css
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+}
+
+.todo-item {
+  padding: 12px 16px;
+  border: 1px solid #d8ded5;
+  border-radius: 8px;
+}
+```
+
+- `.todo-list` は `class="todo-list"` の要素を選ぶ
+- `display: flex` は子要素の並び方を制御する
+- `gap` は子要素同士の間隔
+- `padding` は内側の余白
+- `border` は枠線
+
+最初は `color` や `font-size` より、`margin`、`padding`、`display`、`gap`、`width` を優先して覚えると画面を組み立てやすくなります。
+
+### 3. 余白は `margin` と `padding` を分けて考える
+
+```css
+.card {
+  margin-bottom: 16px;
+  padding: 20px;
+}
+```
+
+- `margin` は要素の外側の余白
+- `padding` は要素の内側の余白
+
+画面が読みにくいときは、まず余白が足りているかを見ます。Web UIは、文字やカードの装飾よりも、余白の取り方で読みやすさが大きく変わります。
+
+### 4. Flexboxでよく使う形を覚える
+
+横並びにする:
+
+```css
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+```
+
+中央に置く:
+
+```css
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+```
+
+折り返す:
+
+```css
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+```
+
+この3パターンは、Reactや管理画面を作るときにも毎回使います。
+
+### 5. レスポンシブは最初から考える
+
+PCでは横並び、スマホでは縦並びにしたい場合は、メディアクエリを使います。
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+最初から完璧に作る必要はありません。ただ、横幅が狭くなったときに文字がはみ出さないか、ボタンが押しにくくならないかは必ず確認します。
+
 ## HTMLとCSSとは？
 
 ### HTML - Webページの骨格
