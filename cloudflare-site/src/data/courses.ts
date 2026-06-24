@@ -25,8 +25,8 @@ export const phases: Phase[] = [
     summary: '開発環境とWebの土台。',
     cards: [
       { label: 'Environment', title: '環境構築', description: 'まずMac/Windowsの開発環境を整え、VS Codeとターミナルを使える状態にする。', href: '/environment/', accent: 'green' },
-      { label: 'HTML / CSS', title: 'HTML / CSS', description: 'ページ構造、スタイル、レイアウト、レスポンシブ基礎。', href: '/frontend/', accent: 'green' },
-      { label: 'JavaScript', title: 'JavaScript', description: '変数、条件分岐、関数、配列、DOM操作。フロントエンド基礎の中で学ぶ。', href: '/frontend/', accent: 'green' },
+      { label: 'HTML / CSS', title: 'HTML / CSS', description: 'HTML構造、CSSセレクタ、余白、Flexbox、レスポンシブ基礎。', href: '/frontend/html_css/', accent: 'green' },
+      { label: 'JavaScript', title: 'JavaScript', description: '変数、条件分岐、関数、配列、DOM操作、イベント処理。', href: '/frontend/javascript/', accent: 'green' },
       { label: 'TypeScript', title: 'TypeScript基礎', description: '型、関数、オブジェクト、コンパイル、実践演習。', href: '/typescript/', accent: 'green' }
     ]
   },
