@@ -8,6 +8,120 @@ nav_order: 2
 
 HTML/CSSでWebページの構造とデザインを学んだら、次は**JavaScript**を学びましょう。JavaScriptを使うことで、静的なページに動きをつけ、ユーザーと対話できるWebアプリケーションを作れるようになります。
 
+このページでは、外部教材で文法を補いながら、このカリキュラム内でも**ReactとTypeScriptへ進むために必ず必要なJavaScriptの考え方**を整理します。
+
+## このページのゴール
+
+- 変数、条件分岐、配列、オブジェクト、関数を読める
+- `map`、`filter`、`find` を使って配列を扱える
+- DOMを取得して、クリックなどのイベントに反応できる
+- `fetch`、`Promise`、`async/await` の役割を説明できる
+- エラーを見て、どこで何が失敗したかを切り分けられる
+- TypeScriptとReactで出てくるコードに抵抗がなくなる
+
+## 必ず覚えること
+
+### 1. 変数は `const` を基本にする
+
+JavaScriptでは、まず `const` を使います。後から値を入れ替える必要があるときだけ `let` を使います。
+
+```js
+const userName = "Taro";
+const age = 20;
+
+let count = 0;
+count = count + 1;
+```
+
+`var` は古い書き方なので、このカリキュラムでは基本的に使いません。
+
+### 2. オブジェクトは「まとまったデータ」
+
+APIから返ってくるJSONや、Reactのpropsは、ほとんどがオブジェクトです。
+
+```js
+const user = {
+  id: 1,
+  name: "Taro",
+  email: "taro@example.com"
+};
+
+console.log(user.name);
+```
+
+`user.name` のように、ドットで中の値を取り出します。TypeScriptでは、このオブジェクトの形に型を付けていきます。
+
+### 3. 配列は `map` と `filter` を最優先で覚える
+
+Reactで一覧表示をするとき、配列操作は必ず使います。
+
+```js
+const todos = [
+  { id: 1, title: "HTMLを学ぶ", done: true },
+  { id: 2, title: "JavaScriptを学ぶ", done: false }
+];
+
+const titles = todos.map((todo) => todo.title);
+const activeTodos = todos.filter((todo) => !todo.done);
+```
+
+- `map` は配列の各要素を別の形に変換する
+- `filter` は条件に合う要素だけを残す
+- `find` は条件に合う最初の1件を探す
+
+この3つは、Todoアプリ、SNSの投稿一覧、ユーザー一覧のすべてで使います。
+
+### 4. 関数は処理に名前を付けるもの
+
+```js
+function formatUserName(user) {
+  return `${user.name}さん`;
+}
+
+const label = formatUserName({ name: "Taro" });
+console.log(label);
+```
+
+関数を使うと、同じ処理を何度も書かずに済みます。Reactではコンポーネントも関数として書くので、ここで関数に慣れておくことが重要です。
+
+### 5. DOM操作は「HTMLをJavaScriptから触る」こと
+
+```html
+<button id="saveButton">保存</button>
+<p id="message"></p>
+
+<script>
+  const button = document.querySelector("#saveButton");
+  const message = document.querySelector("#message");
+
+  button.addEventListener("click", () => {
+    message.textContent = "保存しました";
+  });
+</script>
+```
+
+- `document.querySelector` でHTML要素を取得する
+- `addEventListener` でクリックなどの操作を受け取る
+- `textContent` で画面の文字を変える
+
+Reactでは直接DOMを触る場面は減りますが、「ユーザー操作で画面が変わる」という考え方は同じです。
+
+### 6. 非同期処理はAPI通信の土台
+
+サーバーからデータを取る処理は、すぐには終わりません。そのため `async/await` を使います。
+
+```js
+async function loadUser() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
+  const user = await response.json();
+  console.log(user.name);
+}
+
+loadUser();
+```
+
+この形は、Reactの[fetchでAPI通信](/react/api_fetch/)でもそのまま使います。
+
 ## TypeScriptへの第一歩
 
 JavaScriptを学ぶことは、今後このコースで使用することになる**TypeScript**という言語の先駆けになります。
