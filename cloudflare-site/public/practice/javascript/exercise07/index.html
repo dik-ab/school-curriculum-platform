@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 7 - TODOリスト</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .input-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    input {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .delete-btn {
+      background-color: #f44336;
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    .delete-btn:hover {
+      background-color: #da190b;
+    }
+  </style>
+</head>
+<body>
+  <h1>TODOリスト</h1>
+  <div class="input-container">
+    <input type="text" id="taskInput" placeholder="タスクを入力してください">
+    <button id="addButton">追加</button>
+  </div>
+  <ul id="taskList"></ul>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const addButton = document.getElementById("addButton");
+    const taskList = document.getElementById("taskList");
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+
+      if (taskText === "") {
+        alert("タスクを入力してください");
+        return;
+      }
+
+      // li要素を作成
+      const li = document.createElement("li");
+
+      // タスクのテキスト部分を作成
+      const span = document.createElement("span");
+      span.textContent = taskText;
+
+      // 削除ボタンを作成
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "削除";
+      deleteBtn.className = "delete-btn";
+      deleteBtn.addEventListener("click", function() {
+        li.remove();
+      });
+
+      // li要素に追加
+      li.appendChild(span);
+      li.appendChild(deleteBtn);
+
+      // リストに追加
+      taskList.appendChild(li);
+
+      // 入力欄をクリア
+      taskInput.value = "";
+      taskInput.focus();
+    }
+
+    addButton.addEventListener("click", addTask);
+
+    // Enterキーでも追加できるようにする
+    taskInput.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        addTask();
+      }
+    });
+  </script>
+</body>
+</html>
