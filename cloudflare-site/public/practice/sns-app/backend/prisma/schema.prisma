@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  username      String   @unique
+  displayName   String
+  passwordHash  String
+  bio           String   @default("")
+  avatarUrl     String?
+  emailVerified Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  verificationTokens EmailVerificationToken[]
+  posts              Post[]
+  likes              Like[]
+  following          Follow[]                 @relation("Follower")
+  followers          Follow[]                 @relation("Followee")
+
+  conversationsAsUserOne Conversation[] @relation("UserOne")
+  conversationsAsUserTwo Conversation[] @relation("UserTwo")
+  messages               Message[]
+}
+
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  userOneId Int
+  userTwoId Int
+  userOne   User      @relation("UserOne", fields: [userOneId], references: [id], onDelete: Cascade)
+  userTwo   User      @relation("UserTwo", fields: [userTwoId], references: [id], onDelete: Cascade)
+  messages  Message[]
+  createdAt DateTime  @default(now())
+
+  @@unique([userOneId, userTwoId])
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  content        String       @db.VarChar(1000)
+  conversationId Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       Int
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+}
+
+model Follow {
+  followerId Int
+  followeeId Int
+  follower   User     @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followee   User     @relation("Followee", fields: [followeeId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@id([followerId, followeeId])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.VarChar(280)
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes     Like[]
+  createdAt DateTime @default(now())
+}
+
+model Like {
+  userId    Int
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId])
+}
+
+model EmailVerificationToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  expiresAt DateTime
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
