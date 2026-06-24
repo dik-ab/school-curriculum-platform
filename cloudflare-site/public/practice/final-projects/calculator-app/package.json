@@ -1,0 +1,13 @@
+{
+  "name": "calculator-app",
+  "version": "1.0.0",
+  "description": "TypeScript Calculator App",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
