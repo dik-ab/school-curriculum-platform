@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 8 - クイズアプリ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    .question {
+      font-size: 20px;
+      margin: 30px 0;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 15px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 32px;
+      font-weight: bold;
+      min-height: 50px;
+    }
+    .correct {
+      color: #4CAF50;
+    }
+    .incorrect {
+      color: #f44336;
+    }
+  </style>
+</head>
+<body>
+  <h1>クイズアプリ</h1>
+  <div class="question">
+    <p>JavaScriptはどの種類の言語ですか？</p>
+  </div>
+  <button id="choice1">コンパイル言語</button>
+  <button id="choice2">インタプリタ言語</button>
+  <button id="choice3">マークアップ言語</button>
+  <p id="result"></p>
+
+  <script>
+    const choice1 = document.getElementById("choice1");
+    const choice2 = document.getElementById("choice2");
+    const choice3 = document.getElementById("choice3");
+    const result = document.getElementById("result");
+
+    function showResult(isCorrect) {
+      if (isCorrect) {
+        result.textContent = "正解！ ✓";
+        result.className = "correct";
+      } else {
+        result.textContent = "不正解 ✗";
+        result.className = "incorrect";
+      }
+    }
+
+    choice1.addEventListener("click", function() {
+      showResult(false);
+    });
+
+    choice2.addEventListener("click", function() {
+      showResult(true);
+    });
+
+    choice3.addEventListener("click", function() {
+      showResult(false);
+    });
+  </script>
+</body>
+</html>
