@@ -1,14 +1,16 @@
 ---
 title: 開発環境をComposeで組む
-parent: Docker基礎
-nav_order: 5
+parent: Docker Compose + DB
+section_key: docker-compose-db
+section_title: Docker Compose + DB
+nav_order: 2
 ---
 
 # 開発環境をComposeで組む
 
 前のページ（[Docker Composeで複数コンテナを動かす](/docker/docker_compose/)）で、API + PostgreSQLの2コンテナを起動できるようになりました。Composeの仕組みを学ぶ題材としては、これで十分です。しかし「毎日の開発で使う環境」として考えると、実はAPIまでコンテナで動かす必要はありません。
 
-このページはDocker基礎の総仕上げとして、本カリキュラムで**開発環境の標準形**と呼ぶ構成を組み上げます。標準形とは、**PostgreSQLだけをComposeで起動し、APIとフロントエンドは手元（ホスト）で `pnpm run dev`（NestJSは `pnpm run start:dev`）で動かす**形です。そしてこの構成は、次の章[データベースとPrisma](/database/)以降、最終プロジェクトまでずっと使い続けます。
+このページはDocker Compose + DBの実践として、本カリキュラムで**開発環境の標準形**と呼ぶ構成を組み上げます。標準形とは、**PostgreSQLだけをComposeで起動し、APIとフロントエンドは手元（ホスト）で `pnpm run dev`（NestJSは `pnpm run start:dev`）で動かす**形です。そしてこの構成は、[データベース基礎](/database/)以降、最終プロジェクトまでずっと使い続けます。
 
 ## 学習目標
 
@@ -145,7 +147,7 @@ postgresql://ユーザー名:パスワード@ホスト名:ポート/データベ
 
 「どこで動いているプログラムから見るか」で接続先の名前が変わる——前ページの知識がそのままここで効いています。
 
-なお、現時点のメモAPIはメモリ上の配列で動いているため、この接続文字列はまだ使いません。次の章でPrismaを導入すると、`DATABASE_URL` という名前の環境変数（`.env` ファイルに書きます）として、この値がそのまま接続設定になります。ここでは「DBの場所は `localhost:5432`」という形を頭に入れておけば十分です。
+なお、現時点のメモAPIはメモリ上の配列で動いているため、この接続文字列はまだ使いません。DBを使う実装に進むと、`DATABASE_URL` という名前の環境変数（`.env` ファイルに書きます）として、この値がそのまま接続設定になります。ここでは「DBの場所は `localhost:5432`」という形を頭に入れておけば十分です。
 
 ### 開発の一日の流れ
 
@@ -325,7 +327,7 @@ volumes:
 標準形（PostgreSQLだけをComposeで起動し、アプリはホストで `pnpm run dev`）は、使い捨ての練習ではありません。
 
 - 次の章の[PostgreSQLのセットアップ](/database/postgresql_setup/)では、**Composeで起動したPostgreSQL 16**に `psql` で接続し、SQLを学びます。
-- 続くPrismaの導入では、`DATABASE_URL`（ホスト名は `localhost`）がそのまま接続設定になり、メモAPIのデータがついにデータベースへ永続化されます。
+- DBを使う実装に進むと、`DATABASE_URL`（ホスト名は `localhost`）がそのまま接続設定になり、APIのデータをデータベースへ永続化できます。
 - 実践プロジェクトの[フルスタックTodoアプリのセットアップ](/fullstack-todo/setup/)、そして最終プロジェクトの[SNSのプロジェクトセットアップ](/sns/project_setup/)でも、開発環境はこの標準形のままです。
 
 「`docker compose up -d` してから `pnpm run dev`」を手に馴染ませておくと、この先の章の立ち上がりがスムーズになります。
@@ -390,8 +392,8 @@ volumes:
 
 ## 次のステップ
 
-これでDocker基礎は完了です。「コンテナの概念 → 基本操作 → 自作アプリのイメージ化 → 複数コンテナ → 開発環境の標準形」と積み上げてきて、**コマンド1つでDBが立ち上がる開発環境**を手に入れました。
+これでDocker Compose + DBの実践は完了です。**コマンド1つでDBが立ち上がり、ホストで動くAPIから接続できる開発環境**を手に入れました。
 
-次のセクション[データベースとPrisma](/database/)では、ここで起動したPostgreSQL 16の中身に踏み込みます。まずは[PostgreSQLのセットアップ](/database/postgresql_setup/)で、このcompose.yamlの環境に `psql` で接続するところから始まります。compose.yamlは削除せず、そのまま持っていってください。この標準形は[フルスタックTodoアプリのセットアップ](/fullstack-todo/setup/)、[SNSのプロジェクトセットアップ](/sns/project_setup/)でも使い続けます。
+次の[データベース基礎](/database/)では、ここで起動したPostgreSQL 16の中身に踏み込みます。まずは[PostgreSQLを起動して触ってみる](/database/postgresql_setup/)で、このcompose.yamlの環境に `psql` で接続するところから始まります。compose.yamlは削除せず、そのまま持っていってください。この標準形は[フルスタックTodoアプリのセットアップ](/fullstack-todo/setup/)、[SNSのプロジェクトセットアップ](/sns/project_setup/)でも使い続けます。
 
 また、[Dockerfileを書く](/docker/dockerfile/)で作った本番用ステージは、[CI/CD](/cicd/)と[AWSデプロイ](/aws/)の章で自動ビルド・デプロイされます。Dockerはここから先、すべての章の足元を支える存在になります。
