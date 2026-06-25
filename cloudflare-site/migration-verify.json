@@ -1,8 +1,8 @@
 {
   "sourceMetrics": {
     "markdown": 119,
-    "codeFences": 1808,
-    "mermaid": 157,
+    "codeFences": 1827,
+    "mermaid": 160,
     "details": 472,
     "summaries": 472,
     "checkboxes": 657,
@@ -10,8 +10,8 @@
   },
   "targetMetrics": {
     "markdown": 119,
-    "codeFences": 1808,
-    "mermaid": 157,
+    "codeFences": 1827,
+    "mermaid": 160,
     "details": 472,
     "summaries": 472,
     "checkboxes": 657,
