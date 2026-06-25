@@ -392,7 +392,7 @@ curl -i -X DELETE http://localhost:3000/bookmarks/1
 <details markdown="1">
 <summary>解答を見る</summary>
 
-- **データベースへの保存** — 主にBookmarksService（配列操作をデータベース操作に置き換える）。Controller・DTOはほぼ変更不要です。[データベースとPrisma](/database//)の知識を使います。
+- **データベースへの保存** — 主にBookmarksService（配列操作をデータベース操作に置き換える）。Controller・DTOはほぼ変更不要です。[データベースとPrisma](/database/)の知識を使います。
 - **ログインユーザーによる絞り込み** — 認証の仕組みとGuard、およびControllerでのユーザー情報の受け取りが必要になります。SNS開発セクションの[認証](/sns/auth/)で学びます。
 
 変更の影響範囲を層ごとに見積もれること自体が、Module / Controller / Service / DTOという分業を理解した証拠です。
@@ -415,4 +415,4 @@ curl -i -X DELETE http://localhost:3000/bookmarks/1
 
 バックエンド基礎はこれで修了です。チェックが付かない項目があれば、該当ページに戻って復習してから先へ進んでください。
 
-次のセクションは[Docker基礎](/docker//)です。ここで作ったAPIを「どこでも同じように動かす」ためのコンテナ技術を学びます。その後の[データベースとPrisma](/database//)で、メモAPIのデータを本物のデータベースに永続化し、このセクションで予告した進化を実現します。
+次のセクションは[Docker基礎](/docker/)です。ここで作ったAPIを「どこでも同じように動かす」ためのコンテナ技術を学びます。その後の[データベースとPrisma](/database/)で、メモAPIのデータを本物のデータベースに永続化し、このセクションで予告した進化を実現します。
