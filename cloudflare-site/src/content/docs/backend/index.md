@@ -27,15 +27,15 @@ sequenceDiagram
     S-->>C: 200 OK （削除完了）
 ```
 
-ここで作るAPIはデータをメモリ上に保持する簡易版ですが、後の[データベースとPrisma](/database//)セクションでデータベースに永続化する本格的なAPIへと発展させます。さらに最終的には、SNS開発セクションで投稿・いいね・フォローなどの機能を持つ本物のSNSバックエンドを構築します。
+ここで作るAPIはデータをメモリ上に保持する簡易版ですが、後の[データベースとPrisma](/database/)セクションでデータベースに永続化する本格的なAPIへと発展させます。さらに最終的には、SNS開発セクションで投稿・いいね・フォローなどの機能を持つ本物のSNSバックエンドを構築します。
 
 ## 前提知識
 
 このセクションを始める前に、以下を修了していることを前提とします。
 
-- [TypeScript基礎](/typescript//) — 型、関数、クラスの基本
-- [React基礎](/react//) — 特に[fetchでAPI通信](/react/api_fetch/)で学んだ「フロントエンドからAPIを呼ぶ」経験
-- [環境構築](/environment//) — Node.js 20とpnpmが使えること（pnpmの導入は[React基礎のセットアップ](/react/setup/)を参照）
+- [TypeScript基礎](/typescript/) — 型、関数、クラスの基本
+- [React基礎](/react/) — 特に[fetchでAPI通信](/react/api_fetch/)で学んだ「フロントエンドからAPIを呼ぶ」経験
+- [環境構築](/environment/) — Node.js 20とpnpmが使えること（pnpmの導入は[React基礎のセットアップ](/react/setup/)を参照）
 
 ## 各ページの内容
 
