@@ -1,6 +1,8 @@
 ---
 title: Docker Composeで複数コンテナを動かす
 parent: Docker基礎
+section_key: docker
+section_title: Docker基礎
 nav_order: 4
 ---
 
@@ -126,7 +128,7 @@ docker compose down
 
 ## サービスを増やす — PostgreSQLを追加する
 
-いよいよ本題の「複数コンテナ」です。データベースのPostgreSQL 16を2つ目のサービスとして追加します。PostgreSQL自体の使い方は[データベースとPrisma](/database/)の章で学ぶので、ここでは「複数コンテナを動かす練習台」として扱います。
+いよいよ本題の「複数コンテナ」です。データベースのPostgreSQL 16を2つ目のサービスとして追加します。PostgreSQL自体の使い方は[データベース基礎](/database/)と[Docker Compose + DB](/docker/database_compose/)で学ぶので、ここでは「複数コンテナを動かす練習台」として扱います。
 
 **`memo-api/compose.yaml`**
 
@@ -384,4 +386,4 @@ compose.yamlで付けたサービス名（この例では `db`）を指定しま
 
 Composeの仕組み（サービス・ボリューム・ネットワーク）が分かったところで、次のページ[開発環境をComposeで組む](/docker/dev_environment/)では、これを「毎日使える開発環境」に仕上げます。コードを書き換えたら即座に反映されるホットリロードや、起動順の制御など、開発で実際に必要になる設定を加えていきます。
 
-ここで学んだ「サービス名で接続する」「ボリュームでデータを残す」は、[データベースとPrisma](/database/)の章、そして最終プロジェクトの[SNS開発](/sns/)まで、ずっと使い続ける知識です。
+ここで学んだ「サービス名で接続する」「ボリュームでデータを残す」は、[Docker Compose + DB](/docker/database_compose/)と最終プロジェクトの[SNS開発](/sns/)まで、ずっと使い続ける知識です。
