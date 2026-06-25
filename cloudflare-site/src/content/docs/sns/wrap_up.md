@@ -70,19 +70,19 @@ flowchart LR
 
 矢印は「この機能を作るのに、この章の知識を使った」という対応です。図に収まらなかった土台も含めて、章ごとに振り返ります。それぞれ「SNSのどこで使ったか」を思い出しながら読んでください。思い出せない章があれば、そこが復習ポイントです。
 
-- [Git/GitHub基礎](/git//) … すべての作業の土台。コミットの積み重ねが、そのまま開発の記録になりました
-- [React基礎](/react//) … すべての画面。`useState` / `useEffect`、フォーム、リスト表示、そして `useHashRoute` のようなカスタムフック
-- [バックエンド基礎（NestJS）](/backend//) … すべてのAPI。Controller / Service / DI / DTOとバリデーション
-- [Docker基礎](/docker//) … 開発用DBのコンテナ起動と、[デプロイ](/sns/deploy/)での本番用イメージ作成
-- [データベースとPrisma](/database//) … 全7テーブルのスキーマ設計、マイグレーション、リレーションのクエリ
-- [実践: フルスタックTodoアプリ](/fullstack-todo//) … フロントとAPIの「つなぎ込み」の原体験。CORSやエラーハンドリングはここで学びました
-- [コード品質と開発ツール](/tooling//) … Prettier / ESLintによる、読みやすいコードの維持
-- [バックエンドテスト](/testing//) … 単体テストとE2Eテスト。[SNSのテスト](/sns/testing/)で実践しました
-- [CI/CD](/cicd//) … pushのたびに走るパイプライン。壊れたコードを本番に出さない仕組み
-- [AWSデプロイ](/aws//) … S3 / CloudFront / ECS / RDS / SES / CDK。アプリが「世界で動く」ための知識
-- [リアルタイム通信](/realtime//) … WebSocketとSocket.IO。DMチャットの心臓部
-- [AI開発入門](/ai//) … Claude Codeとの協働。開発の進め方そのものを変えるスキル
-- [AIチャット開発（RAG）](/ai-chat//) … LLMをアプリに組み込む実践。追加課題でSNSとの合流先があります
+- [Git/GitHub基礎](/git/) … すべての作業の土台。コミットの積み重ねが、そのまま開発の記録になりました
+- [React基礎](/react/) … すべての画面。`useState` / `useEffect`、フォーム、リスト表示、そして `useHashRoute` のようなカスタムフック
+- [バックエンド基礎（NestJS）](/backend/) … すべてのAPI。Controller / Service / DI / DTOとバリデーション
+- [Docker基礎](/docker/) … 開発用DBのコンテナ起動と、[デプロイ](/sns/deploy/)での本番用イメージ作成
+- [データベースとPrisma](/database/) … 全7テーブルのスキーマ設計、マイグレーション、リレーションのクエリ
+- [実践: フルスタックTodoアプリ](/fullstack-todo/) … フロントとAPIの「つなぎ込み」の原体験。CORSやエラーハンドリングはここで学びました
+- [コード品質と開発ツール](/tooling/) … Prettier / ESLintによる、読みやすいコードの維持
+- [バックエンドテスト](/testing/) … 単体テストとE2Eテスト。[SNSのテスト](/sns/testing/)で実践しました
+- [CI/CD](/cicd/) … pushのたびに走るパイプライン。壊れたコードを本番に出さない仕組み
+- [AWSデプロイ](/aws/) … S3 / CloudFront / ECS / RDS / SES / CDK。アプリが「世界で動く」ための知識
+- [リアルタイム通信](/realtime/) … WebSocketとSocket.IO。DMチャットの心臓部
+- [AI開発入門](/ai/) … Claude Codeとの協働。開発の進め方そのものを変えるスキル
+- [AIチャット開発（RAG）](/ai-chat/) … LLMをアプリに組み込む実践。追加課題でSNSとの合流先があります
 
 ## 全機能セルフレビュー総チェックリスト
 
