@@ -319,7 +319,7 @@ flowchart TB
 - **`package.json`** — プロジェクト名、依存パッケージ、`pnpm run dev` などのスクリプト定義が書かれています。`dependencies` に `react` と `react-dom`（いずれも18系）があることを確認してください
 - **`vite.config.ts`** — Viteの設定ファイルです。`plugins: [react()]` という記述が、ViteにReact（JSX）を扱わせるための設定です。当面は編集しません
 - **`tsconfig.json` / `tsconfig.app.json`** — [コンパイル](/typescript/compile/)で学んだTypeScript設定です。テンプレートが適切に設定済みなので、そのまま使います
-- **`node_modules/`** — インストールされたパッケージの実体です。**編集しない・Gitにコミットしない**（`.gitignore` に最初から登録されています）。[Git/GitHub基礎](/git//)で学んだとおり、`package.json` があれば `pnpm install` でいつでも復元できます
+- **`node_modules/`** — インストールされたパッケージの実体です。**編集しない・Gitにコミットしない**（`.gitignore` に最初から登録されています）。[Git/GitHub基礎](/git/)で学んだとおり、`package.json` があれば `pnpm install` でいつでも復元できます
 
 ## package.jsonのscriptsを確認する
 
@@ -339,13 +339,13 @@ flowchart TB
 | `pnpm run dev` | 開発サーバーを起動する（学習中はこれを常用） |
 | `pnpm run build` | 型チェック（`tsc`）をしてから本番用ファイルを `dist/` に生成する |
 | `pnpm run preview` | `build` の成果物をローカルで確認する |
-| `pnpm run lint` | コードの問題を検査する（[コード品質と開発ツール](/tooling//)で学びます） |
+| `pnpm run lint` | コードの問題を検査する（[コード品質と開発ツール](/tooling/)で学びます） |
 
-試しに `pnpm run build` を実行すると、`dist/` ディレクトリにHTML・CSS・JavaScriptが生成されます。この `dist/` が「本番サーバーに置くファイル一式」であり、後の[AWSデプロイ](/aws//)では、これをS3にアップロードして世界に公開します。
+試しに `pnpm run build` を実行すると、`dist/` ディレクトリにHTML・CSS・JavaScriptが生成されます。この `dist/` が「本番サーバーに置くファイル一式」であり、後の[AWSデプロイ](/aws/)では、これをS3にアップロードして世界に公開します。
 
 ## プロジェクトをGitで管理する
 
-[Git/GitHub基礎](/git//)で学んだとおり、プロジェクトは最初からGitで管理しましょう。
+[Git/GitHub基礎](/git/)で学んだとおり、プロジェクトは最初からGitで管理しましょう。
 
 ```bash
 git init
@@ -425,4 +425,4 @@ git commit -m "ViteでReactプロジェクトを作成"
 
 開発環境が整い、Reactアプリが手元で動くようになりました。次のページ[JSXとコンポーネント](/react/jsx_and_components/)では、`App.tsx` の中に書かれていたHTMLのような記法——**JSX**——のルールを学び、自分の手で画面の部品（コンポーネント）を作ります。
 
-ここで作ったプロジェクトは、このセクションを通して使い続けます。また、`pnpm run build` が生成する `dist/` は、[CI/CD](/cicd//)と[AWSデプロイ](/aws//)で「ビルドして公開する」流れを学ぶときに再登場します。
+ここで作ったプロジェクトは、このセクションを通して使い続けます。また、`pnpm run build` が生成する `dist/` は、[CI/CD](/cicd/)と[AWSデプロイ](/aws/)で「ビルドして公開する」流れを学ぶときに再登場します。
