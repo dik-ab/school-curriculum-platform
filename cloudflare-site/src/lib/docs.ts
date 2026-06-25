@@ -4,6 +4,7 @@ export type DocItem = {
   entry: CollectionEntry<'docs'>;
   slug: string;
   section: string;
+  sectionTitle: string;
   title: string;
   order: number;
   isSectionIndex: boolean;
@@ -26,15 +27,27 @@ export function titleFromEntry(entry: CollectionEntry<'docs'>) {
   return entry.id.split('/').pop()?.replace(/\.md$/, '').replace(/[-_]/g, ' ') ?? 'Page';
 }
 
+export function sectionKeyFromEntry(entry: CollectionEntry<'docs'>, slug: string) {
+  if (entry.data.section_key) return String(entry.data.section_key);
+  return sectionFromSlug(slug);
+}
+
+export function sectionTitleFromEntry(entry: CollectionEntry<'docs'>, section: string) {
+  if (entry.data.section_title) return String(entry.data.section_title);
+  return section;
+}
+
 export async function getAllDocEntries(): Promise<DocItem[]> {
   return (await getCollection('docs')).map((entry) => {
     const slug = slugFromId(entry.id);
-    const section = sectionFromSlug(slug);
-    const isSectionIndex = slug === section;
+    const rootSection = sectionFromSlug(slug);
+    const section = sectionKeyFromEntry(entry, slug);
+    const isSectionIndex = slug === rootSection;
     return {
       entry,
       slug,
       section,
+      sectionTitle: sectionTitleFromEntry(entry, section),
       title: titleFromEntry(entry),
       order: isSectionIndex ? -1 : Number(entry.data.nav_order ?? 999),
       isSectionIndex
