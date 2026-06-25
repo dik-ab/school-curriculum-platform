@@ -1,6 +1,8 @@
 ---
 title: PostgreSQLを起動して触ってみる
-parent: データベースとPrisma
+parent: データベース基礎
+section_key: database
+section_title: データベース基礎
 nav_order: 2
 ---
 
@@ -48,7 +50,7 @@ volumes:
 - `image: postgres:16` — PostgreSQL 16の公式イメージを使います。バージョンを固定するのは、[Dockerfileのページ](/docker/dockerfile/)で学んだとおり「環境を再現可能にする」ためです
 - `POSTGRES_USER` / `POSTGRES_PASSWORD` — データベースに接続するためのユーザー名とパスワードです。開発環境なので簡単な値にしていますが、本番環境では推測されない値を使います
 - `POSTGRES_DB: memo` — 起動時に `memo` という名前のデータベースを自動作成します。この章の目的は[バックエンド基礎で作ったメモAPI](/backend/crud_practice/)のデータを永続化することなので、DB名も `memo` です
-- `ports: "5432:5432"` — PostgreSQLの標準ポート5432を、手元のPC（ホスト）にも公開します。後でPrismaがここに接続します
+- `ports: "5432:5432"` — PostgreSQLの標準ポート5432を、手元のPC（ホスト）にも公開します。ローカルのAPIやpsqlはここに接続します
 - `volumes: db-data:...` — [ボリューム](/docker/docker_compose/)を使い、コンテナを削除してもデータが消えないようにしています。`/var/lib/postgresql/data` はPostgreSQLがデータファイルを置く場所です
 
 ここでは練習用に、上記の内容だけを書いた `compose.yaml` を新しいディレクトリに用意しても構いませんし、Docker章で作ったプロジェクトをそのまま使っても構いません。
@@ -268,7 +270,7 @@ SELECT id, name FROM users;
 (5 rows)
 ```
 
-実務では `SELECT *` よりも必要な列だけを指定する方が、通信量が減り高速になります。後で学ぶPrismaの `select` オプションはこれに対応します。
+実務では `SELECT *` よりも必要な列だけを指定する方が、通信量が減り高速になります。APIからDBを読むときも、この考え方はそのまま使います。
 
 ### WHERE — 条件で絞り込む
 
@@ -433,7 +435,7 @@ CREATE TABLE posts (
 ```sql
 INSERT INTO posts (content, user_id) VALUES
   ('おはようございます', 1),
-  ('Prismaの勉強中', 2),
+  ('データベースの勉強中', 2),
   ('今日はいい天気', 1),
   ('psql楽しい', 3);
 ```
@@ -469,7 +471,7 @@ JOIN users ON posts.user_id = users.id;
  id |      content       |  name
 ----+--------------------+--------
   1 | おはようございます | 太郎
-  2 | Prismaの勉強中     | 花子
+  2 | データベースの勉強中 | 花子
   3 | 今日はいい天気     | 太郎
   4 | psql楽しい         | 次郎
 ```
@@ -491,7 +493,7 @@ WHERE users.name = '太郎'
 ORDER BY posts.created_at DESC;
 ```
 
-JOINにはいくつか種類がありますが、まずはこの基本形（INNER JOIN。`JOIN` と書けばこれになります）を押さえれば十分です。Prismaを使うと、このJOINに相当する操作を `include` というオプションで簡単に書けるようになります（[リレーション](/database/relations/)で学びます）。
+JOINにはいくつか種類がありますが、まずはこの基本形（INNER JOIN。`JOIN` と書けばこれになります）を押さえれば十分です。フレームワークやORMを使う場合でも、複数テーブルをまとめて取得するときはこのJOINの考え方が土台になります。
 
 ## 後片付け
 
@@ -509,7 +511,7 @@ docker compose stop
 
 `stop` ならボリュームのデータは残るので、次回 `docker compose up -d` すれば作ったテーブルもデータもそのまま使えます。`docker compose down -v` とすると**ボリュームごと削除されてデータが消える**ので、消したい場合だけ使ってください。
 
-なお、ここで作った `users` / `posts` テーブルはSQL練習用です。次のページからはPrismaがテーブルを管理するため、このまま残しておいても構いませんし、`DROP TABLE posts; DROP TABLE users;`（テーブルの削除。外部キーの都合で `posts` が先です）で消しても構いません。ただし[マイグレーションのページ](/database/schema_and_migration/)で `prisma migrate dev` を初めて実行する際、PrismaがこれらのPrisma管理外のテーブルを検出し、データベースのリセットを促すことがあります。練習用テーブルはここでDROPしておくのが無難です。
+なお、ここで作った `users` / `posts` テーブルはSQL練習用です。このまま残して復習に使っても構いませんし、`DROP TABLE posts; DROP TABLE users;`（テーブルの削除。外部キーの都合で `posts` が先です）で消しても構いません。
 
 ## 理解度チェック
 
@@ -593,8 +595,7 @@ JOIN users ON posts.user_id = users.id;
 
 ## 次のステップ
 
-生のSQLでデータベースを操作する感覚がつかめました。しかし、アプリケーションのコードの中でSQLを文字列として組み立てるのは大変です。次のページでは、TypeScriptからデータベースを型安全に操作するためのツール **Prisma** を導入します。
+生のSQLでデータベースを操作する感覚がつかめました。ここで学んだ `SELECT`、`INSERT`、`UPDATE`、`DELETE`、`JOIN` は、この後どの言語・フレームワークでDBを扱う場合でも前提になります。
 
 - 前のページ: [データベースとは](/database/what_is_database/)
-- 次のページ: [Prismaの導入](/database/prisma_setup/)
-- このページで学んだSQLの知識は、Prismaが裏で発行しているSQLを理解する土台になります。また[SNS開発](/sns/)でパフォーマンスを考えるときにも役立ちます
+- このページで学んだSQLの知識は、各言語・フレームワークからDBを扱うときの土台になります。また[SNS開発](/sns/)でパフォーマンスを考えるときにも役立ちます
