@@ -1,6 +1,8 @@
 ---
 title: Dockerfileを書く
 parent: Docker基礎
+section_key: docker
+section_title: Docker基礎
 nav_order: 3
 ---
 
