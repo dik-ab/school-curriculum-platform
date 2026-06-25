@@ -199,7 +199,7 @@ module.exports = {
 **コード解説**
 
 - `parserOptions.project: 'tsconfig.json'` — TypeScriptの型情報を使った高度な検査を有効にするため、`tsconfig.json` の場所を教えています。
-- `env: { node: true, jest: true }` — バックエンドはブラウザではなくNode.jsで動くので `node: true`。テストフレームワークJest（[テストの章](/testing//)で学びます）のグローバル変数も許可しています。Vite側との違いに注目してください。**実行環境が違えば `env` も違う**のです。
+- `env: { node: true, jest: true }` — バックエンドはブラウザではなくNode.jsで動くので `node: true`。テストフレームワークJest（[テストの章](/testing/)で学びます）のグローバル変数も許可しています。Vite側との違いに注目してください。**実行環境が違えば `env` も違う**のです。
 - `extends` の `'plugin:prettier/recommended'` — **Prettierとの連携設定**です。次の節で詳しく説明します。
 - `rules` — NestJSの開発スタイルに合わない推奨ルールを `'off'` で無効化しています。たとえば `@typescript-eslint/no-explicit-any` を `off` にして、[`any` 型](/typescript/basic_types/)の使用をエラーにしない設定です（学習段階では助かりますが、品質を上げたければ `error` に戻す選択肢もあります）。
 
