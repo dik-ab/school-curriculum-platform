@@ -6,7 +6,7 @@ nav_order: 2
 
 # バックエンド: Todo APIの実装
 
-このページでは、[セットアップ](/fullstack-todo/setup/)で作成した `backend/` プロジェクトに、[セクションの概要](/fullstack-todo//)で設計した5つのエンドポイントを実装します。NestJSのModule / Controller / Serviceの構成、DTOによるバリデーション、PrismaによるDBアクセスと、[バックエンド基礎](/backend//)・[データベースとPrisma](/database//)で学んだことをすべて組み合わせます。
+このページでは、[セットアップ](/fullstack-todo/setup/)で作成した `backend/` プロジェクトに、[セクションの概要](/fullstack-todo/)で設計した5つのエンドポイントを実装します。NestJSのModule / Controller / Serviceの構成、DTOによるバリデーション、PrismaによるDBアクセスと、[バックエンド基礎](/backend/)・[データベースとPrisma](/database/)で学んだことをすべて組み合わせます。
 
 実装の流れは、[メモAPIを作る](/backend/crud_practice/)で経験したCRUD実装とほぼ同じです。違いは、データの保存先がメモリ上の配列ではなく**PostgreSQL**になることと、最初に設計したステータスコード（201 / 204 / 400 / 404）を意識して作り込むことです。
 
@@ -81,7 +81,7 @@ CREATE src/prisma/prisma.service.ts (90 bytes)
 UPDATE src/app.module.ts (...)
 ```
 
-`--no-spec` はテストファイル（`.spec.ts`）を生成しないオプションです。テストは[バックエンドテスト](/testing//)の章で本格的に扱うため、ここでは省略します。
+`--no-spec` はテストファイル（`.spec.ts`）を生成しないオプションです。テストは[バックエンドテスト](/testing/)の章で本格的に扱うため、ここでは省略します。
 
 生成されたファイルを次のように実装します。
 
@@ -331,7 +331,7 @@ export class TodosService {
 
 ## TodosControllerの実装
 
-HTTPの入口です。[セクションの概要](/fullstack-todo//)のAPI設計表と1行ずつ対応させながら書きます。
+HTTPの入口です。[セクションの概要](/fullstack-todo/)のAPI設計表と1行ずつ対応させながら書きます。
 
 **`backend/src/todos/todos.controller.ts`**
 
