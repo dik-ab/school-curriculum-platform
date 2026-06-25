@@ -6,9 +6,9 @@ nav_order: 2
 
 # PostgreSQLを起動して触ってみる
 
-[前のページ](/database/what_is_database/)でデータベースの概念とSQLの基礎を学びました。このページでは、実際にPostgreSQL 16をDocker Composeで起動し、`psql` というコマンドラインツールから生のSQLを一通り実行します。「読めるSQL」を「書けるSQL」にすることが目的です。
+[前のページ](/database/what_is_database/)でデータベースの概念とSQLの基礎を学びました。このページでは、PostgreSQL 16に`psql`というコマンドラインツールから接続し、生のSQLを一通り実行します。「読めるSQL」を「書けるSQL」にすることが目的です。
 
-PostgreSQLの起動には、[Docker基礎](/docker//)で学んだ知識をそのまま使います。特に[開発環境をcomposeで組む](/docker/dev_environment/)で確立した標準形（PostgreSQLのみcompose、APIはローカル）が前提です。
+PostgreSQLコンテナの立て方そのものは、[Docker Compose + PostgreSQL / MySQL](/docker/database_compose/)で独立して扱います。このページでは、DBが起動している前提で、`psql`とSQLの練習に集中します。
 
 ## 学習目標
 
@@ -18,11 +18,11 @@ PostgreSQLの起動には、[Docker基礎](/docker//)で学んだ知識をその
 - WHERE・ORDER BYで絞り込みと並べ替えができる
 - JOINで2つのテーブルを結合した結果を取得できる
 
-## Docker ComposeでPostgreSQLを起動する
+## PostgreSQLコンテナを起動する
 
 ### compose.yamlの確認
 
-[開発環境をcomposeで組む](/docker/dev_environment/)で作成した `compose.yaml` には、PostgreSQLのサービスが含まれていました。データベース部分を抜き出すと次のような構成です。
+[Docker Compose + PostgreSQL / MySQL](/docker/database_compose/)で作成した `compose.yaml` には、PostgreSQLのサービスが含まれていました。データベース部分を抜き出すと次のような構成です。
 
 **`compose.yaml`**
 
@@ -597,4 +597,4 @@ JOIN users ON posts.user_id = users.id;
 
 - 前のページ: [データベースとは](/database/what_is_database/)
 - 次のページ: [Prismaの導入](/database/prisma_setup/)
-- このページで学んだSQLの知識は、Prismaが裏で発行しているSQLを理解する土台になります。また[SNS開発](/sns//)でパフォーマンスを考えるときにも役立ちます
+- このページで学んだSQLの知識は、Prismaが裏で発行しているSQLを理解する土台になります。また[SNS開発](/sns/)でパフォーマンスを考えるときにも役立ちます
