@@ -493,4 +493,4 @@ Controllerは「Serviceのメソッドを呼ぶ」ことしか知らず、Servic
 
 - 前のページ: [スキーマ定義とマイグレーション](/database/schema_and_migration/)
 - 次のページ: [リレーション](/database/relations/)
-- ここで作ったPrismaService + PrismaModuleのパターンは、[SNS開発](/sns/project_setup/)でもそのまま使います。また、データベースを使ったServiceのテスト方法は[バックエンドテスト](/testing//)で学びます
+- ここで作ったPrismaService + PrismaModuleのパターンは、[SNS開発](/sns/project_setup/)でもそのまま使います。また、データベースを使ったServiceのテスト方法は[バックエンドテスト](/testing/)で学びます
