@@ -17,6 +17,10 @@ function runGit(args) {
     .filter(Boolean);
 }
 
+function uniqueSorted(items) {
+  return [...new Set(items)].sort();
+}
+
 function ensureDir(path) {
   mkdirSync(path, { recursive: true });
 }
@@ -64,7 +68,8 @@ function normalizeTargetPath(fromFile, href) {
   const fromDir = posix.dirname(fromFile.replace(/\\/g, '/'));
   const resolved = posix.normalize(posix.join(fromDir === '.' ? '' : fromDir, pathPart));
   const withoutHtml = resolved.replace(/\.html$/, '').replace(/\/index$/, '');
-  return withoutHtml === '.' ? `/${hash}` : `/${withoutHtml.replace(/^\.\//, '')}/${hash}`;
+  const cleanPath = withoutHtml.replace(/^\.\//, '').replace(/\/$/, '');
+  return cleanPath === '.' || cleanPath === '' ? `/${hash}` : `/${cleanPath}/${hash}`;
 }
 
 function normalizeOldGitHubPagesUrl(href) {
@@ -97,7 +102,10 @@ function migrateDocs() {
   rmSync(docsRoot, { recursive: true, force: true });
   ensureDir(docsRoot);
 
-  const markdownFiles = runGit(['ls-files', '*.md'])
+  const markdownFiles = uniqueSorted([
+    ...runGit(['ls-files', '*.md']),
+    ...runGit(['ls-files', '--others', '--exclude-standard', '*.md'])
+  ])
     .filter((file) => !excludedDocPrefixes.some((prefix) => file.startsWith(prefix)));
 
   for (const file of markdownFiles) {
