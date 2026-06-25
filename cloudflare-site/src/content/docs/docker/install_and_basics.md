@@ -403,6 +403,6 @@ docker rmi hello-world
 
 ## 次のステップ
 
-ここまでは「他人が作ったイメージ」を使ってきました。次のページ[Dockerfileを書く](/docker/dockerfile/)では、いよいよ自分のアプリ——[バックエンド基礎](/backend//)で作ったNestJSのメモAPI——を自分のイメージにします。
+ここまでは「他人が作ったイメージ」を使ってきました。次のページ[Dockerfileを書く](/docker/dockerfile/)では、いよいよ自分のアプリ——[バックエンド基礎](/backend/)で作ったNestJSのメモAPI——を自分のイメージにします。
 
-このページで学んだ `docker run -p` や `docker logs` は、自作イメージの動作確認でそのまま使います。また、[データベースとPrisma](/database//)の章では、今回のnginxと同じ要領でPostgreSQL 16の公式イメージを起動します。
+このページで学んだ `docker run -p` や `docker logs` は、自作イメージの動作確認でそのまま使います。また、[データベースとPrisma](/database/)の章では、今回のnginxと同じ要領でPostgreSQL 16の公式イメージを起動します。
