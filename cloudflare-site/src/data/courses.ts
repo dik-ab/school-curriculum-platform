@@ -59,13 +59,12 @@ export const phases: Phase[] = [
     id: 'database',
     number: '04',
     title: 'データベースとローカル開発',
-    summary: 'API実装の前に、RDB、SQL、PostgreSQL、Docker Composeの土台を押さえる。',
+    summary: 'DBの考え方、Docker、ComposeでのDB起動を分けて押さえる。',
     grid: 'wide',
     cards: [
-      { label: 'RDB / SQL', title: 'データベースの考え方', description: 'テーブル、行、列、主キー、外部キー、リレーションの基本。', href: '/database/what_is_database/', accent: 'ink' },
-      { label: 'PostgreSQL', title: 'PostgreSQLを触る', description: 'DockerでPostgreSQLを起動し、psqlでSQLとJOINを練習する。', href: '/database/postgresql_setup/', accent: 'ink' },
-      { label: 'Docker', title: 'Docker基礎', description: 'コンテナ、イメージ、ポート、ボリューム、開発環境の再現。', href: '/docker/', accent: 'ink' },
-      { label: 'Compose', title: 'ローカルDB環境', description: 'docker-composeでPostgreSQLを立て、API開発で使うDBを準備する。', href: '/docker/dev_environment/', accent: 'ink' }
+      { label: 'Database', title: 'データベース基礎', description: 'RDB、SQL、テーブル、主キー、外部キー、リレーションの考え方。', href: '/database/what_is_database/', accent: 'ink' },
+      { label: 'Docker', title: 'Docker基礎', description: 'コンテナ、イメージ、ポート、ボリューム、Dockerfileの基本。', href: '/docker/', accent: 'ink' },
+      { label: 'Compose + DB', title: 'Docker Compose + DB', description: 'PostgreSQL / MySQLをComposeで起動し、ローカルアプリから接続する。', href: '/docker/database_compose/', accent: 'ink' }
     ]
   },
   {
