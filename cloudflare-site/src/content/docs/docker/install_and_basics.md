@@ -1,6 +1,8 @@
 ---
 title: Dockerのインストールと基本操作
 parent: Docker基礎
+section_key: docker
+section_title: Docker基礎
 nav_order: 2
 ---
 
@@ -405,4 +407,4 @@ docker rmi hello-world
 
 ここまでは「他人が作ったイメージ」を使ってきました。次のページ[Dockerfileを書く](/docker/dockerfile/)では、いよいよ自分のアプリ——[バックエンド基礎](/backend/)で作ったNestJSのメモAPI——を自分のイメージにします。
 
-このページで学んだ `docker run -p` や `docker logs` は、自作イメージの動作確認でそのまま使います。また、[データベースとPrisma](/database/)の章では、今回のnginxと同じ要領でPostgreSQL 16の公式イメージを起動します。
+このページで学んだ `docker run -p` や `docker logs` は、自作イメージの動作確認でそのまま使います。また、[Docker Compose + DB](/docker/database_compose/)では、今回のnginxと同じ要領でPostgreSQL 16の公式イメージを起動します。
