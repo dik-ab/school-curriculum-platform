@@ -9,7 +9,7 @@ permalink: /cicd/
 
 このセクションでは **CI/CD（シーアイ・シーディー）** を学びます。CIは Continuous Integration（継続的インテグレーション）、CDは Continuous Delivery / Deployment（継続的デリバリー／デプロイ）の略で、ひとことで言えば「**コードをpushしたら、チェックとデプロイを機械が自動でやってくれる仕組み**」です。
 
-ここまでのセクションで、皆さんはGitでコードを管理し（[Git/GitHub基礎](/git//)）、ESLintやPrettierでコードの品質を保ち（[コード品質と開発ツール](/tooling//)）、Jestでテストを書けるようになりました（[バックエンドテスト](/testing//)）。しかし、これらのチェックを「自分が手で実行するのを忘れない」ことに頼っていては、いつか必ず抜け漏れが起きます。CI/CDは、この「人間の注意力に頼る部分」をGitHubへのpushをきっかけに自動化する仕組みです。
+ここまでのセクションで、皆さんはGitでコードを管理し（[Git/GitHub基礎](/git/)）、ESLintやPrettierでコードの品質を保ち（[コード品質と開発ツール](/tooling/)）、Jestでテストを書けるようになりました（[バックエンドテスト](/testing/)）。しかし、これらのチェックを「自分が手で実行するのを忘れない」ことに頼っていては、いつか必ず抜け漏れが起きます。CI/CDは、この「人間の注意力に頼る部分」をGitHubへのpushをきっかけに自動化する仕組みです。
 
 このセクションでは、GitHubに組み込まれたCI/CDサービスである **GitHub Actions（ギットハブ・アクションズ）** を使って、実際に自動チェックの仕組みを構築します。
 
@@ -30,7 +30,7 @@ permalink: /cicd/
 - pnpm scriptsの実行（`pnpm run lint` や `pnpm test`） — [エディタ連携とpnpm scripts](/tooling/editor_and_scripts/)
 - Jestによるテストの基本 — [単体テスト](/testing/unit_test/)
 
-特に「pushすると何が起きるか」「Pull Requestとは何か」が曖昧な場合は、先に[Git/GitHub基礎](/git//)を復習してください。CI/CDはGitHubの操作の延長線上にある仕組みです。
+特に「pushすると何が起きるか」「Pull Requestとは何か」が曖昧な場合は、先に[Git/GitHub基礎](/git/)を復習してください。CI/CDはGitHubの操作の延長線上にある仕組みです。
 
 ## 学習の流れ
 
@@ -46,6 +46,6 @@ permalink: /cicd/
 - 自分のリポジトリに lint + test + build のCIを組み込み、Pull Request上でチェック結果を確認できる
 - 「ビルド」が何を生成し、それがどこへ配置されるのかを説明できる
 
-ここで作るCIの仕組みは、[AWSデプロイ](/aws//)のセクションで「GitHub ActionsからAWSへ自動デプロイする」CDへと発展し、[SNS開発（最終プロジェクト）](/sns//)では開発フローの土台として常に動き続けることになります。
+ここで作るCIの仕組みは、[AWSデプロイ](/aws/)のセクションで「GitHub ActionsからAWSへ自動デプロイする」CDへと発展し、[SNS開発（最終プロジェクト）](/sns/)では開発フローの土台として常に動き続けることになります。
 
 それでは、[CI/CDとは何か](/cicd/what_is_cicd/)から始めましょう。
