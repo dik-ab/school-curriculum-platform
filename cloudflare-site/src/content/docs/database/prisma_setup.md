@@ -1,6 +1,8 @@
 ---
 title: Prismaの導入
-parent: データベースとPrisma
+parent: NestJS + Prisma
+section_key: nestjs-prisma
+section_title: NestJS + Prisma
 nav_order: 3
 ---
 
