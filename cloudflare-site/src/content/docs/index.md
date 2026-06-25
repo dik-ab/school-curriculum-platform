@@ -33,20 +33,20 @@ JavaScriptに型を追加したTypeScriptを学びます。入門編最後の大
 
 | 章 | 内容 |
 |---|---|
-| [Git/GitHub基礎](/git//) | バージョン管理、ブランチ、Pull Request |
-| [React基礎](/react//) | コンポーネント、状態管理、API通信 |
-| [バックエンド基礎（NestJS）](/backend//) | HTTP/REST、Controller/Service/DI、バリデーション |
-| [Docker基礎](/docker//) | コンテナ、Dockerfile、docker-compose |
-| [データベースとPrisma](/database//) | SQL、PostgreSQL、スキーマ設計、マイグレーション |
-| [実践: フルスタックTodoアプリ](/fullstack-todo//) | フロント+API+DBを初めて通しで構築 |
-| [コード品質と開発ツール](/tooling//) | Prettier、ESLint、エディタ連携 |
-| [バックエンドテスト](/testing//) | Jestによる単体テスト、E2Eテスト |
-| [CI/CD](/cicd//) | GitHub Actions、自動テスト・自動デプロイ |
-| [AWSデプロイ](/aws//) | S3/CloudFront、ECS、RDS、SES、CDK（IaC） |
-| [リアルタイム通信](/realtime//) | WebSocket、NestJS Gateway |
-| [AI開発入門](/ai//) | LLMの基礎、Claude Code、CLAUDE.md、skills |
-| [AIチャット開発（RAG）](/ai-chat//) | embeddings、pgvector、Claude APIでQ&Aボット構築 |
-| [SNS開発（最終プロジェクト）](/sns//) | 認証・投稿・いいね・フォロー・チャット・デプロイまで全部 |
+| [Git/GitHub基礎](/git/) | バージョン管理、ブランチ、Pull Request |
+| [React基礎](/react/) | コンポーネント、状態管理、API通信 |
+| [バックエンド基礎（NestJS）](/backend/) | HTTP/REST、Controller/Service/DI、バリデーション |
+| [Docker基礎](/docker/) | コンテナ、Dockerfile、docker-compose |
+| [データベースとPrisma](/database/) | SQL、PostgreSQL、スキーマ設計、マイグレーション |
+| [実践: フルスタックTodoアプリ](/fullstack-todo/) | フロント+API+DBを初めて通しで構築 |
+| [コード品質と開発ツール](/tooling/) | Prettier、ESLint、エディタ連携 |
+| [バックエンドテスト](/testing/) | Jestによる単体テスト、E2Eテスト |
+| [CI/CD](/cicd/) | GitHub Actions、自動テスト・自動デプロイ |
+| [AWSデプロイ](/aws/) | S3/CloudFront、ECS、RDS、SES、CDK（IaC） |
+| [リアルタイム通信](/realtime/) | WebSocket、NestJS Gateway |
+| [AI開発入門](/ai/) | LLMの基礎、Claude Code、CLAUDE.md、skills |
+| [AIチャット開発（RAG）](/ai-chat/) | embeddings、pgvector、Claude APIでQ&Aボット構築 |
+| [SNS開発（最終プロジェクト）](/sns/) | 認証・投稿・いいね・フォロー・チャット・デプロイまで全部 |
 
 ## 練習問題と回答コードについて
 
