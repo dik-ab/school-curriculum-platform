@@ -161,7 +161,7 @@ export class SnsInfraStack extends cdk.Stack {
 - `import * as cdk from 'aws-cdk-lib';` … CDK本体（v2）を読み込みます。スタックの基底クラスや共通の型がここに入っています
 - `import { Construct } from 'constructs';` … コンストラクトの基底となる型です。コンストラクタの引数の型に使います
 - `import * as s3 from 'aws-cdk-lib/aws-s3';` … S3関連の部品だけを読み込みます。`aws-cdk-lib/aws-ecs` のように、サービスごとのサブパスから読み込むのがCDK v2の流儀です
-- `export class SnsInfraStack extends cdk.Stack` … スタックは `cdk.Stack` を**継承したクラス**として定義します。クラス構文は[TypeScript基礎](/typescript//)で学んだものと同じです
+- `export class SnsInfraStack extends cdk.Stack` … スタックは `cdk.Stack` を**継承したクラス**として定義します。クラス構文は[TypeScript基礎](/typescript/)で学んだものと同じです
 - `constructor(scope: Construct, id: string, props?: cdk.StackProps)` … CDKのコンストラクトに共通のコンストラクタ形式です。`scope` は親（このスタックを入れるアプリ）、`id` はスタックの識別名、`props` は設定値です
 - `super(scope, id, props);` … 親クラス `cdk.Stack` の初期化。お決まりの1行です
 - `new s3.Bucket(this, 'PracticeBucket', {...})` … **ここが本体**。S3バケットのコンストラクト（L2）を生成します。第1引数 `this` は「このスタックの中に置く」という意味、第2引数 `'PracticeBucket'` はスタック内での識別ID（実際のバケット名はCDKがこのIDから一意な名前を自動生成します）
