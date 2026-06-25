@@ -17,7 +17,7 @@ nav_order: 3
 
 ## 前提の確認
 
-[環境構築](/environment//)で導入したNode.js 20と、pnpmが使えることを確認します（pnpmの導入は[React基礎のセットアップ](/react/setup/)を参照）。ターミナルで次を実行してください。
+[環境構築](/environment/)で導入したNode.js 20と、pnpmが使えることを確認します（pnpmの導入は[React基礎のセットアップ](/react/setup/)を参照）。ターミナルで次を実行してください。
 
 ```bash
 node -v
