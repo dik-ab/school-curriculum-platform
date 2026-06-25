@@ -380,7 +380,7 @@ docker rmi hello-world
 <details markdown="1">
 <summary>解答を見る</summary>
 
-`docker logs コンテナ名` を使います。リアルタイムで監視し続けたい場合は `docker logs -f コンテナ名` です。アプリが期待どおり動かないときに最初に確認すべき場所であり、この後NestJSアプリをコンテナ化したときのデバッグでも頻繁に使います。
+`docker logs コンテナ名` を使います。リアルタイムで監視し続けたい場合は `docker logs -f コンテナ名` です。コンテナが期待どおり動かないときに、最初に確認すべき場所です。
 
 </details>
 
@@ -405,6 +405,6 @@ docker rmi hello-world
 
 ## 次のステップ
 
-ここまでは「他人が作ったイメージ」を使ってきました。次のページ[Dockerfileを書く](/docker/dockerfile/)では、いよいよ自分のアプリ——[バックエンド基礎](/backend/)で作ったNestJSのメモAPI——を自分のイメージにします。
+ここまでは「他人が作ったイメージ」を使ってきました。次のページ[Dockerfileを書く](/docker/dockerfile/)では、自分で用意したHTMLを入れた小さなイメージを作ります。
 
 このページで学んだ `docker run -p` や `docker logs` は、自作イメージの動作確認でそのまま使います。また、[Docker Compose + DB](/docker/database_compose/)では、今回のnginxと同じ要領でPostgreSQL 16の公式イメージを起動します。
