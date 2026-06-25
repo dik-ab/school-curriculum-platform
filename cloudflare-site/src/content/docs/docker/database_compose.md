@@ -1,7 +1,9 @@
 ---
 title: Docker Compose + PostgreSQL / MySQL
-parent: Docker基礎
-nav_order: 5
+parent: Docker Compose + DB
+section_key: docker-compose-db
+section_title: Docker Compose + DB
+nav_order: 1
 ---
 
 # Docker Compose + PostgreSQL / MySQL
@@ -16,6 +18,8 @@ nav_order: 5
 - Docker ComposeでMySQLを起動できる
 - `ports`、`environment`、`volumes` の役割を説明できる
 - DBコンテナのデータをボリュームで永続化できる
+- DBコンテナへ入り、コンテナ内からDBへ接続できる
+- `psql` の基本メタコマンドと `\x auto` を使って結果を見やすくできる
 - ローカルアプリから `localhost` 経由でDBへ接続する形を理解できる
 - PostgreSQLとMySQLのどちらを使うか、学習上の判断ができる
 
@@ -34,10 +38,12 @@ Docker Composeを使うと、DBの起動条件を `compose.yaml` に書いてお
 flowchart LR
     A["compose.yaml"] --> B["PostgreSQL<br>container"]
     A --> C["MySQL<br>container"]
-    B --> D["volume<br>db-data"]
+    B --> D["volume<br>postgres-data"]
     C --> E["volume<br>mysql-data"]
-    F["local API<br>NestJS / Spring / Rails"] -->|"localhost:5432 / 3306"| B
+    F["local API<br>NestJS / Spring / Rails"] -->|"localhost:5432"| B
     F -->|"localhost:3306"| C
+    G["docker compose exec"] -->|"container内へ入る"| B
+    G -->|"container内へ入る"| C
 ```
 
 ## まず覚えるComposeの基本
@@ -55,7 +61,7 @@ DBコンテナは、ただ起動できればよいわけではありません。
 
 ## PostgreSQLを起動する
 
-本カリキュラムでは、基本のDBとしてPostgreSQLを使います。Prisma、RAG、pgvectorとの相性がよく、実務でもよく使われます。
+本カリキュラムでは、基本のDBとしてPostgreSQLを使います。標準SQLへの対応が強く、RAGで使うpgvectorのような拡張機能もあり、実務でもよく使われます。
 
 任意の作業フォルダに `compose.yaml` を作成します。
 
@@ -101,7 +107,7 @@ docker compose up -d
 docker compose ps
 ```
 
-PostgreSQLに入ります。
+PostgreSQLに入ります。これは「PCからコンテナの中で `psql` を実行する」コマンドです。
 
 ```bash
 docker compose exec postgres psql -U postgres -d app_db
@@ -117,6 +123,120 @@ app_db=#
 
 ```text
 \q
+```
+
+## DBコンテナにアクセスする
+
+DBを使うときは、次の2種類の「入る」を区別してください。
+
+| 操作 | 何をしているか | よく使う場面 |
+| --- | --- | --- |
+| `docker compose exec postgres psql ...` | コンテナ内で直接 `psql` を起動する | DBにSQLを打ちたい |
+| `docker compose exec postgres bash` | コンテナ内のシェルに入る | ファイル、環境変数、プロセスを確認したい |
+
+まずコンテナのシェルに入ります。
+
+```bash
+docker compose exec postgres bash
+```
+
+コンテナの中に入ると、プロンプトが変わります。そこで環境変数を確認できます。
+
+```bash
+echo $POSTGRES_DB
+echo $POSTGRES_USER
+```
+
+コンテナ内からPostgreSQLへ接続します。
+
+```bash
+psql -U postgres -d app_db
+```
+
+つまり、次の2つは入口が違うだけで、最終的には同じDBに入っています。
+
+```bash
+# PCから一発でpsqlを起動する
+docker compose exec postgres psql -U postgres -d app_db
+
+# いったんコンテナのbashに入り、その中でpsqlを起動する
+docker compose exec postgres bash
+psql -U postgres -d app_db
+```
+
+コンテナIDや名前を直接使う方法もあります。
+
+```bash
+docker ps
+docker exec -it <container_name_or_id> bash
+```
+
+普段はサービス名で指定できる `docker compose exec postgres ...` の方が読みやすく、プロジェクト内では使いやすいです。
+
+## psqlで最低限覚える操作
+
+`psql` はPostgreSQLを操作するCLIです。SQL以外に、バックスラッシュから始まる**メタコマンド**が使えます。
+
+| コマンド | 意味 |
+| --- | --- |
+| `\conninfo` | 今どのDBに、どのユーザーで接続しているか表示する |
+| `\l` | データベース一覧を表示する |
+| `\dt` | 現在のDBにあるテーブル一覧を表示する |
+| `\d users` | `users` テーブルの列、型、制約を表示する |
+| `\x` | 縦表示をON/OFFする |
+| `\x auto` | 横に長い結果だけ自動で縦表示にする |
+| `\q` | psqlを終了する |
+
+特に便利なのが `\x auto` です。横に長いテーブルを `SELECT *` すると、ターミナル上で折り返されて読みにくくなります。`\x auto` を入れておくと、結果が横に収まらないときだけ自動で縦表示になります。
+
+```sql
+\conninfo
+\x auto
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  bio TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users (name, email, bio)
+VALUES
+  ('太郎', 'taro@example.com', 'PostgreSQLをDocker Composeで練習しています'),
+  ('花子', 'hanako@example.com', '長い文字列が入ると横表示では読みにくくなります');
+
+SELECT * FROM users;
+```
+
+通常の横表示で読みにくい場合でも、縦表示なら1行の中身を追いやすくなります。
+
+```text
+-[ RECORD 1 ]-------------------------------
+id         | 1
+name       | 太郎
+email      | taro@example.com
+bio        | PostgreSQLをDocker Composeで練習しています
+created_at | 2026-06-25 10:00:00
+```
+
+テーブル構造を確認します。
+
+```sql
+\dt
+\d users
+```
+
+練習が終わったらpsqlを抜けます。
+
+```text
+\q
+```
+
+コンテナのbashにも入っていた場合は、さらに抜けます。
+
+```bash
+exit
 ```
 
 ## MySQLを起動する
@@ -178,6 +298,16 @@ mysql>
 ```sql
 exit;
 ```
+
+MySQLでも、いま接続しているDBやテーブルを確認できます。
+
+```sql
+SELECT DATABASE();
+SHOW DATABASES;
+SHOW TABLES;
+```
+
+PostgreSQLの `\dt` や `\d users` はpsql専用のメタコマンドです。MySQLでは `SHOW TABLES;`、`DESCRIBE users;` のようにSQL文として確認します。
 
 ## PostgreSQLとMySQLを同時に立てる
 
@@ -256,6 +386,56 @@ mysql://app_user:app_password@localhost:3306/app_db
 
 「どこから見た接続先なのか」を必ず意識してください。
 
+```mermaid
+flowchart LR
+    A["APIをPCで実行<br>pnpm run dev"] -->|"localhost:5432"| B["PostgreSQL container"]
+    C["APIもComposeで実行<br>api service"] -->|"postgres:5432"| B
+    D["psqlをPCから実行"] -->|"localhost:5432"| B
+    E["psqlをコンテナ内で実行"] -->|"localhost:5432<br>containerの中から見たlocalhost"| B
+```
+
+`localhost` は常に「そのコマンドを実行している場所自身」を指します。PCでAPIを動かしているなら `localhost` はPCです。APIコンテナの中で `localhost` と書くと、そのAPIコンテナ自身を指すため、DBコンテナには届きません。同じCompose内の別サービスへ接続するときは、`postgres` や `mysql` のようなサービス名を使います。
+
+## ログと状態を確認する
+
+DBが起動しない、接続できない、パスワードが違う、というときはログを見ます。
+
+```bash
+docker compose logs postgres
+docker compose logs -f postgres
+```
+
+MySQLの場合はサービス名を変えます。
+
+```bash
+docker compose logs mysql
+```
+
+コンテナの状態、公開ポート、名前を確認します。
+
+```bash
+docker compose ps
+docker ps
+```
+
+ボリュームが作られているか確認します。
+
+```bash
+docker volume ls
+```
+
+今のプロジェクトに紐づくリソースを消すときは次の2段階です。
+
+```bash
+# コンテナとネットワークだけ消す。DBデータは残る
+docker compose down
+
+# ボリュームも消す。DBデータも消える
+docker compose down -v
+```
+
+DBの不具合調査では、まず `logs`、`ps`、接続文字列、ボリュームの有無を確認します。いきなり `down -v` するとデータが消えるので、原因が分からないまま初期化する癖はつけないでください。
+
 ## データを完全に消したいとき
 
 普通に停止するだけなら、次のコマンドです。
@@ -280,6 +460,9 @@ docker compose down -v
 - PostgreSQLは標準ポート `5432`、MySQLは標準ポート `3306`
 - `environment` で初期DB名、ユーザー名、パスワードを指定する
 - `volumes` を使わないと、コンテナを消したときにDBデータも消える
+- `docker compose exec postgres bash` でコンテナの中に入れる
+- `docker compose exec postgres psql -U postgres -d app_db` でPCから一発でpsqlに入れる
+- PostgreSQLでは `\conninfo`、`\dt`、`\d users`、`\x auto` が特に便利
 - APIをPCで動かす場合は `localhost` でDBに接続する
 - APIもCompose内で動かす場合は、`postgres` や `mysql` のようなサービス名で接続する
 - `docker compose down -v` はDBデータを完全に消す操作なので注意する
