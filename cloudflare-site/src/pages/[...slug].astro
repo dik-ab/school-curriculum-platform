@@ -24,7 +24,7 @@ const next = currentIndex >= 0 && currentIndex < sectionEntries.length - 1 ? sec
 <BaseLayout title={`${item.title} | School Curriculum`}>
   <main class="docs-layout">
     <aside class="docs-sidebar">
-      <h2>{item.section}</h2>
+      <h2>{item.sectionTitle}</h2>
       <nav aria-label="Course navigation">
         {sectionEntries.map((entry) => (
           <a href={`/${entry.slug}/`} aria-current={entry.slug === item.slug ? 'page' : undefined}>{entry.title}</a>
@@ -34,7 +34,7 @@ const next = currentIndex >= 0 && currentIndex < sectionEntries.length - 1 ? sec
 
     <article class="doc-shell">
       <div class="breadcrumb">
-        <a href="/">ホーム</a> / {item.section} / {item.title}
+        <a href="/">ホーム</a> / {item.sectionTitle} / {item.title}
       </div>
       <div class="prose">
         <Content />
