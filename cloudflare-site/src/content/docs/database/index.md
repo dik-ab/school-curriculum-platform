@@ -23,9 +23,9 @@ permalink: /database/
 
 ```mermaid
 flowchart LR
-    A["データベースの<br>概念とSQL"] --> B["PostgreSQLで<br>SQLを練習"]
-    B --> C["テーブル設計<br>主キー・外部キー"]
-    C --> D["JOINと集計<br>検索・並び替え"]
+    A["データベースとは<br>保存の考え方"] --> B["SQL基本<br>SELECT / WHERE"]
+    B --> C["SQL応用<br>JOIN / 集計"]
+    C --> D["PostgreSQLで<br>実際に実行"]
     D --> E["SNS開発へ<br>設計力を接続"]
     style A fill:#e3f2fd,stroke:#1565c0
     style C fill:#e3f2fd,stroke:#1565c0
@@ -34,15 +34,18 @@ flowchart LR
 
 | ページ | 内容 |
 |---|---|
-| [データベースとは](/database/what_is_database/) | RDBの概念、テーブル・行・列、主キーと外部キー、SQLの基礎 |
-| [PostgreSQLを起動して触ってみる](/database/postgresql_setup/) | 起動済みのPostgreSQLにpsqlで入り、生のSQLを実行する |
+| [データベースとは](/database/what_is_database/) | DBが必要な理由、RDB、テーブル・行・列、主キーと外部キー |
+| [SQL基本構文](/database/sql_basic/) | `SELECT`、列指定、`WHERE`、`INSERT`、`UPDATE`、`DELETE` を表と結果で理解する |
+| [SQL応用構文](/database/sql_applied/) | `ORDER BY`、`LIMIT`、`LIKE`、`JOIN`、`GROUP BY`、集計を具体例で理解する |
+| [PostgreSQLでSQLを実行する](/database/postgresql_setup/) | 起動済みのPostgreSQLにpsqlで入り、学んだSQLを実際に実行する |
 
 ## このセクションの前提知識
 
 以下のセクションを修了していることを前提とします。
 
 - [バックエンド基礎（NestJS）](/backend/) — APIがなぜDBを必要とするのかを理解しやすくなります
-- [Docker基礎](/docker/) — DBコンテナの起動は[Docker Compose + PostgreSQL / MySQL](/docker/database_compose/)で学びます
+- [Docker基礎](/docker/) — コンテナの考え方を理解します
+- [Docker Compose + PostgreSQL / MySQL](/docker/database_compose/) — PostgreSQLを起動できる状態にします
 
 ## 学んだことはどこで使うのか
 
