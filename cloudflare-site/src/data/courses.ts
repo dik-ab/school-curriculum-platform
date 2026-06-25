@@ -59,12 +59,12 @@ export const phases: Phase[] = [
     id: 'database',
     number: '04',
     title: 'データベースとローカル開発',
-    summary: 'DBの考え方、Docker、ComposeでのDB起動を分けて押さえる。',
+    summary: 'Dockerで環境をそろえ、ComposeでDBを起動してからSQLを学ぶ。',
     grid: 'wide',
     cards: [
-      { label: 'Database', title: 'データベース基礎', description: 'RDB、SQL、テーブル、主キー、外部キー、リレーションの考え方。', href: '/database/what_is_database/', accent: 'ink' },
       { label: 'Docker', title: 'Docker基礎', description: 'コンテナ、イメージ、ポート、ボリューム、Dockerfileの基本。', href: '/docker/', accent: 'ink' },
-      { label: 'Compose + DB', title: 'Docker Compose + DB', description: 'PostgreSQL / MySQLをComposeで起動し、ローカルアプリから接続する。', href: '/docker/database_compose/', accent: 'ink' }
+      { label: 'Compose + DB', title: 'Docker Compose + DB', description: 'PostgreSQL / MySQLをComposeで起動し、ローカルアプリから接続する。', href: '/docker/database_compose/', accent: 'ink' },
+      { label: 'Database', title: 'データベース基礎', description: 'RDB、SQL、テーブル、主キー、外部キー、リレーションの考え方。', href: '/database/', accent: 'ink' }
     ]
   },
   {
