@@ -35,7 +35,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: memo
+      POSTGRES_DB: app_db
     ports:
       - "5432:5432"
     volumes:
@@ -49,8 +49,8 @@ volumes:
 
 - `image: postgres:16` — PostgreSQL 16の公式イメージを使います。バージョンを固定するのは、[Dockerfileのページ](/docker/dockerfile/)で学んだとおり「環境を再現可能にする」ためです
 - `POSTGRES_USER` / `POSTGRES_PASSWORD` — データベースに接続するためのユーザー名とパスワードです。開発環境なので簡単な値にしていますが、本番環境では推測されない値を使います
-- `POSTGRES_DB: memo` — 起動時に `memo` という名前のデータベースを自動作成します。この章の目的は[バックエンド基礎で作ったメモAPI](/backend/crud_practice/)のデータを永続化することなので、DB名も `memo` です
-- `ports: "5432:5432"` — PostgreSQLの標準ポート5432を、手元のPC（ホスト）にも公開します。ローカルのAPIやpsqlはここに接続します
+- `POSTGRES_DB: app_db` — 起動時に `app_db` という名前のデータベースを自動作成します。学習用の汎用的なDB名です
+- `ports: "5432:5432"` — PostgreSQLの標準ポート5432を、手元のPC（ホスト）にも公開します。psqlやDBクライアントはここに接続します
 - `volumes: db-data:...` — [ボリューム](/docker/docker_compose/)を使い、コンテナを削除してもデータが消えないようにしています。`/var/lib/postgresql/data` はPostgreSQLがデータファイルを置く場所です
 
 ここでは練習用に、上記の内容だけを書いた `compose.yaml` を新しいディレクトリに用意しても構いませんし、Docker章で作ったプロジェクトをそのまま使っても構いません。
@@ -93,14 +93,14 @@ myapp-db-1   postgres:16   "docker-entrypoint.s…"   db        10 seconds ago  
 コンテナの中でpsqlを起動しましょう。[コンテナ内でコマンドを実行する](/docker/install_and_basics/) `docker compose exec` を使います。
 
 ```bash
-docker compose exec db psql -U postgres -d memo
+docker compose exec db psql -U postgres -d app_db
 ```
 
 **コード解説**
 
 - `docker compose exec db` — `db` サービスのコンテナ内でコマンドを実行します
 - `psql -U postgres` — ユーザー `postgres`（compose.yamlの `POSTGRES_USER`）として接続します
-- `-d memo` — 接続先のデータベース名（compose.yamlの `POSTGRES_DB`）です
+- `-d app_db` — 接続先のデータベース名（compose.yamlの `POSTGRES_DB`）です
 
 実行結果の例:
 
@@ -108,10 +108,10 @@ docker compose exec db psql -U postgres -d memo
 psql (16.4 (Debian 16.4-1.pgdg120+1))
 Type "help" for help.
 
-memo=#
+app_db=#
 ```
 
-`memo=#` というプロンプトが出れば接続成功です。ここからはSQLとpsqlのコマンドを打ち込めます。
+`app_db=#` というプロンプトが出れば接続成功です。ここからはSQLとpsqlのコマンドを打ち込めます。
 
 ### psqlの基本コマンド
 
@@ -154,7 +154,7 @@ CREATE TABLE
 テーブルができたか確認しましょう。
 
 ```
-memo=# \dt
+app_db=# \dt
 ```
 
 実行結果の例:
@@ -170,7 +170,7 @@ memo=# \dt
 `\d users` でテーブルの構造も確認できます。
 
 ```
-memo=# \d users
+app_db=# \d users
 ```
 
 実行結果の例:
@@ -228,7 +228,7 @@ ERROR:  duplicate key value violates unique constraint "users_email_key"
 DETAIL:  Key (email)=(taro@example.com) already exists.
 ```
 
-このように、データベースは**制約によってデータの整合性を守ってくれます**。アプリケーションのバリデーション（[DTOとバリデーション](/backend/dto_and_validation/)）とデータベースの制約は、二重の防御として両方使うのが基本です。
+このように、データベースは**制約によってデータの整合性を守ってくれます**。入力画面やサーバー側のチェックだけに頼らず、データベース側にも制約を置くことで、壊れたデータが入りにくくなります。
 
 ## SELECT — データを取得する
 
@@ -270,7 +270,7 @@ SELECT id, name FROM users;
 (5 rows)
 ```
 
-実務では `SELECT *` よりも必要な列だけを指定する方が、通信量が減り高速になります。APIからDBを読むときも、この考え方はそのまま使います。
+実務では `SELECT *` よりも必要な列だけを指定する方が、通信量が減り高速になります。一覧画面では軽い情報だけを取り、詳細画面で必要な列を追加する、といった考え方につながります。
 
 ### WHERE — 条件で絞り込む
 
@@ -500,7 +500,7 @@ JOINにはいくつか種類がありますが、まずはこの基本形（INNE
 psqlを終了するには `\q` を入力します。
 
 ```
-memo=# \q
+app_db=# \q
 ```
 
 コンテナを停止する場合は次のとおりです。
@@ -515,7 +515,7 @@ docker compose stop
 
 ## 理解度チェック
 
-**Q1. `docker compose exec db psql -U postgres -d memo` というコマンドの各部分は何をしていますか。**
+**Q1. `docker compose exec db psql -U postgres -d app_db` というコマンドの各部分は何をしていますか。**
 
 <details markdown="1">
 <summary>解答を見る</summary>
@@ -523,9 +523,9 @@ docker compose stop
 - `docker compose exec db` — Composeで起動中の `db` サービスのコンテナ内でコマンドを実行する
 - `psql` — PostgreSQLのコマンドラインクライアントを起動する
 - `-U postgres` — ユーザー `postgres` として接続する
-- `-d memo` — データベース `memo` に接続する
+- `-d app_db` — データベース `app_db` に接続する
 
-つまり「dbコンテナの中でpsqlを起動し、postgresユーザーとしてmemoデータベースに接続する」コマンドです。
+つまり「dbコンテナの中でpsqlを起動し、postgresユーザーとしてapp_dbデータベースに接続する」コマンドです。
 
 </details>
 
