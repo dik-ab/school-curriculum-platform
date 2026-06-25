@@ -55,7 +55,7 @@ UPDATE src/memos/memos.module.ts (170 bytes)
 
 - `CREATE src/memos/memos.module.ts` — メモ機能の箱（MemosModule）が`src/memos/`ディレクトリに作られました。Moduleの詳しい中身は次の[ServiceとDI](/backend/service_and_di/)で扱うので、ここでは「機能の箱が用意された」と理解すれば十分です。
 - `UPDATE src/app.module.ts` — MemosModuleがAppModuleの`imports`に自動登録されました。
-- `CREATE src/memos/memos.controller.ts` — Controller本体です。`.spec.ts`はテストファイルで、[バックエンドテスト](/testing//)で扱います。
+- `CREATE src/memos/memos.controller.ts` — Controller本体です。`.spec.ts`はテストファイルで、[バックエンドテスト](/testing/)で扱います。
 - `UPDATE src/memos/memos.module.ts` — MemosControllerがMemosModuleの`controllers`に自動登録されました。
 
 生成されたControllerは、まだ中身が空です。
