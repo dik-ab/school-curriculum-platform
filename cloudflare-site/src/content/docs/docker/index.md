@@ -1,5 +1,7 @@
 ---
 title: Docker基礎
+section_key: docker
+section_title: Docker基礎
 nav_order: 9
 has_children: true
 permalink: /docker/
@@ -15,7 +17,7 @@ permalink: /docker/
 
 現代のWeb開発において、Dockerは避けて通れない基盤技術になっています。本カリキュラムでも、この後のセクションで繰り返しDockerを使います。
 
-- **データベースの章**（[データベースとPrisma](/database/)）では、Dockerを使ってPostgreSQLを起動します。PCに直接インストールするより、はるかに簡単で安全です。
+- **Docker Compose + DB**の教材では、Dockerを使ってPostgreSQLやMySQLを起動します。PCに直接インストールするより、はるかに簡単で安全です。
 - **AWSデプロイの章**（[AWSデプロイ](/aws/)）では、NestJSアプリをDockerイメージにしてECS（コンテナ実行サービス）にデプロイします。
 - **最終プロジェクトのSNS開発**でも、PostgreSQLをDockerで起動して開発を進めます。
 
@@ -29,8 +31,8 @@ permalink: /docker/
 | [Dockerのインストールと基本操作](/docker/install_and_basics/) | Docker Desktopの導入、イメージとコンテナ、基本コマンド |
 | [Dockerfileを書く](/docker/dockerfile/) | NestJSのメモAPIをコンテナ化する。レイヤー構造とマルチステージビルド |
 | [Docker Composeで複数コンテナを動かす](/docker/docker_compose/) | compose.yamlの書き方、ボリューム、コンテナ間ネットワーク |
-| [Docker Compose + PostgreSQL / MySQL](/docker/database_compose/) | PostgreSQLとMySQLをComposeで起動し、ローカルアプリから接続する |
-| [開発環境をComposeで組む](/docker/dev_environment/) | PostgreSQL 16をComposeで起動し、ローカルのAPIとつなぐ開発環境の標準形を作る |
+
+DBをComposeで立てる実践は、この章とは別の[Docker Compose + DB](/docker/database_compose/)で扱います。Docker基礎ではまず、イメージ、コンテナ、Dockerfile、ネットワーク、ボリュームの意味を理解することに集中します。
 
 ## 学習の流れ
 
@@ -41,14 +43,50 @@ graph LR
     A["コンテナとは何か<br>（概念を理解する）"] --> B["インストールと基本操作<br>（手を動かして触る）"]
     B --> C["Dockerfile<br>（自分のアプリを箱に詰める）"]
     C --> D["Docker Compose<br>（複数の箱をまとめて動かす）"]
-    D --> E["PostgreSQL / MySQL<br>（DBをComposeで起動）"]
-    E --> F["開発環境構築<br>（APIとDBをつなぐ標準形）"]
     style A fill:#e3f2fd,stroke:#1565c0
-    style E fill:#e8f5e9,stroke:#2e7d32
-    style F fill:#e8f5e9,stroke:#2e7d32
+    style C fill:#fef3c7,stroke:#b45309
+    style D fill:#e8f5e9,stroke:#2e7d32
 ```
 
-最初の2ページで「コンテナとは何か」「どう操作するか」を理解し、後半の3ページで前章までに作ったメモAPIを実際にコンテナ化していきます。概念だけ・コマンドだけを覚えるのではなく、「自分のアプリをDockerで動かせる」状態をゴールにします。
+最初の2ページで「コンテナとは何か」「どう操作するか」を理解し、後半で前章までに作ったメモAPIを実際にコンテナ化していきます。概念だけ・コマンドだけを覚えるのではなく、「自分のアプリをDockerで動かせる」状態をゴールにします。
+
+## Dockerの全体像
+
+Dockerで混乱しやすいのは、イメージ、コンテナ、ポート、ボリューム、ネットワークが同時に出てくる点です。まずは次の関係で整理してください。
+
+```mermaid
+flowchart LR
+    A["Dockerfile<br>作り方を書く"] --> B["Image<br>実行用のひな形"]
+    B --> C["Container<br>実際に動く箱"]
+    C --> D["Port<br>PCやブラウザから入る入口"]
+    C --> E["Volume<br>消したくないデータ置き場"]
+    C --> F["Network<br>コンテナ同士の通り道"]
+    style A fill:#e0f2fe,stroke:#0369a1
+    style B fill:#fef3c7,stroke:#b45309
+    style C fill:#dcfce7,stroke:#15803d
+    style D fill:#fce7f3,stroke:#be185d
+    style E fill:#ede9fe,stroke:#7c3aed
+    style F fill:#f1f5f9,stroke:#475569
+```
+
+実務で使うDockerは、ほとんどこの組み合わせです。
+
+```mermaid
+flowchart TB
+    subgraph pc["自分のPC"]
+        CLI["docker / docker compose コマンド"]
+        Browser["ブラウザ / APIクライアント"]
+    end
+    subgraph docker["Docker上で動くもの"]
+        App["APIコンテナ"]
+        Nginx["nginxコンテナ"]
+    end
+    CLI -->|"起動・停止・ログ確認"| docker
+    Browser -->|"localhost:3000 など"| App
+    Browser -->|"localhost:8080 など"| Nginx
+```
+
+この章では「箱を作る」「箱を起動する」「箱の中のログや状態を見る」ことを中心に学びます。DBの永続化や接続は、独立した実践教材で扱います。
 
 ## 前提条件
 
