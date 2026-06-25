@@ -70,7 +70,7 @@ flowchart LR
 | MySQL（マイエスキューエル） | 世界で最も普及しているオープンソースRDBMS |
 | SQLite（エスキューライト） | ファイル1つで完結する軽量RDBMS。スマホアプリなどに組み込まれる |
 
-本カリキュラムでは**PostgreSQL 16**を使います。機能が豊富で、後の[RAGのセクション](/ai-chat//)で使うpgvectorのような拡張機能も充実しているためです。
+本カリキュラムでは**PostgreSQL 16**を使います。機能が豊富で、後の[RAGのセクション](/ai-chat/)で使うpgvectorのような拡張機能も充実しているためです。
 
 ### テーブル・行・列
 
@@ -347,4 +347,4 @@ UPDATE users SET name = '匿名';
 データベースの概念とSQLの基礎を理解できたら、次は実際にPostgreSQLを動かしてSQLを打ち込んでみましょう。
 
 - 次のページ: [PostgreSQLを起動して触ってみる](/database/postgresql_setup/) — Docker ComposeでPostgreSQL 16を起動し、psqlで今日学んだSQLを実際に実行します
-- このページで学んだ主キー・外部キー・1対多の関係は、[リレーション](/database/relations/)でPrismaのコードとして書き、[SNS開発](/sns//)のER図設計でフル活用します
+- このページで学んだ主キー・外部キー・1対多の関係は、[リレーション](/database/relations/)でPrismaのコードとして書き、[SNS開発](/sns/)のER図設計でフル活用します
