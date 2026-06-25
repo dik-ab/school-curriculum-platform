@@ -1,6 +1,8 @@
 ---
 title: スキーマ定義とマイグレーション
-parent: データベースとPrisma
+parent: NestJS + Prisma
+section_key: nestjs-prisma
+section_title: NestJS + Prisma
 nav_order: 4
 ---
 
