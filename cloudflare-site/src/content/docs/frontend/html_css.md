@@ -19,130 +19,6 @@ nav_order: 1
 - スマホ幅でも崩れにくいレイアウトを考えられる
 - ブラウザの開発者ツールでHTML/CSSの状態を確認できる
 
-## 必ず覚えること
-
-### 1. HTMLは「見た目」ではなく「意味」を書く
-
-HTMLでは、ただ文字を並べるのではなく、その情報が何なのかをタグで表します。
-
-```html
-<header>
-  <h1>Todoアプリ</h1>
-</header>
-
-<main>
-  <section>
-    <h2>今日やること</h2>
-    <ul>
-      <li>HTML/CSSを復習する</li>
-      <li>JavaScriptでクリック処理を書く</li>
-    </ul>
-  </section>
-</main>
-```
-
-- `h1` はページで一番大きな見出し
-- `section` は意味のあるまとまり
-- `ul` と `li` はリスト
-- `div` は意味を持たない汎用の箱
-
-迷ったら、まず「これは見出しなのか」「一覧なのか」「入力フォームなのか」と考えてタグを選びます。
-
-### 2. CSSは「どの要素に」「何を適用するか」を書く
-
-CSSはセレクタで対象を選び、プロパティで見た目を指定します。
-
-```css
-.todo-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 0;
-}
-
-.todo-item {
-  padding: 12px 16px;
-  border: 1px solid #d8ded5;
-  border-radius: 8px;
-}
-```
-
-- `.todo-list` は `class="todo-list"` の要素を選ぶ
-- `display: flex` は子要素の並び方を制御する
-- `gap` は子要素同士の間隔
-- `padding` は内側の余白
-- `border` は枠線
-
-最初は `color` や `font-size` より、`margin`、`padding`、`display`、`gap`、`width` を優先して覚えると画面を組み立てやすくなります。
-
-### 3. 余白は `margin` と `padding` を分けて考える
-
-```css
-.card {
-  margin-bottom: 16px;
-  padding: 20px;
-}
-```
-
-- `margin` は要素の外側の余白
-- `padding` は要素の内側の余白
-
-画面が読みにくいときは、まず余白が足りているかを見ます。Web UIは、文字やカードの装飾よりも、余白の取り方で読みやすさが大きく変わります。
-
-### 4. Flexboxでよく使う形を覚える
-
-横並びにする:
-
-```css
-.toolbar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-```
-
-中央に置く:
-
-```css
-.center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-```
-
-折り返す:
-
-```css
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-```
-
-この3パターンは、Reactや管理画面を作るときにも毎回使います。
-
-### 5. レスポンシブは最初から考える
-
-PCでは横並び、スマホでは縦並びにしたい場合は、メディアクエリを使います。
-
-```css
-.layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 24px;
-}
-
-@media (max-width: 760px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-}
-```
-
-最初から完璧に作る必要はありません。ただ、横幅が狭くなったときに文字がはみ出さないか、ボタンが押しにくくならないかは必ず確認します。
-
 ## HTMLとCSSとは？
 
 ### HTML - Webページの骨格
@@ -204,6 +80,178 @@ CSSは、HTMLで記述した要素の**デザインやレイアウト**を指定
   **[Chrome デベロッパーツールの使い方](https://willcloud.jp/knowhow/dev-tools-01/)**
 
   実際のWebサイトを見ながら「このデザインはどうやって作られているんだろう？」と調べてみると、学びが深まります。
+
+## 最後に必ず覚えること
+
+ここまでの解説と外部教材を読んだら、最後にこの項目を確認してください。暗記ではなく、「見たら意味がわかる」「自分で小さく書ける」状態が目標です。
+
+### 1. HTMLは「見た目」ではなく「意味」を書く
+
+HTMLは、画面をきれいにするためのものではなく、ページの構造や情報の意味をブラウザに伝えるためのものです。
+
+```html
+<header>
+  <h1>Todoアプリ</h1>
+</header>
+
+<main>
+  <section>
+    <h2>今日やること</h2>
+    <ul>
+      <li>HTML/CSSを復習する</li>
+      <li>JavaScriptでクリック処理を書く</li>
+    </ul>
+  </section>
+</main>
+```
+
+特に覚えるタグは、まず次のあたりです。
+
+- `html` - HTML文書全体を表す
+- `head` - 画面には直接表示されない設定を書く
+- `body` - 画面に表示される中身を書く
+- `header` - ページやセクションの上部
+- `main` - ページの主な内容
+- `section` - 意味のあるまとまり
+- `h1` から `h3` - 見出し
+- `p` - 段落
+- `ul` / `ol` / `li` - 箇条書き
+- `a` - リンク
+- `img` - 画像
+- `form` / `input` / `button` - 入力フォーム
+- `div` - どうしても意味のあるタグがないときに使う箱
+
+最初からすべてを完璧に覚える必要はありません。ただし、何でも `div` で囲むのではなく、「これは見出しなのか」「一覧なのか」「フォームなのか」と考える癖は必ず付けてください。
+
+### 2. CSSは「対象」と「指定」を分けて読む
+
+CSSは、どの要素に、どんな見た目を当てるかを書きます。
+
+```css
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+}
+
+.todo-item {
+  padding: 12px 16px;
+  border: 1px solid #d8ded5;
+  border-radius: 8px;
+}
+```
+
+この場合、`.todo-list` や `.todo-item` が「対象」です。`display`、`gap`、`padding`、`border` が「指定」です。
+
+よく使うセレクタは次の3つです。
+
+- `p` - すべての `p` タグを選ぶ
+- `.card` - `class="card"` の要素を選ぶ
+- `#app` - `id="app"` の要素を選ぶ
+
+実務では `class` を使う場面が多いです。`id` はJavaScriptで特定の要素を取るときには便利ですが、CSSでは使いすぎない方が管理しやすいです。
+
+### 3. 余白は `margin` と `padding` を分けて考える
+
+```css
+.card {
+  margin-bottom: 16px;
+  padding: 20px;
+}
+```
+
+- `margin` は要素の外側の余白
+- `padding` は要素の内側の余白
+
+例えばカード同士の間隔を空けたいなら `margin` や親要素の `gap` を使います。カードの中の文字と枠線の間隔を空けたいなら `padding` を使います。
+
+読みやすい画面を作るうえで、余白はかなり重要です。色や装飾より先に、文字が詰まりすぎていないか、ボタン同士が近すぎないかを確認してください。
+
+### 4. レイアウトは `display` から考える
+
+CSSで配置がうまくいかないときは、まず `display` を見ます。
+
+横並びにする:
+
+```css
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+```
+
+中央に置く:
+
+```css
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+```
+
+カードを折り返す:
+
+```css
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+```
+
+2カラムにする:
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+}
+```
+
+最初は、横並びや中央寄せは `flex`、大きなページ分割は `grid`、という理解で十分です。
+
+### 5. レスポンシブは「狭くなったらどうするか」を決める
+
+PCで横並びにした画面は、スマホではそのままだと狭すぎます。そこで、画面幅に応じてレイアウトを変えます。
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+この例では、PCではサイドバーと本文の2カラム、スマホでは1カラムに変えています。
+
+最低限、次の3つは確認してください。
+
+- 横スクロールが出ていないか
+- 長い文字がカードやボタンからはみ出していないか
+- スマホ幅でボタンやリンクが押しやすい大きさになっているか
+
+### 6. 開発者ツールで確認する
+
+HTML/CSSは、書いたら終わりではありません。Chromeの開発者ツールで、どの要素にどのCSSが当たっているかを確認します。
+
+確認するポイントは次の通りです。
+
+- ElementsタブでHTML構造を見る
+- Stylesで適用されているCSSを見る
+- チェックを外して、どのCSSが効いているか試す
+- 画面幅を変えて、スマホ表示を確認する
+
+HTML/CSSは「書ける」だけではなく、「なぜこの見た目になっているかを調べられる」ことが大切です。
 
 ## 次のステップ
 
