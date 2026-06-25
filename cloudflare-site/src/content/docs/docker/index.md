@@ -11,14 +11,14 @@ permalink: /docker/
 
 このセクションでは、コンテナ（Container）技術の代表である Docker（ドッカー）を学びます。
 
-前のセクション（[バックエンド基礎（NestJS）](/backend/)）では、自分のPCにNode.jsをインストールしてメモAPIを動かしました。しかし実際の開発現場では、「自分のPCでは動くのに、他の人のPCやサーバーでは動かない」という問題が頻繁に起こります。Dockerは、アプリケーションを「どこでも同じように動く箱」に詰めることで、この問題を解決する技術です。
+実際の開発現場では、「自分のPCでは動くのに、他の人のPCやサーバーでは動かない」という問題が頻繁に起こります。Dockerは、ソフトウェアを「どこでも同じように動く箱」に詰めることで、この問題を解決する技術です。
 
 ## なぜDockerを学ぶのか
 
 現代のWeb開発において、Dockerは避けて通れない基盤技術になっています。本カリキュラムでも、この後のセクションで繰り返しDockerを使います。
 
 - **Docker Compose + DB**の教材では、Dockerを使ってPostgreSQLやMySQLを起動します。PCに直接インストールするより、はるかに簡単で安全です。
-- **AWSデプロイの章**（[AWSデプロイ](/aws/)）では、NestJSアプリをDockerイメージにしてECS（コンテナ実行サービス）にデプロイします。
+- **デプロイの章**では、作成したアプリをDockerイメージにしてサーバー上で動かします。
 - **最終プロジェクトのSNS開発**でも、PostgreSQLをDockerで起動して開発を進めます。
 
 つまり、ここでDockerを身につけておくことが、この先のすべての土台になります。
@@ -29,7 +29,7 @@ permalink: /docker/
 |---|---|
 | [コンテナとは何か](/docker/what_is_container/) | コンテナの概念、仮想マシン（VM）との違い、なぜ使われるのか |
 | [Dockerのインストールと基本操作](/docker/install_and_basics/) | Docker Desktopの導入、イメージとコンテナ、基本コマンド |
-| [Dockerfileを書く](/docker/dockerfile/) | NestJSのメモAPIをコンテナ化する。レイヤー構造とマルチステージビルド |
+| [Dockerfileを書く](/docker/dockerfile/) | 静的HTMLをnginxイメージに入れ、Dockerfileの基本命令を学ぶ |
 | [Docker Composeで複数コンテナを動かす](/docker/docker_compose/) | compose.yamlの書き方、ボリューム、コンテナ間ネットワーク |
 
 DBをComposeで立てる実践は、この章とは別の[Docker Compose + DB](/docker/database_compose/)で扱います。Docker基礎ではまず、イメージ、コンテナ、Dockerfile、ネットワーク、ボリュームの意味を理解することに集中します。
@@ -48,7 +48,7 @@ graph LR
     style D fill:#e8f5e9,stroke:#2e7d32
 ```
 
-最初の2ページで「コンテナとは何か」「どう操作するか」を理解し、後半で前章までに作ったメモAPIを実際にコンテナ化していきます。概念だけ・コマンドだけを覚えるのではなく、「自分のアプリをDockerで動かせる」状態をゴールにします。
+最初の2ページで「コンテナとは何か」「どう操作するか」を理解し、後半で静的HTMLとnginxを題材にDockerfileとComposeを学びます。まだアプリ開発には進まず、Dockerそのものの考え方と操作に集中します。
 
 ## Dockerの全体像
 
@@ -75,10 +75,10 @@ flowchart LR
 flowchart TB
     subgraph pc["自分のPC"]
         CLI["docker / docker compose コマンド"]
-        Browser["ブラウザ / APIクライアント"]
+        Browser["ブラウザ"]
     end
     subgraph docker["Docker上で動くもの"]
-        App["APIコンテナ"]
+        App["Webサーバー<br>nginxコンテナ"]
         Nginx["nginxコンテナ"]
     end
     CLI -->|"起動・停止・ログ確認"| docker
@@ -90,7 +90,6 @@ flowchart TB
 
 ## 前提条件
 
-- [バックエンド基礎（NestJS）](/backend/)を修了し、メモAPI（[CRUD実践](/backend/crud_practice/)で作成）が手元にあること
 - [ターミナルの使い方](/environment/terminal/)に慣れていること
 
 それでは、[コンテナとは何か](/docker/what_is_container/)から始めましょう。
