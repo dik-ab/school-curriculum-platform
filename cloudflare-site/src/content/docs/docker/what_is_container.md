@@ -1,6 +1,8 @@
 ---
 title: コンテナとは何か
 parent: Docker基礎
+section_key: docker
+section_title: Docker基礎
 nav_order: 1
 ---
 
@@ -156,7 +158,7 @@ graph LR
 
 たとえばPostgreSQL（データベース）を使いたいとき、従来はインストーラのダウンロード、インストール、初期設定、起動設定…と手順が多く、OSごとに方法も違いました。Dockerなら、コマンド1つで公式イメージから起動できます。不要になったらコンテナを消すだけで、PCはきれいなままです。
 
-実際に[データベースとPrisma](/database/)の章では、この方法でPostgreSQL 16を起動します。
+実際に[Docker Compose + DB](/docker/database_compose/)では、この方法でPostgreSQL 16を起動します。
 
 ### 2. チーム全員・本番環境まで同じ環境になる
 
