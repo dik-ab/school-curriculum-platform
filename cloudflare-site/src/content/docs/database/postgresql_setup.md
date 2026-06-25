@@ -1,14 +1,14 @@
 ---
-title: PostgreSQLを起動して触ってみる
+title: PostgreSQLでSQLを実行する
 parent: データベース基礎
 section_key: database
 section_title: データベース基礎
-nav_order: 2
+nav_order: 4
 ---
 
-# PostgreSQLを起動して触ってみる
+# PostgreSQLでSQLを実行する
 
-[前のページ](/database/what_is_database/)でデータベースの概念とSQLの基礎を学びました。このページでは、PostgreSQL 16に`psql`というコマンドラインツールから接続し、生のSQLを一通り実行します。「読めるSQL」を「書けるSQL」にすることが目的です。
+[前のページ](/database/sql_applied/)までで、SQLの基本構文と応用構文を読みました。このページでは、PostgreSQL 16に`psql`というコマンドラインツールから接続し、生のSQLを一通り実行します。「読めるSQL」を「書けるSQL」にすることが目的です。
 
 PostgreSQLコンテナの立て方そのものは、[Docker Compose + PostgreSQL / MySQL](/docker/database_compose/)で独立して扱います。このページでは、DBが起動している前提で、`psql`とSQLの練習に集中します。
 
@@ -126,7 +126,7 @@ psqlには、SQLとは別に `\`（バックスラッシュ）で始まる便利
 
 ## テーブルを作る — CREATE TABLE
 
-[前のページ](/database/what_is_database/)で例に使ったユーザーテーブルを、実際に作ってみましょう。psqlのプロンプトに次のSQLを入力します（複数行に分けて入力でき、`;` を打った時点で実行されます）。
+[SQL基本構文](/database/sql_basic/)で例に使ったユーザーテーブルを、実際に作ってみましょう。psqlのプロンプトに次のSQLを入力します（複数行に分けて入力でき、`;` を打った時点で実行されます）。
 
 ```sql
 CREATE TABLE users (
@@ -396,7 +396,7 @@ DELETE 1
 
 ### 投稿テーブルを作る
 
-[前のページ](/database/what_is_database/)で見たとおり、`users` を参照する `posts` テーブルを作ります。これから作る2つのテーブルの関係をER図で確認しておきましょう。
+[SQL応用構文](/database/sql_applied/)で見たとおり、`users` を参照する `posts` テーブルを作ります。これから作る2つのテーブルの関係をER図で確認しておきましょう。
 
 ```mermaid
 erDiagram
@@ -597,5 +597,5 @@ JOIN users ON posts.user_id = users.id;
 
 生のSQLでデータベースを操作する感覚がつかめました。ここで学んだ `SELECT`、`INSERT`、`UPDATE`、`DELETE`、`JOIN` は、この後どの言語・フレームワークでDBを扱う場合でも前提になります。
 
-- 前のページ: [データベースとは](/database/what_is_database/)
+- 前のページ: [SQL応用構文](/database/sql_applied/)
 - このページで学んだSQLの知識は、各言語・フレームワークからDBを扱うときの土台になります。また[SNS開発](/sns/)でパフォーマンスを考えるときにも役立ちます
