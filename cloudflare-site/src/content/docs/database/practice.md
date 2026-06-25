@@ -718,5 +718,5 @@ curl -X DELETE http://localhost:3000/memos/1/tags/1
 おつかれさまでした。これで「データベースとPrisma」のセクションは完了です。メモリ上の配列から始まったメモAPIは、検索・分類・タグ付けまでできる本格的なAPIに成長しました。
 
 - 前のページ: [リレーション](/database/relations/)
-- 次のセクション: [コード品質と開発ツール](/tooling//) — チーム開発に欠かせないPrettier/ESLintを導入します
-- ここで身につけたスキーマ設計とクエリの力は、[バックエンドテスト](/testing//)でのテストDB、[RAG開発](/ai-chat/embeddings_and_pgvector/)でのpgvector、そして[SNS開発](/sns//)でのユーザー・投稿・いいね・フォローの実装で、繰り返しフル活用します
+- 次のセクション: [コード品質と開発ツール](/tooling/) — チーム開発に欠かせないPrettier/ESLintを導入します
+- ここで身につけたスキーマ設計とクエリの力は、[バックエンドテスト](/testing/)でのテストDB、[RAG開発](/ai-chat/embeddings_and_pgvector/)でのpgvector、そして[SNS開発](/sns/)でのユーザー・投稿・いいね・フォローの実装で、繰り返しフル活用します
