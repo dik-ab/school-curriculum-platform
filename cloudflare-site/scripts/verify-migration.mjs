@@ -13,6 +13,10 @@ function gitFiles(args) {
     .filter(Boolean);
 }
 
+function uniqueSorted(items) {
+  return [...new Set(items)].sort();
+}
+
 function read(path) {
   return readFileSync(path, 'utf8');
 }
@@ -26,7 +30,10 @@ function countPattern(files, root, pattern) {
   return count;
 }
 
-const docFiles = gitFiles(['ls-files', '*.md']).filter(
+const docFiles = uniqueSorted([
+  ...gitFiles(['ls-files', '*.md']),
+  ...gitFiles(['ls-files', '--others', '--exclude-standard', '*.md'])
+]).filter(
   (file) => !file.startsWith('.authoring/') && !file.startsWith('practice/')
 );
 const practiceFiles = gitFiles(['ls-files', 'practice/**']);
@@ -66,4 +73,3 @@ console.log(JSON.stringify(report, null, 2));
 if (missingDocs.length || missingPractice.length) {
   process.exitCode = 1;
 }
-
