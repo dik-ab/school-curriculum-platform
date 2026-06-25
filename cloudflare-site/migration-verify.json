@@ -1,20 +1,20 @@
 {
   "sourceMetrics": {
     "markdown": 121,
-    "codeFences": 1841,
-    "mermaid": 160,
-    "details": 472,
-    "summaries": 472,
-    "checkboxes": 657,
+    "codeFences": 1822,
+    "mermaid": 158,
+    "details": 455,
+    "summaries": 455,
+    "checkboxes": 651,
     "practice": 190
   },
   "targetMetrics": {
     "markdown": 121,
-    "codeFences": 1841,
-    "mermaid": 160,
-    "details": 472,
-    "summaries": 472,
-    "checkboxes": 657,
+    "codeFences": 1822,
+    "mermaid": 158,
+    "details": 455,
+    "summaries": 455,
+    "checkboxes": 651,
     "practice": 190
   },
   "missingDocs": [],
