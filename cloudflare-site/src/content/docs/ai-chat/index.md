@@ -9,7 +9,7 @@ permalink: /ai-chat/
 
 このセクションでは、これまで学んできた技術を総動員して、**「このカリキュラム自体に質問できるQ&Aボット」**を開発します。
 
-[AI開発入門](/ai//)では、LLM（大規模言語モデル）の仕組みと、Claude Codeを使った開発の進め方を学びました。このセクションでは一歩進んで、**自分のアプリケーションにAIを組み込む**方法を学びます。
+[AI開発入門](/ai/)では、LLM（大規模言語モデル）の仕組みと、Claude Codeを使った開発の進め方を学びました。このセクションでは一歩進んで、**自分のアプリケーションにAIを組み込む**方法を学びます。
 
 ## 作るもの
 
@@ -56,9 +56,9 @@ flowchart LR
     style E fill:#fff3e0,stroke:#ef6c00
 ```
 
-- **React** — チャット画面のUI。[React基礎](/react//)で学んだ`useState`と`fetch`を使います
-- **NestJS** — 質問を受け取り、検索とAI呼び出しを組み立てるAPIサーバー。[バックエンド基礎](/backend//)の知識をそのまま使います
-- **PostgreSQL + pgvector** — カリキュラム本文を「ベクトル」として保存し、意味の近い文章を検索します。[データベースとPrisma](/database//)で学んだPostgreSQLに拡張機能を追加します
+- **React** — チャット画面のUI。[React基礎](/react/)で学んだ`useState`と`fetch`を使います
+- **NestJS** — 質問を受け取り、検索とAI呼び出しを組み立てるAPIサーバー。[バックエンド基礎](/backend/)の知識をそのまま使います
+- **PostgreSQL + pgvector** — カリキュラム本文を「ベクトル」として保存し、意味の近い文章を検索します。[データベースとPrisma](/database/)で学んだPostgreSQLに拡張機能を追加します
 - **Voyage AI / Claude API** — 文章のベクトル化（embedding）と回答の生成を担当する外部AIサービスです
 
 ## このセクションで学ぶこと
@@ -86,12 +86,12 @@ flowchart LR
 
 以下のセクションを修了していることを前提とします。
 
-- [TypeScript基礎](/typescript//) — すべてのコードをTypeScriptで書きます
-- [React基礎](/react//) — 特に[APIとの通信](/react/api_fetch/)
-- [バックエンド基礎（NestJS）](/backend//) — Controller / Service / DTOを一通り使います
-- [データベースとPrisma](/database//) — PostgreSQLの起動とPrismaの操作
-- [Docker基礎](/docker//) — [Docker Compose](/docker/docker_compose/)でデータベースを起動します
-- [AI開発入門](/ai//) — [LLMとは何か](/ai/what_is_llm/)、トークンの概念
+- [TypeScript基礎](/typescript/) — すべてのコードをTypeScriptで書きます
+- [React基礎](/react/) — 特に[APIとの通信](/react/api_fetch/)
+- [バックエンド基礎（NestJS）](/backend/) — Controller / Service / DTOを一通り使います
+- [データベースとPrisma](/database/) — PostgreSQLの起動とPrismaの操作
+- [Docker基礎](/docker/) — [Docker Compose](/docker/docker_compose/)でデータベースを起動します
+- [AI開発入門](/ai/) — [LLMとは何か](/ai/what_is_llm/)、トークンの概念
 
 ## 費用について（重要）
 
@@ -103,6 +103,6 @@ flowchart LR
 
 RAGは現在、業務システムへのAI組み込みで最もよく使われるパターンのひとつです。「社内マニュアルに答えるボット」「製品ドキュメントのサポートAI」など、構成はこのセクションで作るものとほぼ同じです。
 
-また、ここで使うNestJS + PostgreSQL + Reactの組み合わせは、次の[SNS開発（最終プロジェクト）](/sns//)でも中心となる構成です。外部APIとの連携、APIキーの安全な管理、非同期処理の組み立てといった経験は、どんなWebサービス開発でも役立ちます。
+また、ここで使うNestJS + PostgreSQL + Reactの組み合わせは、次の[SNS開発（最終プロジェクト）](/sns/)でも中心となる構成です。外部APIとの連携、APIキーの安全な管理、非同期処理の組み立てといった経験は、どんなWebサービス開発でも役立ちます。
 
 まずは[RAGとは何か](/ai-chat/what_is_rag/)から始めましょう。
