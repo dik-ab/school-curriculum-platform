@@ -20,7 +20,7 @@ nav_order: 1
 - DBコンテナのデータをボリュームで永続化できる
 - DBコンテナへ入り、コンテナ内からDBへ接続できる
 - `psql` の基本メタコマンドと `\x auto` を使って結果を見やすくできる
-- ローカルアプリから `localhost` 経由でDBへ接続する形を理解できる
+- PC側のツールから `localhost` 経由でDBへ接続する形を理解できる
 - PostgreSQLとMySQLのどちらを使うか、学習上の判断ができる
 
 ## なぜDBはDocker Composeで立てるのか
@@ -40,7 +40,7 @@ flowchart LR
     A --> C["MySQL<br>container"]
     B --> D["volume<br>postgres-data"]
     C --> E["volume<br>mysql-data"]
-    F["local API<br>NestJS / Spring / Rails"] -->|"localhost:5432"| B
+    F["PC側のツール<br>psql / DBクライアント"] -->|"localhost:5432"| B
     F -->|"localhost:3306"| C
     G["docker compose exec"] -->|"container内へ入る"| B
     G -->|"container内へ入る"| C
@@ -361,7 +361,7 @@ docker compose ps
 
 ## ローカルアプリから接続する
 
-DBコンテナを起動したら、ローカルで動くAPIから接続します。
+DBコンテナを起動したら、PC側から見た接続先を整理します。ここではまだアプリ実装はしません。まず、psqlやDBクライアントから接続するための情報として理解します。
 
 PostgreSQLの場合:
 
@@ -375,26 +375,26 @@ MySQLの場合:
 mysql://app_user:app_password@localhost:3306/app_db
 ```
 
-ここで大事なのは、ホスト名が `localhost` であることです。APIを手元のPCで `pnpm run start:dev` などで動かしている場合、DBにはPC側に公開されたポートから入ります。
+ここで大事なのは、PC側から接続するときのホスト名が `localhost` であることです。DBには、`ports` でPC側に公開されたポートから入ります。
 
-一方、APIも同じCompose内のコンテナとして動かしている場合は、接続先は `localhost` ではなくサービス名になります。
+一方、将来ほかのコンテナからDBへ接続する場合は、接続先は `localhost` ではなくサービス名になります。今は「そういう違いがある」程度で十分です。
 
-| APIの動かし方 | PostgreSQLの接続先 | MySQLの接続先 |
+| 接続する場所 | PostgreSQLの接続先 | MySQLの接続先 |
 | --- | --- | --- |
-| APIをPCで動かす | `localhost:5432` | `localhost:3306` |
-| APIもComposeで動かす | `postgres:5432` | `mysql:3306` |
+| PC側のツールから接続する | `localhost:5432` | `localhost:3306` |
+| Compose内の別コンテナから接続する | `postgres:5432` | `mysql:3306` |
 
 「どこから見た接続先なのか」を必ず意識してください。
 
 ```mermaid
 flowchart LR
-    A["APIをPCで実行<br>pnpm run dev"] -->|"localhost:5432"| B["PostgreSQL container"]
-    C["APIもComposeで実行<br>api service"] -->|"postgres:5432"| B
+    A["PC側のpsql<br>DBクライアント"] -->|"localhost:5432"| B["PostgreSQL container"]
+    C["Compose内の別コンテナ"] -->|"postgres:5432"| B
     D["psqlをPCから実行"] -->|"localhost:5432"| B
     E["psqlをコンテナ内で実行"] -->|"localhost:5432<br>containerの中から見たlocalhost"| B
 ```
 
-`localhost` は常に「そのコマンドを実行している場所自身」を指します。PCでAPIを動かしているなら `localhost` はPCです。APIコンテナの中で `localhost` と書くと、そのAPIコンテナ自身を指すため、DBコンテナには届きません。同じCompose内の別サービスへ接続するときは、`postgres` や `mysql` のようなサービス名を使います。
+`localhost` は常に「そのコマンドを実行している場所自身」を指します。PC側のツールから接続するなら `localhost` はPCです。別コンテナの中で `localhost` と書くと、そのコンテナ自身を指すため、DBコンテナには届きません。同じCompose内の別サービスへ接続するときは、`postgres` や `mysql` のようなサービス名を使います。
 
 ## ログと状態を確認する
 
@@ -463,12 +463,12 @@ docker compose down -v
 - `docker compose exec postgres bash` でコンテナの中に入れる
 - `docker compose exec postgres psql -U postgres -d app_db` でPCから一発でpsqlに入れる
 - PostgreSQLでは `\conninfo`、`\dt`、`\d users`、`\x auto` が特に便利
-- APIをPCで動かす場合は `localhost` でDBに接続する
-- APIもCompose内で動かす場合は、`postgres` や `mysql` のようなサービス名で接続する
+- PC側のツールから接続する場合は `localhost` でDBに接続する
+- Compose内の別コンテナから接続する場合は、`postgres` や `mysql` のようなサービス名で接続する
 - `docker compose down -v` はDBデータを完全に消す操作なので注意する
 
 ## 次のステップ
 
-PostgreSQLを起動できたら、次は[PostgreSQLを起動して触ってみる](/database/postgresql_setup/)で、`psql` を使ってSQLを実行します。
+PostgreSQLを起動できたら、次は[PostgreSQLでSQLを実行する](/database/postgresql_setup/)で、`psql` を使ってSQLを実行します。
 
 MySQLを使う言語・フレームワークに進む場合も、ここで学んだComposeの考え方は同じです。DBの種類が変わっても、`image`、`environment`、`ports`、`volumes` を読む力があれば対応できます。
