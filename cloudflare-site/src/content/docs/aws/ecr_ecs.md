@@ -281,7 +281,7 @@ export class ApiStack extends cdk.Stack {
 
 **コード解説**
 
-- `interface ApiStackProps extends cdk.StackProps { vpc; repository; }` … このスタックが外から受け取る値を**TypeScriptのインターフェースで型定義**しています。VPCとECRリポジトリは他のスタックで作ったものを受け取ります。[TypeScript基礎](/typescript//)のオブジェクト型の知識がそのまま活きる場面です
+- `interface ApiStackProps extends cdk.StackProps { vpc; repository; }` … このスタックが外から受け取る値を**TypeScriptのインターフェースで型定義**しています。VPCとECRリポジトリは他のスタックで作ったものを受け取ります。[TypeScript基礎](/typescript/)のオブジェクト型の知識がそのまま活きる場面です
 - `new ecs.Cluster(this, 'ApiCluster', { vpc })` … タスクを収容するクラスターを、受け取ったVPCの中に作ります
 - `new ecsPatterns.ApplicationLoadBalancedFargateService(...)` … **L3パターンの本体**。この1つで、タスク定義・Fargateサービス・ALB・ターゲットグループ・リスナー・セキュリティグループ・IAMロール（ECRからpullする権限を含む）がまとめて構築されます
 - `cpu: 256, memoryLimitMiB: 512` … タスクのリソース。0.25vCPU / 512MBという最小クラスの構成です（cpuは1024 = 1vCPUの単位）
