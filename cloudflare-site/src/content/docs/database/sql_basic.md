@@ -59,7 +59,7 @@ SELECT name, email FROM users;
 | 次郎 | jiro@example.com |
 | 美咲 | misaki@example.com |
 
-APIのレスポンスに不要な列を含めない、一覧画面では軽い情報だけ取る、という場面で使います。
+一覧画面では軽い情報だけ取る、詳細画面では必要な列を追加で取る、という場面で使います。
 
 ## WHERE: 条件で絞り込む
 
