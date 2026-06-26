@@ -396,10 +396,13 @@ h1 {
   position: sticky;
   top: 84px;
   align-self: start;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
   padding: 20px;
   background: linear-gradient(180deg, #ffffff, #f9fcfb);
   border: 1px solid var(--line);
   border-radius: 14px;
+  scrollbar-gutter: stable;
 }
 
 .docs-sidebar h2 {
@@ -546,6 +549,8 @@ h1 {
   .docs-sidebar {
     position: static;
     height: auto;
+    max-height: none;
+    overflow: visible;
   }
 }
 
