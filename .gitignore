@@ -10,3 +10,7 @@ dist/
 .wrangler/
 .playwright-mcp/
 *.log
+
+# Local reference materials
+2024curriculum/
+java/
