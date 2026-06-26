@@ -1,7 +1,7 @@
 {
   "sourceMetrics": {
-    "markdown": 121,
-    "codeFences": 1822,
+    "markdown": 136,
+    "codeFences": 1997,
     "mermaid": 158,
     "details": 455,
     "summaries": 455,
@@ -9,8 +9,8 @@
     "practice": 190
   },
   "targetMetrics": {
-    "markdown": 121,
-    "codeFences": 1822,
+    "markdown": 136,
+    "codeFences": 1997,
     "mermaid": 158,
     "details": 455,
     "summaries": 455,
