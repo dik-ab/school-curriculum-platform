@@ -48,7 +48,7 @@ export const phases: Phase[] = [
     summary: 'フレームワークに入る前に、言語そのものを押さえる。',
     cards: [
       { label: 'TypeScript', title: 'TypeScript基礎', description: '型、class、module、async/await、DTOの前提。', href: '/typescript/', accent: 'amber' },
-      { label: 'Java', title: 'Java基礎', description: '型、class、interface、collection、例外処理。', accent: 'amber' },
+      { label: 'Java', title: 'Java基礎', description: '型、class、interface、collection、例外処理。', href: '/java/', accent: 'amber' },
       { label: 'Python', title: 'Python基礎', description: '関数、型ヒント、class、venv、非同期処理。', accent: 'amber' },
       { label: 'PHP', title: 'PHP基礎', description: '型、配列、関数、class、Composer、Laravelの前提。', accent: 'amber' },
       { label: 'Go', title: 'Go基礎', description: '型、struct、interface、goroutine、module管理。', accent: 'amber' },
