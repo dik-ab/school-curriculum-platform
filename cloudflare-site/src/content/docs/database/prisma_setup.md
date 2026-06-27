@@ -35,6 +35,23 @@ const user = await prisma.user.findUnique({ where: { id: 1 } });
 
 どちらも結果は同じです。それでもORMを使うのには明確な理由があります。
 
+ORMが「プログラムのオブジェクト」と「データベースのテーブル」をどう橋渡しするのか、イメージを図で押さえましょう。
+
+```mermaid
+flowchart LR
+    subgraph APP["プログラムの世界（Object）"]
+        O["user オブジェクト<br>user.id / user.name"]
+    end
+    subgraph DBW["データベースの世界（Relational）"]
+        T["users テーブル<br>id 列 / name 列"]
+    end
+    O <-->|"ORMが対応づけ（Mapping）"| T
+    style O fill:#e8f5e9,stroke:#2e7d32
+    style T fill:#fff3e0,stroke:#ef6c00
+```
+
+**図の読み方**: 左がTypeScriptのオブジェクト、右がデータベースのテーブルです。ORMは両者を行き来する「翻訳係」で、私たちがオブジェクトを操作すると、ORMが対応するテーブルへのSQLに変換してくれます。この対応づけ（Mapping）こそがORMの名前の由来です。
+
 ### なぜORMを使うのか
 
 1. **型安全** — Prismaは、テーブル定義からTypeScriptの型を自動生成します。`user.naem` のようなタイプミスや、存在しない列へのアクセスを**コンパイル時に**検出できます。生のSQLを文字列で書くと、間違いは実行するまで分かりません
@@ -68,6 +85,25 @@ flowchart TB
 ```
 
 ポイントは、**schema.prismaがすべての起点**になることです。設計図を1つ書けば、そこから「実際のテーブル」と「TypeScriptの型つきクライアント」の両方が生成されるため、データベースとコードの食い違いが起きません。
+
+このうち、次のページで使う `prisma migrate dev` を実行したとき、裏側で何が順番に起きるのかを時系列で見ておきましょう。
+
+```mermaid
+sequenceDiagram
+    participant Dev as "開発者"
+    participant CLI as "Prisma CLI"
+    participant File as "schema.prisma"
+    participant DB as "PostgreSQL"
+    participant Gen as "Prisma Client"
+    Dev->>CLI: "prisma migrate dev を実行"
+    CLI->>File: "設計図を読み込む"
+    CLI->>DB: "テーブルを作成・変更（SQL）"
+    DB-->>CLI: "完了"
+    CLI->>Gen: "型つきクライアントを再生成"
+    Gen-->>Dev: "コードから使える状態になる"
+```
+
+**図の読み方**: 上から下へ時間が流れます。1回の `migrate dev` で「DBのテーブル更新」と「Prisma Clientの再生成」が続けて行われるのがポイントです。だからスキーマを直すたびにこのコマンドを打てば、テーブルとコードの型が常に一致します。
 
 ## プロジェクトの準備
 
@@ -214,6 +250,23 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/memo?schema=public"
 postgresql://ユーザー名:パスワード@ホスト:ポート/データベース名?schema=public
               postgres   postgres  localhost 5432  memo
 ```
+
+1本のURLに見えますが、実は5つの情報が決まった順番で並んでいます。各部分が何を指すのかを図で分解してみましょう。
+
+```mermaid
+flowchart TB
+    URL["DATABASE_URL の中身"]
+    URL --> U["postgres<br>（ユーザー名）"]
+    URL --> P["postgres<br>（パスワード）"]
+    URL --> H["localhost:5432<br>（ホスト:ポート）"]
+    URL --> D["memo<br>（データベース名）"]
+    URL --> S["schema=public<br>（名前空間）"]
+    style URL fill:#e3f2fd,stroke:#1565c0
+    style D fill:#e8f5e9,stroke:#2e7d32
+    style H fill:#fff3e0,stroke:#ef6c00
+```
+
+**図の読み方**: いちばん上のURLが、下の5つの部品に分かれます。「誰が（ユーザー名・パスワード）」「どこに（ホスト:ポート）」「どのDBへ（データベース名）」つなぐか、という情報の集まりだと分かれば、接続エラーが出たときにどこを直せばよいか見当がつきます。
 
 **コード解説**
 
