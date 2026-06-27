@@ -156,6 +156,25 @@ docker build -t docker-html-demo:1.0 .
 - `-t docker-html-demo:1.0` はイメージ名とタグを付けています
 - 最後の `.` はビルドコンテキストです。今いるフォルダを材料としてDockerに渡します
 
+`docker build` を実行したとき、何を材料にして、どんな順番でイメージができあがるのかを流れ図で確認しましょう。
+
+```mermaid
+flowchart TB
+    A["Dockerfile<br>作り方の手順"] --> B["docker build を実行"]
+    Ctx["ビルドコンテキスト<br>（カレントフォルダ . ）"] --> B
+    B --> C["命令を上から順に実行"]
+    C --> D["イメージ完成<br>docker-html-demo"]
+    D --> E["docker run で<br>コンテナとして起動"]
+    style A fill:#fff7ed,stroke:#ea580c
+    style Ctx fill:#ede7f6,stroke:#5e35b1
+    style B fill:#e0f2fe,stroke:#0284c7
+    style C fill:#e0f2fe,stroke:#0284c7
+    style D fill:#dcfce7,stroke:#16a34a
+    style E fill:#dcfce7,stroke:#16a34a
+```
+
+図の読み方: ビルドの材料は「Dockerfile（手順）」と「ビルドコンテキスト（`.` で渡したフォルダの中身）」の2つです。この2つをもとに命令が上から順に実行され、最後に1つのイメージ（緑）が完成します。完成したイメージは、前ページで学んだ `docker run` でコンテナにできます。
+
 ビルドできたら確認します。
 
 ```bash
@@ -220,6 +239,23 @@ CMD ["nginx", "-g", "daemon off;"]
 
 `daemon off;` は、nginxをコンテナの前面で動かすための指定です。コンテナでは、メインプロセスが終了するとコンテナも終了します。
 
+ここまでに出てきた代表的な命令が、それぞれどの役割を担い、どう積み上がって1つのイメージになるのかを図でまとめます。
+
+```mermaid
+flowchart TB
+    F["FROM<br>土台のイメージを決める"] --> Co["COPY<br>手元のファイルを入れる"]
+    Co --> R["RUN<br>ビルド時にコマンドを実行"]
+    R --> Cm["CMD<br>起動時に実行する命令を決める"]
+    Cm --> Img["完成したイメージ"]
+    style F fill:#fff7ed,stroke:#ea580c
+    style Co fill:#fef9c3,stroke:#ca8a04
+    style R fill:#e0f2fe,stroke:#0284c7
+    style Cm fill:#ede7f6,stroke:#5e35b1
+    style Img fill:#dcfce7,stroke:#16a34a
+```
+
+図の読み方: 上から `FROM`（土台）→ `COPY`（ファイル投入）→ `RUN`（ビルド時の処理）→ `CMD`（起動時の指示）と積み上がり、最後にイメージ（緑）が完成します。`RUN` はビルド中、`CMD` は起動時という「働くタイミングの違い」を、位置の違いとして覚えておきましょう。今回のnginx例では `RUN` は使わず、`CMD` も公式イメージのものをそのまま利用しています。
+
 ## レイヤーとキャッシュ
 
 Dockerイメージは、Dockerfileの命令ごとに作られる**レイヤー**の積み重ねです。
@@ -233,6 +269,25 @@ flowchart TB
 ```
 
 Dockerは、変更がないレイヤーをキャッシュして再利用します。たとえば `index.html` だけを変更した場合、土台のnginxイメージを毎回取り直す必要はありません。変更されたCOPY以降だけが作り直されます。
+
+`index.html` だけを直して再ビルドしたとき、どのレイヤーが再利用され、どのレイヤーが作り直されるのかを図にすると次のようになります。
+
+```mermaid
+flowchart TB
+    subgraph New["index.html だけ変更して再ビルド"]
+        direction TB
+        N3["レイヤー3<br>COPY index.html<br>作り直し"]
+        N2["レイヤー2<br>WORKDIR<br>キャッシュ再利用"]
+        N1["レイヤー1<br>FROM nginx<br>キャッシュ再利用"]
+        N3 --> N2
+        N2 --> N1
+    end
+    style N3 fill:#ffebee,stroke:#c62828
+    style N2 fill:#e8f5e9,stroke:#2e7d32
+    style N1 fill:#e8f5e9,stroke:#2e7d32
+```
+
+図の読み方: 緑のレイヤー（`FROM` と `WORKDIR`）は変更がないのでキャッシュがそのまま使われ、赤のレイヤー（`COPY index.html`）だけが作り直されます。だから2回目以降のビルドは速くなります。なお「変わったレイヤーより下（あと）の命令はすべて作り直し」になるため、変わりにくい命令ほど上に、変わりやすい命令ほど下に書くとキャッシュが効きやすくなります。
 
 この考え方は、後で別の種類のソフトウェアをコンテナ化するときにも重要になります。ただし、今は「上から順に命令が実行され、変更がない部分は再利用される」と理解できれば十分です。
 
