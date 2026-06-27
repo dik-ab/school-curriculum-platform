@@ -95,14 +95,35 @@ export const phases: Phase[] = [
   {
     id: 'projects',
     number: '06',
-    title: '実践開発',
-    summary: '共通仕様とフレームワーク別実装をカード単位で選ぶ。',
+    title: '実践準備',
+    summary: 'TodoとSNSで毎回使う開発フロー、CI/CD、リアルタイム通信、AI活用を先に押さえる。',
+    grid: 'wide',
+    cards: [
+      { label: 'Git / GitHub', title: 'Git/GitHub基礎', description: 'commit、push、Pull Request、ブランチ、レビュー、コンフリクト解消。', href: '/git/', accent: 'green', project: true },
+      { label: 'CI/CD', title: 'GitHub Actions', description: 'PR時に単体テストとbuildを自動実行する流れを作る。Todo/SNSの品質確認で使う。', href: '/cicd/', accent: 'purple', project: true },
+      { label: 'Realtime', title: 'リアルタイム通信', description: 'WebSocketとSocket.IOを理解し、SNSのDMチャット実装につなげる。', href: '/realtime/', accent: 'purple', project: true },
+      { label: 'AI', title: 'AI開発', description: '仕様書や既存コードをAIに読ませ、巨大な実践課題を安全に進める準備をする。', href: '/ai/', accent: 'purple', project: true }
+    ]
+  },
+  {
+    id: 'todo-project',
+    number: '07',
+    title: 'Todoアプリ実践',
+    summary: '共通仕様を確認し、React共通フロントとバックエンド別APIをカード単位で選ぶ。',
     grid: 'featured',
     cards: [
-      { label: 'Git / GitHub', title: 'Git/GitHub基礎', description: 'commit、push、fetch、pull、stash、ブランチ、マージ、コンフリクト解消。', href: '/git/', accent: 'green', project: true },
       { label: 'Todo Common', title: 'Todo共通仕様', description: 'React共通フロント、API、DB、完成条件を全スタック共通で固定する。', href: '/fullstack-todo/', accent: 'green', project: true },
       { label: 'Todo / NestJS', title: 'Todo NestJS版', description: 'NestJS + Prisma + PostgreSQLでTodo CRUDを実装する詳細チュートリアル。', href: '/fullstack-todo/nestjs/', accent: 'blue', project: true },
-      { label: 'Todo / Spring', title: 'Todo Spring Boot版', description: 'Spring Boot + JPA + PostgreSQLでTodo CRUDを実装するルート。', href: '/fullstack-todo/spring_boot/', accent: 'amber', project: true },
+      { label: 'Todo / Spring', title: 'Todo Spring Boot版', description: 'Spring Boot + JPA + PostgreSQLでTodo CRUDを実装するルート。', href: '/fullstack-todo/spring_boot/', accent: 'amber', project: true }
+    ]
+  },
+  {
+    id: 'sns-project',
+    number: '08',
+    title: 'SNS開発',
+    summary: '認証、投稿、いいね、フォロー、リアルタイムDMをフレームワーク別に実装する。',
+    grid: 'featured',
+    cards: [
       { label: 'SNS Common', title: 'SNS共通仕様', description: '認証、投稿、いいね、フォロー、DM、Cookie、DB設計を全スタック共通で固定する。', href: '/sns/', accent: 'green', project: true },
       { label: 'SNS / NestJS', title: 'SNS NestJS版', description: 'NestJS + Prisma + Socket.IOでSNSを作るTypeScriptルート。', href: '/sns/nestjs/', accent: 'blue', project: true },
       { label: 'SNS / Spring', title: 'SNS Spring Boot版', description: 'Spring Boot + JPA + netty-socketioでSNSを作るJavaルート。', href: '/sns/spring_boot/', accent: 'amber', project: true },
@@ -115,14 +136,12 @@ export const phases: Phase[] = [
   },
   {
     id: 'ops-ai',
-    number: '07',
-    title: '運用とAI',
-    summary: 'デプロイ、リアルタイム通信、AI開発、設計へ進む。',
+    number: '09',
+    title: 'クラウド運用と拡張',
+    summary: '実践課題を本番構成、検索AI、設計改善へ広げる。',
     grid: 'wide',
     cards: [
-      { label: 'Deploy', title: 'CI/CD / AWS', description: 'GitHub Actions、ECS、RDS、S3、CloudFront、SES。', href: '/cicd/', accent: 'purple' },
-      { label: 'Realtime', title: 'リアルタイム通信', description: 'WebSocket、Socket.IO、Redis pub/sub、Gateway設計。', href: '/realtime/', accent: 'purple' },
-      { label: 'AI', title: 'AI開発', description: 'Claude、Codex、CLAUDE.md、skills、AIペアプロ。', href: '/ai/', accent: 'purple' },
+      { label: 'AWS', title: 'AWSデプロイ', description: 'ECS、RDS、S3、CloudFront、SESを使い、実践課題を本番構成へ載せる。', href: '/aws/', accent: 'purple' },
       { label: 'RAG', title: 'RAGチャット', description: 'Embeddings、pgvector、教材検索、AI回答生成。', href: '/ai-chat/', accent: 'purple' },
       { label: 'Architecture', title: 'アーキテクチャ基礎', description: '責務分離、設計判断、保守しやすい構成。', accent: 'purple' }
     ]
