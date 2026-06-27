@@ -20,11 +20,11 @@ Goで薄いWeb APIを作るルートです。Ginはルーティングとmiddlewa
 
 ## 実装方針
 
-現在の解答コードは、学習しやすい最小構成として `main.go` にモデル、ルーティング、handler、middleware、Socket.IO処理をまとめています。最初からhandler/service/repositoryへ細かく分けると、Go初学者には「どこで何が起きているか」が見えにくくなるためです。
+現在の解答コードは、学習しやすい最小構成として `main.go` にモデル、ルーティング、handler、middleware、WebSocket処理をまとめています。最初からhandler/service/repositoryへ細かく分けると、Go初学者には「どこで何が起きているか」が見えにくくなるためです。
 
 DBはローカル検証ではSQLiteを既定にし、`DATABASE_URL` が `postgres://` または `postgresql://` で始まる場合はPostgreSQLへ接続します。schema作成はGORMの `AutoMigrate` を使います。ログイン成功時は `sns_session` HttpOnly CookieにJWTを保存し、Gin middlewareでCookieを検証して現在のユーザーを復元します。
 
-リアルタイムDMは、共通Reactフロントの `socket.io-client` と合わせるため、Go側でも `github.com/zishang520/socket.io/v2` を使います。namespaceは `/chat`、イベント名は `joinConversation`、`sendMessage`、`newMessage` です。
+リアルタイムDMは、共通ReactフロントのWebSocketアダプタを使います。Gin側は `/chat` でWebSocket upgradeを受け、JSONの `joinConversation`、`sendMessage`、`newMessage` イベントを扱います。
 
 > 実務では、Goでも最初から巨大な抽象化を作る必要はありません。まず動く1ファイル構成でHTTP、DB、Cookie、リアルタイム通信の流れを確認し、その後にhandler/service/repositoryへ分割すると、責務分離の理由が理解しやすくなります。
 
@@ -45,7 +45,7 @@ DBはローカル検証ではSQLiteを既定にし、`DATABASE_URL` が `postgre
 | 章 | Gin/GORMで扱う主な技術 |
 |---|---|
 | メール確認 | `EmailVerificationToken`、確認URLのconsole出力、確認後ログイン許可 |
-| DMチャット | `github.com/zishang520/socket.io/v2`、`/chat` namespace、Cookie認証 |
+| DMチャット | `github.com/gorilla/websocket`、`/chat` WebSocket、Cookie認証 |
 | 画像アップロード | 現在の解答コードはローカル疑似アップロードURLまで。S3 presigned URLは発展課題 |
 | ページネーション | 現在の解答コードには未収録。cursor queryは発展課題 |
 | CI/CD | `go test ./...`、`go build ./...`、GitHub Actions |
@@ -56,7 +56,7 @@ DBはローカル検証ではSQLiteを既定にし、`DATABASE_URL` が `postgre
 | 役割 | URL / コマンド |
 |---|---|
 | Gin API | `http://localhost:8000` / `go run .` |
-| Socket.IO | `http://localhost:8000/chat` |
+| WebSocket | `ws://localhost:8000/chat` |
 | SQLite | `sqlite://sns_gin_gorm.db` |
 | React | `http://localhost:5173` |
 
@@ -65,6 +65,7 @@ React共通フロントエンドの `.env` は、Gin + GORM版では次の値に
 ```bash
 VITE_API_URL="http://localhost:8000"
 VITE_SOCKET_URL="http://localhost:8000"
+VITE_REALTIME_DRIVER="websocket"
 ```
 
 PostgreSQLで動かす場合は、API起動時に `DATABASE_URL` を渡します。
@@ -74,7 +75,8 @@ DATABASE_URL="postgres://postgres:postgres@localhost:5432/sns_go?sslmode=disable
 ```
 
 - `VITE_API_URL` はREST APIの向き先です。
-- `VITE_SOCKET_URL` はSocket.IOの向き先です。Gin版はRESTとSocket.IOを同じポートで受けます。
+- `VITE_SOCKET_URL` はリアルタイム通信の向き先です。React側が `/chat` を付けて `ws://localhost:8000/chat` へ接続します。
+- `VITE_REALTIME_DRIVER="websocket"` により、共通ReactフロントはSocket.IOではなく素のWebSocketアダプタを使います。
 - `DATABASE_URL` を省略すると、ローカル確認用のSQLiteファイルを使います。
 
 ## 小さな実装例
@@ -115,7 +117,7 @@ func (a *App) requireUser(c *gin.Context) {
 
 - `VITE_SOCKET_URL` に `/chat` まで書いてしまうと、React側がさらに `/chat` を付けて接続先がずれます。値は `http://localhost:8000` にします。
 - GinのCORSで `Access-Control-Allow-Origin: *` と `credentials: true` を組み合わせると、ブラウザがCookie付きリクエストを拒否します。開発中もフロントエンドのoriginを固定します。
-- Socket.IOのroomに入る前に送信すると、相手画面に届かないことがあります。React側は会話を選んだ後に `joinConversation` を送ってから `newMessage` を購読します。
+- WebSocket接続直後、会話に参加する前に送信すると、相手画面に届かないことがあります。React側は会話を選んだ後に `joinConversation` を送り、Gin側はその会話IDを接続ごとのroomとして記録してから `newMessage` を配信します。
 
 ## 動作確認済みの範囲
 
