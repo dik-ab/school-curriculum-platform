@@ -29,7 +29,7 @@ AIエージェントを使って開発する場合は、このページと自分
 
 ただし、AIに任せる前提でも、教材には正しいコードと動作確認手順を載せます。AIは補助であり、仕様、テスト、レビューで正しさを確認する責任は開発者側にあります。
 
-解答コードは、[SNS開発ロードマップ（言語別）](/sns/framework_roadmap/) から確認できます。Reactフロントエンドは共通リポジトリ、バックエンドはNestJS版とSpring Boot版を先に公開しています。
+解答コードは、各バックエンド版のページから確認できます。Reactフロントエンドは共通リポジトリ、バックエンドはNestJS版とSpring Boot版を先に公開しています。
 
 ## 開発フェーズ
 
@@ -321,4 +321,4 @@ erDiagram
 
 ## 次のステップ
 
-次は [SNS開発ロードマップ（言語別）](/sns/framework_roadmap/) へ進み、自分が実装するバックエンドスタックを選びます。
+次は自分が実装するバックエンドスタックの個別ページへ進みます。TypeScriptで進める場合は [SNS NestJS + Prisma版](/sns/nestjs/)、Javaで進める場合は [SNS Spring Boot + JPA版](/sns/spring_boot/) から始めてください。FastAPI、Laravel、Gin + GORM、Rails版は、ホームのSNS開発カードから各ページへ直接入れます。

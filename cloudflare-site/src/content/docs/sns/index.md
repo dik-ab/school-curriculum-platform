@@ -72,11 +72,6 @@ SNS開発は、Reactフロントエンドを共通にし、バックエンドだ
     <h3>SNS Rails + Active Record版</h3>
     <p>Rails API、Active Record、Action Cableを使う実装方針を確認します。</p>
   </a>
-  <a class="course-card project" data-accent="ink" href="/sns/framework_roadmap/">
-    <span>Roadmap</span>
-    <h3>全スタック比較</h3>
-    <p>各フレームワークでのORM、認証、リアルタイム通信、テスト方針を一覧で比較します。</p>
-  </a>
   <a class="course-card project" data-accent="blue" href="/ai/">
     <span>AI</span>
     <h3>AI開発入門</h3>
@@ -84,7 +79,7 @@ SNS開発は、Reactフロントエンドを共通にし、バックエンドだ
   </a>
 </div>
 
-既存の詳細チュートリアルは NestJS + Prisma 版として残しています。現在の既存版は `localStorage` + `Authorization: Bearer` のJWT方式で実装されていますが、新しい言語別カリキュラムと解答コードでは [共通要件定義・仕様書](/sns/requirements/) に合わせて HttpOnly Cookie セッション方式を標準にします。サイドバーも版ごとに分けているため、NestJS版を開いたときにSpring Boot版や他言語版のページが混ざることはありません。
+各バックエンド版は、上のカードから個別ページとして開きます。共通仕様は [共通要件定義・仕様書](/sns/requirements/) に置き、フレームワークごとの実装方針や解答コードは各版のページに分けます。サイドバーも版ごとに分けているため、NestJS版を開いたときにSpring Boot版や他言語版のページが混ざることはありません。
 
 ## 学習目標
 
@@ -369,7 +364,7 @@ flowchart LR
 
 ## NestJS版の技術スタックとバージョン
 
-以下は既存の詳細チュートリアルで扱う NestJS + Prisma 版の技術スタックです。言語別に実装する場合は、[SNS開発ロードマップ（言語別）](/sns/framework_roadmap/) の各スタックページを参照してください。
+以下は既存の詳細チュートリアルで扱う NestJS + Prisma 版の技術スタックです。他のバックエンドで実装する場合は、このページ上部のカードから該当スタックの個別ページへ進んでください。
 
 | 技術 | バージョン | 用途 |
 |---|---|---|
