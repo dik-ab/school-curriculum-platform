@@ -452,15 +452,16 @@ export class UsersController {
 
 ## 動作確認（API）
 
-[投稿機能とタイムライン](/sns/nestjs/posts/)までと同じく、curlで動作を確認します。バックエンドとDBが起動している状態で、aliceとbobの2ユーザーでログインし、トークンを変数に入れておきます（2人をまだ登録していない場合は[認証のページ](/sns/nestjs/auth/)の手順で登録してください）。
+[投稿機能とタイムライン](/sns/nestjs/posts/)までと同じく、curlで動作を確認します。バックエンドとDBが起動している状態で、aliceとbobの2ユーザーでログインし、それぞれのCookie jarに `sns_session` を保存しておきます（2人をまだ登録していない場合は[認証のページ](/sns/nestjs/auth/)の手順で登録してください）。
 
 ```bash
-ALICE=$(curl -s -X POST http://localhost:3000/auth/login \
+curl -i -c alice.cookies -X POST http://localhost:3000/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"alice@example.com","password":"password123"}' | sed 's/.*"accessToken":"\([^"]*\)".*/\1/')
-BOB=$(curl -s -X POST http://localhost:3000/auth/login \
+  -d '{"email":"alice@example.com","password":"password123"}'
+
+curl -i -c bob.cookies -X POST http://localhost:3000/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"bob@example.com","password":"password123"}' | sed 's/.*"accessToken":"\([^"]*\)".*/\1/')
+  -d '{"email":"bob@example.com","password":"password123"}'
 ```
 
 bobの投稿が1件もない場合は、[投稿機能とタイムライン](/sns/nestjs/posts/)の手順でbobとして1件投稿しておいてください（以下の例ではid: 4の投稿があるものとします）。
@@ -470,7 +471,7 @@ bobの投稿が1件もない場合は、[投稿機能とタイムライン](/sns
 aliceからbobのプロフィールを見ます。
 
 ```bash
-curl -s http://localhost:3000/users/bob -H "Authorization: Bearer $ALICE"
+curl -s -b alice.cookies http://localhost:3000/users/bob
 ```
 
 実行結果の例:
@@ -487,7 +488,7 @@ aliceがbobをフォローします。
 
 ```bash
 curl -i -s -X POST http://localhost:3000/users/bob/follow \
-  -H "Authorization: Bearer $ALICE"
+  -b alice.cookies
 ```
 
 実行結果の例:
@@ -502,7 +503,7 @@ Content-Type: application/json; charset=utf-8
 もう一度プロフィールを見ると、`followersCount`と`isFollowing`が変わっています。
 
 ```bash
-curl -s http://localhost:3000/users/bob -H "Authorization: Bearer $ALICE"
+curl -s -b alice.cookies http://localhost:3000/users/bob
 ```
 
 実行結果の例:
@@ -514,7 +515,7 @@ curl -s http://localhost:3000/users/bob -H "Authorization: Bearer $ALICE"
 フォロー中タイムラインにbobの投稿が**現れる**ことを確認します。
 
 ```bash
-curl -s http://localhost:3000/posts/timeline -H "Authorization: Bearer $ALICE"
+curl -s -b alice.cookies http://localhost:3000/posts/timeline
 ```
 
 実行結果の例:
@@ -532,9 +533,9 @@ curl -s http://localhost:3000/posts/timeline -H "Authorization: Bearer $ALICE"
 
 ```bash
 curl -i -s -X POST http://localhost:3000/users/bob/follow \
-  -H "Authorization: Bearer $ALICE"
+  -b alice.cookies
 curl -i -s -X POST http://localhost:3000/users/alice/follow \
-  -H "Authorization: Bearer $ALICE"
+  -b alice.cookies
 ```
 
 実行結果の例:
@@ -553,8 +554,8 @@ HTTP/1.1 400 Bad Request
 
 ```bash
 curl -i -s -X DELETE http://localhost:3000/users/bob/follow \
-  -H "Authorization: Bearer $ALICE"
-curl -s http://localhost:3000/posts/timeline -H "Authorization: Bearer $ALICE"
+  -b alice.cookies
+curl -s -b alice.cookies http://localhost:3000/posts/timeline
 ```
 
 実行結果の例（204のあと、タイムラインはaliceの投稿だけに戻る）:
