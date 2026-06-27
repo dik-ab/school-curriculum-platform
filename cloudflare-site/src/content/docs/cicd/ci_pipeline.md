@@ -148,7 +148,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -181,7 +181,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -210,7 +210,7 @@ jobs:
 - `jobs:` — `backend` と `frontend` の2つのジョブを定義します。**2つは別々のランナーで並列に実行されます**
 - `defaults.run.working-directory: backend` — このジョブ内のすべての `run` コマンドを `backend/` ディレクトリで実行する、という指定です。これがないと、リポジトリのルート（package.jsonがない場所）で `pnpm install --frozen-lockfile` が実行されて失敗します。各ステップに `working-directory:` を個別に書くこともできますが、`defaults` でまとめる方が簡潔です
 - `uses: actions/checkout@v4` — リポジトリ全体（backendもfrontendも）をランナーに取得します。`working-directory` は `run` にだけ効く設定なので、checkoutはルートに対して行われます
-- `uses: pnpm/action-setup@v4` — ランナーにpnpm（バージョン9）をインストールします。次の `cache: 'pnpm'` がpnpmを必要とするため、`setup-node` より前に置きます
+- `uses: pnpm/action-setup@v4` — ランナーにpnpm（バージョン10）をインストールします。次の `cache: 'pnpm'` がpnpmを必要とするため、`setup-node` より前に置きます
 - `uses: actions/setup-node@v4` — Node.js 20を準備します
 - `cache-dependency-path: backend/pnpm-lock.yaml` — pnpmキャッシュの鍵となるlockファイルの場所を指定します。lockファイルがルートにないリポジトリ構成では、この指定が必要です。これを忘れると「Dependencies lock file is not found」というエラーになります
 - `run: pnpm install --frozen-lockfile` — `backend/pnpm-lock.yaml` どおりに依存をインストールします
