@@ -48,10 +48,7 @@ DBはローカル検証ではSQLiteを既定にし、`DATABASE_URL` が `postgre
 |---|---|
 | メール確認 | `EmailVerificationToken`、確認URLのconsole出力、確認後ログイン許可 |
 | DMチャット | `github.com/gorilla/websocket`、`/chat` WebSocket、Cookie認証 |
-| 画像アップロード | 現在の解答コードはローカル疑似アップロードURLまで。S3 presigned URLは発展課題 |
-| ページネーション | 現在の解答コードには未収録。cursor queryは発展課題 |
 | CI/CD | `go test ./...`、`go build ./...`、GitHub Actions |
-| デプロイ | 現在の解答コードには未収録。multi-stage Dockerfile、ECS、RDSは発展課題 |
 
 ## ローカル起動の形
 
@@ -77,7 +74,7 @@ DATABASE_URL="postgres://postgres:postgres@localhost:5432/sns_go?sslmode=disable
 ```
 
 - `VITE_API_URL` はREST APIの向き先です。
-- `VITE_SOCKET_URL` はリアルタイム通信の向き先です。React側が `/chat` を付けて `ws://localhost:8000/chat` へ接続します。
+- `VITE_SOCKET_URL` はリアルタイム通信の向き先です。React側のWebSocketアダプタが `http` を `ws` に変換し、さらに `/chat` を付けて `ws://localhost:8000/chat` へ接続します。
 - `VITE_REALTIME_DRIVER="websocket"` により、共通ReactフロントはSocket.IOではなく素のWebSocketアダプタを使います。
 - `DATABASE_URL` を省略すると、ローカル確認用のSQLiteファイルを使います。
 
