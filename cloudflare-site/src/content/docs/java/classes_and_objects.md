@@ -2,7 +2,7 @@
 title: クラスとオブジェクト
 section_key: java
 section_title: Java基礎
-nav_order: 8
+nav_order: 10
 description: クラス、インスタンス、フィールド、メソッド、コンストラクタ、thisを学びます。
 ---
 
