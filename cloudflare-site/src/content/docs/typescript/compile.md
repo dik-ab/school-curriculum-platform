@@ -134,23 +134,23 @@ let result = add(5, "10");  // コンパイル時にエラー！
 
 **つまり、コードを実行する前にバグを見つけられる！**
 
-### 2. 古いブラウザでも動くJavaScriptに変換できる
+### 2. 実行環境に合わせたJavaScriptに変換できる
 
-TypeScriptは、最新のJavaScript機能を使って書けます。でも、コンパイル時に「古いブラウザでも動くJavaScript」に変換できます。
+TypeScriptは、最新のJavaScript機能を使って書けます。でも、コンパイル時に実行環境に合わせたJavaScriptへ変換できます。
 
 **TypeScript（最新の書き方）:**
 ```typescript
 const greet = (name: string): string => `Hello, ${name}`;
 ```
 
-**コンパイル後（古いブラウザでも動く）:**
+**コンパイル後（設定によっては古い書き方に変換される）:**
 ```javascript
 var greet = function(name) {
   return "Hello, " + name;
 };
 ```
 
-設定次第で、どのバージョンのJavaScriptに変換するか選べます。
+設定次第で、どのバージョンのJavaScriptに変換するか選べます。ただし、TypeScriptのコンパイルだけで全ての古い環境に対応できるわけではありません。実務では、必要に応じてビルドツールやpolyfillも組み合わせます。
 
 ### 3. コードの品質が自動的に保たれる
 
@@ -162,13 +162,13 @@ var greet = function(name) {
 
 ### 準備：TypeScriptのインストール
 
-まず、TypeScriptをインストールします（Node.jsが必要です）。
+まず、TypeScriptをインストールします（Node.jsが必要です）。教材では、プロジェクトごとにTypeScriptを入れる方法を使います。
 
 ```bash
-npm install -g typescript
+npm install --save-dev typescript
 ```
 
-これで、`tsc`（TypeScript Compiler）コマンドが使えるようになります。
+これで、そのプロジェクトの中で `npx tsc`（TypeScript Compiler）コマンドが使えるようになります。
 
 ### 手順1：TypeScriptファイルを作成
 
@@ -187,7 +187,7 @@ console.log(greet("太郎"));
 ターミナルで以下のコマンドを実行します。
 
 ```bash
-tsc app.ts
+npx tsc app.ts
 ```
 
 すると、同じディレクトリに`app.js`が生成されます。
@@ -213,16 +213,16 @@ Hello, 太郎
 
 ### 自動コンパイル（便利！）
 
-毎回`tsc`コマンドを打つのは面倒です。**ファイルを保存したら自動でコンパイル**されるようにできます。
+毎回`npx tsc`コマンドを打つのは面倒です。**ファイルを保存したら自動でコンパイル**されるようにできます。
 
 ```bash
-tsc --watch
+npx tsc --watch
 ```
 
 または、短く：
 
 ```bash
-tsc -w
+npx tsc -w
 ```
 
 このコマンドを実行すると、TypeScriptファイルを保存するたびに自動でコンパイルされます。とても便利なので、開発中はこのモードを使いましょう。
@@ -234,7 +234,7 @@ tsc -w
 ### tsconfig.jsonを作成
 
 ```bash
-tsc --init
+npx tsc --init
 ```
 
 このコマンドを実行すると、`tsconfig.json`が自動生成されます。
@@ -256,16 +256,16 @@ tsc --init
 }
 ```
 
-この設定があれば、単に`tsc`と入力するだけで、設定に従ってコンパイルされます。
+この設定があれば、単に`npx tsc`と入力するだけで、設定に従ってコンパイルされます。
 
 ```bash
-tsc
+npx tsc
 ```
 
 または、自動コンパイルモード：
 
 ```bash
-tsc -w
+npx tsc -w
 ```
 
 **重要：** tsconfig.jsonの各設定項目の詳細は、今は全て理解できなくても問題ありません。上記の設定をコピーして使えば動きます。「こういう設定ファイルがあるんだな」という程度の理解で大丈夫です。開発を続けていく中で、必要に応じて調べていけば十分です。
@@ -312,9 +312,9 @@ error TS2345: Argument of type 'string' is not assignable to parameter of type '
 - **srcフォルダ**は、TypeScriptファイルを置く場所（開発用）
 - コンパイルのメリット：
   - 実行前にエラーを発見できる
-  - 古いブラウザでも動くコードに変換できる
+  - 実行環境に合わせたJavaScriptに変換できる
   - コードの品質が保たれる
-- **tsc**コマンドでコンパイル、**tsc -w**で自動コンパイル
+- **npx tsc**コマンドでコンパイル、**npx tsc -w**で自動コンパイル
 - **tsconfig.json**で設定を管理できる
 - コンパイルエラーは怖くない、むしろありがたい存在
 
