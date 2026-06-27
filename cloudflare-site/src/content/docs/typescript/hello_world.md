@@ -272,11 +272,11 @@ Hello, TypeScript!
 
 ```typescript
 const greeting: string = "Hello, TypeScript!";
-const name: string = "太郎";
+const userName: string = "太郎";
 const age: number = 25;
 
 console.log(greeting);
-console.log(`私の名前は${name}です。`);
+console.log(`私の名前は${userName}です。`);
 console.log(`年齢は${age}歳です。`);
 ```
 
@@ -490,4 +490,4 @@ my-ts-app/
 
 **あなたは今、TypeScriptプロジェクトを一から作成できるようになりました！** これは大きな一歩です。
 
-次のページでは、練習問題を通して、ここまで学んだ知識を定着させましょう。
+次のページでは、例外処理とエラーハンドリングを学びます。入力値やAPI通信の失敗に対応できるようになりましょう。
