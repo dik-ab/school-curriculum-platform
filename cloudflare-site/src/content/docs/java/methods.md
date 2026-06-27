@@ -2,7 +2,7 @@
 title: メソッド
 section_key: java
 section_title: Java基礎
-nav_order: 7
+nav_order: 9
 description: メソッドの定義、引数、戻り値、void、オーバーロード、責務分離を学びます。
 ---
 
