@@ -405,4 +405,4 @@ on:
 
 ワークフローの読み書きができるようになりました。次の[CIパイプラインを作る](/cicd/ci_pipeline/)では、この知識を使って、NestJSバックエンドとReactフロントエンドからなるリポジトリに lint + test + build のCIを組み込み、Pull Request上でチェックが緑になるところまでを実践します。
 
-また、ここで読んだ `jekyll.yml` のような「ビルドして成果物をデプロイする」構成は、[ビルドとデプロイの流れ](/cicd/build_and_deploy_flow/)と[AWSデプロイ](/aws/deploy_from_cicd/)につながっていきます。
+また、ここで読んだ `ci.yml` のような「ビルドできることをPRごとに確認する」構成は、[ビルドとデプロイの流れ](/cicd/build_and_deploy_flow/)と[AWSデプロイ](/aws/deploy_from_cicd/)で、成果物を配置するCDへ発展していきます。
