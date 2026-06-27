@@ -26,6 +26,8 @@ DBはローカル検証ではSQLiteを既定にし、`DATABASE_URL` が `postgre
 
 リアルタイムDMは、共通ReactフロントのWebSocketアダプタを使います。Gin側は `/chat` でWebSocket upgradeを受け、JSONの `joinConversation`、`sendMessage`、`newMessage` イベントを扱います。
 
+解答コードには、互換検証用にSocket.IO関連の依存と `/socket.io/*` routeも残っています。ただし、この教材で動作確認する標準経路は素のWebSocketです。React側では必ず `VITE_REALTIME_DRIVER="websocket"` を設定し、`/chat` WebSocketへ接続します。
+
 > 実務では、Goでも最初から巨大な抽象化を作る必要はありません。まず動く1ファイル構成でHTTP、DB、Cookie、リアルタイム通信の流れを確認し、その後にhandler/service/repositoryへ分割すると、責務分離の理由が理解しやすくなります。
 
 ## 第1段階: 最低限SNS
