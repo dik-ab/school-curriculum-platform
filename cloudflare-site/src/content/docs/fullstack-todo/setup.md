@@ -1,7 +1,7 @@
 ---
 title: プロジェクトのセットアップ
 parent: "実践: フルスタックTodoアプリ"
-nav_order: 1
+nav_order: 3
 ---
 
 # プロジェクトのセットアップ

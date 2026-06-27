@@ -1,7 +1,7 @@
 ---
 title: "つなぎ込み: CORSとエラーハンドリング"
 parent: "実践: フルスタックTodoアプリ"
-nav_order: 4
+nav_order: 6
 ---
 
 # つなぎ込み: CORSとエラーハンドリング

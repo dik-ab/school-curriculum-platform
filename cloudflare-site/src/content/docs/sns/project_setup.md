@@ -1,7 +1,7 @@
 ---
-title: プロジェクトセットアップ
+title: "NestJS版: プロジェクトセットアップ"
 parent: SNS開発（最終プロジェクト）
-nav_order: 1
+nav_order: 30
 ---
 
 # プロジェクトセットアップ

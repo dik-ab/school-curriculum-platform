@@ -1,7 +1,7 @@
 ---
-title: AWSへの全体デプロイ
+title: "NestJS版: AWSへの全体デプロイ"
 parent: SNS開発（最終プロジェクト）
-nav_order: 10
+nav_order: 39
 ---
 
 # AWSへの全体デプロイ

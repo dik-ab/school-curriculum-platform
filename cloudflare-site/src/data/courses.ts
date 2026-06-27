@@ -100,8 +100,8 @@ export const phases: Phase[] = [
     grid: 'featured',
     cards: [
       { label: 'Git / GitHub', title: 'Git/GitHub基礎', description: 'commit、push、fetch、pull、stash、ブランチ、マージ、コンフリクト解消。', href: '/git/', accent: 'green', project: true },
-      { label: 'Todo Project', title: 'Todoアプリ実践', description: 'Reactフロント、API、DB、Docker、テストを言語別に実装。', href: '/fullstack-todo/', accent: 'green', project: true },
-      { label: 'SNS Project', title: 'SNS開発実践', description: '認証、投稿、いいね、フォロー、DM、Redis、画像、AWSデプロイ。', href: '/sns/', accent: 'green', project: true }
+      { label: 'Todo Project', title: 'Todoアプリ実践', description: '共通仕様をもとに、Reactフロント、API、DB、Dockerを言語別に実装。', href: '/fullstack-todo/', accent: 'green', project: true },
+      { label: 'SNS Project', title: 'SNS開発実践', description: '共通仕様をもとに、認証、投稿、いいね、フォロー、DM、画像、AWSデプロイを実装。', href: '/sns/', accent: 'green', project: true }
     ],
     stacks: ['TypeScript / NestJS', 'Java / Spring Boot', 'Python / FastAPI', 'PHP / Laravel', 'Go / Gin', 'Ruby / Rails']
   },

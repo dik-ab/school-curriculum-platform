@@ -1,7 +1,7 @@
 ---
-title: 投稿機能とタイムライン
+title: "NestJS版: 投稿機能とタイムライン"
 parent: SNS開発（最終プロジェクト）
-nav_order: 4
+nav_order: 33
 ---
 
 # 投稿機能とタイムライン

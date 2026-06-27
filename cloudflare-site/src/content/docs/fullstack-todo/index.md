@@ -20,6 +20,30 @@ permalink: /fullstack-todo/
 
 もう1つの大きな目的は、**RESTの感覚を体で掴むこと**です。[HTTPとREST](/backend/http_and_rest/)で学んだ「リソースをURLで表し、操作をHTTPメソッドで表す」という設計を、今回は自分でゼロから設計し、実装し、ブラウザから呼び出すところまで通しで行います。
 
+## 言語別Todo開発の進め方
+
+Todo開発は、Reactフロントエンドを共通にし、バックエンドだけを言語・フレームワークごとに差し替えられる構成にします。まず [共通要件定義・仕様書](/fullstack-todo/requirements/) で、画面、API、データモデル、エラー形式、完成条件を固定します。その後、[Todo開発ロードマップ（言語別）](/fullstack-todo/framework_roadmap/) から自分のスタックを選びます。
+
+<div class="course-grid wide">
+  <a class="course-card project" data-accent="green" href="/fullstack-todo/requirements/">
+    <span>Common</span>
+    <h3>共通要件定義・仕様書</h3>
+    <p>全スタックで変えない仕様。画面、API、DB、エラー形式、完成条件を定義します。</p>
+  </a>
+  <a class="course-card project" data-accent="ink" href="/fullstack-todo/framework_roadmap/">
+    <span>Roadmap</span>
+    <h3>言語別ロードマップ</h3>
+    <p>NestJS、Spring Boot、FastAPI、Laravel、Gin/GORM、Railsの実装方針を選びます。</p>
+  </a>
+  <a class="course-card project" data-accent="blue" href="/fullstack-todo/setup/">
+    <span>TypeScript</span>
+    <h3>NestJS + Prisma版</h3>
+    <p>既存の詳細チュートリアル。まず動くTodoアプリを作る標準ルートです。</p>
+  </a>
+</div>
+
+既存の詳細チュートリアルは NestJS + Prisma 版として残しています。別スタックで作る場合も、最初に共通仕様を読み、同じAPIと完成条件を満たすように実装してください。
+
 ## 学習目標
 
 - フロントエンド（React）・API（NestJS）・データベース（PostgreSQL）の3層構成を自分の手で組み上げ、通しで動かせる
@@ -150,6 +174,8 @@ erDiagram
 
 | ページ | 内容 |
 |---|---|
+| [共通要件定義・仕様書](/fullstack-todo/requirements/) | 全スタックで変えない画面、API、DB、エラー形式、完成条件 |
+| [Todo開発ロードマップ（言語別）](/fullstack-todo/framework_roadmap/) | NestJS、Spring Boot、FastAPI、Laravel、Gin/GORM、Railsの実装方針 |
 | [プロジェクトのセットアップ](/fullstack-todo/setup/) | pnpmの導入、リポジトリ構成、DBの起動、Prismaの初期化 |
 | [バックエンド: Todo APIの実装](/fullstack-todo/backend/) | NestJS + PrismaでCRUD APIを実装し、curlで動作確認 |
 | [フロントエンド: 画面の実装](/fullstack-todo/frontend/) | Reactで一覧・追加・完了切替・削除の画面を実装 |

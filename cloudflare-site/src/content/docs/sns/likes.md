@@ -1,7 +1,7 @@
 ---
-title: いいね機能
+title: "NestJS版: いいね機能"
 parent: SNS開発（最終プロジェクト）
-nav_order: 5
+nav_order: 34
 ---
 
 # いいね機能

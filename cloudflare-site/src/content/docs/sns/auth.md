@@ -1,7 +1,7 @@
 ---
-title: ユーザー登録とログイン（JWT認証）
+title: "NestJS版: ユーザー登録とログイン（JWT認証）"
 parent: SNS開発（最終プロジェクト）
-nav_order: 2
+nav_order: 31
 ---
 
 # ユーザー登録とログイン（JWT認証）

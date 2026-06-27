@@ -1,7 +1,7 @@
 ---
 title: "バックエンド: Todo APIの実装"
 parent: "実践: フルスタックTodoアプリ"
-nav_order: 2
+nav_order: 4
 ---
 
 # バックエンド: Todo APIの実装

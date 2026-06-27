@@ -1,7 +1,7 @@
 ---
-title: DMチャット（リアルタイム）
+title: "NestJS版: DMチャット（リアルタイム）"
 parent: SNS開発（最終プロジェクト）
-nav_order: 7
+nav_order: 36
 ---
 
 # DMチャット（リアルタイム）

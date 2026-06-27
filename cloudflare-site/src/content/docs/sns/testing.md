@@ -1,7 +1,7 @@
 ---
-title: SNSのテストを書く
+title: "NestJS版: SNSのテストを書く"
 parent: SNS開発（最終プロジェクト）
-nav_order: 9
+nav_order: 38
 ---
 
 # SNSのテストを書く

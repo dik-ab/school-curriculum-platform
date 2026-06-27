@@ -1,7 +1,7 @@
 ---
-title: メールアドレス確認（SES）
+title: "NestJS版: メールアドレス確認（SES）"
 parent: SNS開発（最終プロジェクト）
-nav_order: 3
+nav_order: 32
 ---
 
 # メールアドレス確認（SES）

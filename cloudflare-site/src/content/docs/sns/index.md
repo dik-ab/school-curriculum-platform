@@ -30,6 +30,30 @@ permalink: /sns/
 
 このように、**どの章の知識も欠けると完成しません**。逆に言えば、途中で詰まった箇所は「どの章の理解が曖昧だったか」を教えてくれるサインです。
 
+## 言語別SNS開発の進め方
+
+SNS開発は、Reactフロントエンドを共通にし、バックエンドだけを言語・フレームワークごとに差し替えられる構成にします。まず [共通要件定義・仕様書](/sns/requirements/) で、画面、API、データモデル、認証方式、エラー形式を固定します。その後、[SNS開発ロードマップ（言語別）](/sns/framework_roadmap/) から自分のスタックを選びます。
+
+<div class="course-grid wide">
+  <a class="course-card project" data-accent="green" href="/sns/requirements/">
+    <span>Common</span>
+    <h3>共通要件定義・仕様書</h3>
+    <p>全スタックで変えない仕様。HttpOnly Cookie認証、API、DB、完成条件を定義します。</p>
+  </a>
+  <a class="course-card project" data-accent="ink" href="/sns/framework_roadmap/">
+    <span>Roadmap</span>
+    <h3>言語別ロードマップ</h3>
+    <p>NestJS、Spring Boot、FastAPI、Laravel、Gin/GORM、Railsの入口です。</p>
+  </a>
+  <a class="course-card project" data-accent="blue" href="/ai/">
+    <span>AI</span>
+    <h3>AI開発入門</h3>
+    <p>巨大な仕様をAIに渡し、実装やレビューの補助に使う方法を学びます。</p>
+  </a>
+</div>
+
+既存の詳細チュートリアルは NestJS + Prisma 版として残しています。現在の既存版は `localStorage` + `Authorization: Bearer` のJWT方式で実装されていますが、新しい言語別カリキュラムでは [共通要件定義・仕様書](/sns/requirements/) に合わせて HttpOnly Cookie セッション方式を標準にします。
+
 ## 学習目標
 
 - これから作るSNSの機能要件・画面構成・データ設計（ER図）・本番アーキテクチャを説明できる
@@ -311,9 +335,9 @@ flowchart LR
 
 「開発ではViteが画面を配信し、本番ではS3+CloudFrontが配信する」「開発ではコンテナのDB、本番ではRDS」という**対応関係**を頭に置いておくと、デプロイのページ（[AWSへの全体デプロイ](/sns/deploy/)）で環境変数を切り替えていく作業の意味がすっと入ってきます。アプリのコード自体は、環境変数の値が違うだけで開発と本番で同じものが動きます。
 
-## 技術スタックとバージョン
+## NestJS版の技術スタックとバージョン
 
-使う技術はすべて既習のものです。バージョンはカリキュラム全体の標準に固定します。
+以下は既存の詳細チュートリアルで扱う NestJS + Prisma 版の技術スタックです。言語別に実装する場合は、[SNS開発ロードマップ（言語別）](/sns/framework_roadmap/) の各スタックページを参照してください。
 
 | 技術 | バージョン | 用途 |
 |---|---|---|
@@ -349,9 +373,9 @@ sns-app/
 
 CIのワークフロー（`ci.yml`）は[CIパイプラインを作る](/cicd/ci_pipeline/)の手順で作成済みのものを流用し、デプロイ用のワークフローは[AWSへの全体デプロイ](/sns/deploy/)で作成します。フロントエンド・バックエンド・インフラを1つのリポジトリに同居させる構成を**モノレポ（monorepo、単一リポジトリ）**と呼びます。採用する理由は[プロジェクトセットアップ](/sns/project_setup/)で説明します。
 
-### ページの順番
+### NestJS版ページの順番
 
-このセクションは11ページ構成です。各ページが「1つの機能の追加」に対応しており、**前のページの完成形が次のページの出発点**になります。順番に進めてください。
+既存のNestJS版チュートリアルは11ページ構成です。各ページが「1つの機能の追加」に対応しており、**前のページの完成形が次のページの出発点**になります。順番に進めてください。
 
 ```mermaid
 flowchart TD
