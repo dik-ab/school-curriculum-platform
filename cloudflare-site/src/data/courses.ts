@@ -5,6 +5,7 @@ export type CourseCard = {
   href?: string;
   accent: 'green' | 'blue' | 'amber' | 'ink' | 'purple';
   project?: boolean;
+  prerequisites?: { title: string; href: string }[];
 };
 
 export type Phase = {
@@ -18,6 +19,15 @@ export type Phase = {
 };
 
 export const phases: Phase[] = [
+  {
+    id: 'web-foundation',
+    number: '00',
+    title: 'Web基礎',
+    summary: 'Webサービス全体の地図を先に押さえる。',
+    cards: [
+      { label: 'Web Map', title: 'Web全体像', description: 'ブラウザ、フロントエンド、API、バックエンド、データベース、インフラ、CI/CDの役割を図で理解する。', href: '/web-basics/', accent: 'blue' }
+    ]
+  },
   {
     id: 'intro',
     number: '01',
@@ -48,7 +58,6 @@ export const phases: Phase[] = [
     title: 'バックエンド言語基礎',
     summary: 'フレームワークに入る前に、言語そのものを押さえる。',
     cards: [
-      { label: 'TypeScript', title: 'TypeScript基礎', description: '型、class、module、async/await、DTOの前提。', href: '/typescript/', accent: 'amber' },
       { label: 'Java', title: 'Java基礎', description: '型、class、interface、collection、例外処理。', href: '/java/', accent: 'amber' },
       { label: 'Python', title: 'Python基礎', description: '関数、型ヒント、class、venv、FastAPIの前提。', href: '/python/', accent: 'amber' },
       { label: 'PHP', title: 'PHP基礎', description: '型、配列、関数、class、Composer、Laravelの前提。', href: '/php/', accent: 'amber' },
@@ -75,12 +84,12 @@ export const phases: Phase[] = [
     summary: '言語別にAPI、ORM、Migration、軽いテストまで実装する。',
     grid: 'wide',
     cards: [
-      { label: 'NestJS', title: 'NestJS + Prisma', description: 'NestJS APIにPrismaを接続し、Migration、CRUD、基本的なテストまで実装。', href: '/database/prisma_setup/', accent: 'ink' },
-      { label: 'Spring', title: 'Spring Boot + JPA', description: 'Spring MVC、JPA/Hibernate、Flyway、JUnit。', accent: 'ink' },
-      { label: 'FastAPI', title: 'FastAPI + SQLAlchemy', description: 'API、Pydantic、SQLAlchemy、Alembic、pytest。', accent: 'ink' },
-      { label: 'Laravel', title: 'Laravel + Eloquent', description: 'MVC、Eloquent、Laravel Migrations、Pest/PHPUnit。', accent: 'ink' },
-      { label: 'Go', title: 'Gin + sqlc / GORM', description: 'REST API、DB接続、Migration、testing。', accent: 'ink' },
-      { label: 'Rails', title: 'Rails + Active Record', description: 'Rails API、Active Record、Migration、RSpec。', accent: 'ink' }
+      { label: 'NestJS', title: 'NestJS + Prisma', description: 'NestJS APIにPrismaを接続し、Migration、CRUD、基本的なテストまで実装。', href: '/database/prisma_setup/', accent: 'ink', prerequisites: [{ title: 'TypeScript基礎', href: '/typescript/' }] },
+      { label: 'Spring', title: 'Spring Boot + JPA', description: 'Spring MVC、JPA/Hibernate、Flyway、JUnit。', accent: 'ink', prerequisites: [{ title: 'Java基礎', href: '/java/' }] },
+      { label: 'FastAPI', title: 'FastAPI + SQLAlchemy', description: 'API、Pydantic、SQLAlchemy、Alembic、pytest。', accent: 'ink', prerequisites: [{ title: 'Python基礎', href: '/python/' }] },
+      { label: 'Laravel', title: 'Laravel + Eloquent', description: 'MVC、Eloquent、Laravel Migrations、Pest/PHPUnit。', accent: 'ink', prerequisites: [{ title: 'PHP基礎', href: '/php/' }] },
+      { label: 'Go', title: 'Gin + sqlc / GORM', description: 'REST API、DB接続、Migration、testing。', accent: 'ink', prerequisites: [{ title: 'Go基礎', href: '/go/' }] },
+      { label: 'Rails', title: 'Rails + Active Record', description: 'Rails API、Active Record、Migration、RSpec。', accent: 'ink', prerequisites: [{ title: 'Ruby基礎', href: '/ruby/' }] }
     ]
   },
   {
