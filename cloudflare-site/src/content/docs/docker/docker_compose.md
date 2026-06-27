@@ -48,6 +48,32 @@ docker compose up -d
 
 「長い起動コマンド」ではなく、「読める設定ファイル」にするのがComposeの価値です。
 
+`compose.yaml` 1枚で、複数のコンテナ・ボリューム（保存領域）・ネットワーク（通信路）をまとめて定義します。全体像を図にすると次のようになります。
+
+```mermaid
+flowchart TB
+    Y["compose.yaml<br>設定ファイル"]
+    subgraph proj["Composeプロジェクト"]
+        subgraph net["app-network（自動で作られる）"]
+            S1["web1<br>コンテナ"]
+            S2["web2<br>コンテナ"]
+        end
+        V[("ボリューム<br>保存領域")]
+    end
+    Y -->|"services を読む"| S1
+    Y -->|"services を読む"| S2
+    Y -->|"volumes を読む"| V
+    S1 -.->|"データを保存"| V
+
+    style Y fill:#fce4ec,stroke:#c2185b
+    style S1 fill:#e8f5e9,stroke:#2e7d32
+    style S2 fill:#e8f5e9,stroke:#2e7d32
+    style V fill:#ede7f6,stroke:#6a1b9a
+    style net fill:#eceff1,stroke:#546e7a
+```
+
+図の読み方: `compose.yaml` に書いた内容を元に、Composeがコンテナ（緑）・ボリューム（紫）・ネットワーク（灰色の枠）をまとめて用意してくれます。1つのファイルが「設計図」になっているとイメージしてください。
+
 ## 最初のcompose.yaml
 
 作業フォルダを作ります。
@@ -221,6 +247,33 @@ http://localhost:8082
 
 このように、Composeでは複数のコンテナを1つの設定ファイルで管理できます。
 
+`docker compose up -d` を1回打つと、`compose.yaml` に書いたサービスがまとめて立ち上がります。その流れを図にします。
+
+```mermaid
+flowchart LR
+    U["あなた<br>docker compose up -d"]
+    Y["compose.yaml"]
+    subgraph proj["まとめて起動"]
+        W1["web1<br>コンテナ起動"]
+        W2["web2<br>コンテナ起動"]
+    end
+    U --> Y
+    Y -->|"web1 を起動"| W1
+    Y -->|"web2 を起動"| W2
+    W1 -->|"localhost:8081"| B1["ブラウザ"]
+    W2 -->|"localhost:8082"| B2["ブラウザ"]
+
+    style U fill:#fce4ec,stroke:#c2185b
+    style Y fill:#fff3e0,stroke:#ef6c00
+    style W1 fill:#e8f5e9,stroke:#2e7d32
+    style W2 fill:#e8f5e9,stroke:#2e7d32
+    style B1 fill:#fce4ec,stroke:#c2185b
+    style B2 fill:#fce4ec,stroke:#c2185b
+    style proj fill:#eceff1,stroke:#546e7a
+```
+
+図の読み方: コマンド1つで複数のコンテナ（緑）が同時に立ち上がります。`web1` は8081番、`web2` は8082番というように、それぞれ別の入口でブラウザ（ピンク）からアクセスできます。
+
 ## サービス名はCompose内の名前になる
 
 Composeでは、`web1` や `web2` のようなサービス名が、Compose内の名前として使われます。
@@ -233,7 +286,22 @@ flowchart LR
     C --- N
 ```
 
-あとでPostgreSQLを立てるとき、`postgres` というサービス名を付けると、同じComposeネットワーク内では `postgres` という名前で参照できます。今は「サービス名はただのラベルではなく、Compose内の名前になる」と覚えておけば十分です。
+あとでPostgreSQLを立てるとき、`postgres` というサービス名を付けると、同じComposeネットワーク内では `postgres` という名前で参照できます。同じネットワークの中では、コンテナはお互いをサービス名で呼び出せます。たとえばアプリコンテナからDBコンテナへは `postgres` という名前で接続できます。
+
+```mermaid
+flowchart LR
+    subgraph net["app-network（同じComposeネットワーク）"]
+        A["app<br>アプリコンテナ"]
+        D["postgres<br>DBコンテナ"]
+    end
+    A -->|"postgres:5432 で接続"| D
+
+    style A fill:#e8f5e9,stroke:#2e7d32
+    style D fill:#e8f5e9,stroke:#2e7d32
+    style net fill:#eceff1,stroke:#546e7a
+```
+
+図の読み方: 同じネットワーク（灰色の枠）に入ったコンテナ同士は、IPアドレスを気にせずサービス名だけで通信できます。`app` から見たDBの住所は `postgres:5432` です。今は「サービス名はただのラベルではなく、Compose内の名前になる」と覚えておけば十分です。
 
 ## このページで必ず覚えること
 
