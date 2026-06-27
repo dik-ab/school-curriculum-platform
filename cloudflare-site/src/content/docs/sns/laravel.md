@@ -85,8 +85,8 @@ npm run dev
 | セットアップ | `.env.example`、`bootstrap/app.php`、`routes/web.php` |
 | 認証 | `SnsController`、`SessionToken`、`EmailVerificationToken` |
 | 投稿 | `Post` model、`posts` migration、`POST /posts`、`GET /posts` |
-| いいね | `Like` model、unique制約、`POST /posts/:id/likes` |
-| フォロー | `Follow` model、`POST /users/:username/follow` |
+| いいね | `Like` model、unique制約、`firstOrCreate`、操作後のPost JSON |
+| フォロー | `Follow` model、`firstOrCreate` / `delete`、操作後のProfile JSON |
 | プロフィール | `PATCH /users/me`、`GET /users/:username` |
 | テスト | `tests/Feature/SnsApiTest.php` |
 
