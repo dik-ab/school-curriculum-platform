@@ -72,6 +72,26 @@ erDiagram
     }
 ```
 
+外部キー `authorId` が実際にどうつながるのかを、具体的なデータで見てみましょう。
+
+```mermaid
+flowchart LR
+    subgraph U["USER テーブル"]
+        U1["id = 1<br>name = 太郎"]
+    end
+    subgraph P["POST テーブル"]
+        P1["id = 1<br>content = おはよう<br>authorId = 1"]
+        P2["id = 2<br>content = いい天気<br>authorId = 1"]
+    end
+    P1 -->|"authorId が指す"| U1
+    P2 -->|"authorId が指す"| U1
+    style U1 fill:#e3f2fd,stroke:#1565c0
+    style P1 fill:#fff3e0,stroke:#ef6c00
+    style P2 fill:#fff3e0,stroke:#ef6c00
+```
+
+**図の読み方**: POST側の `authorId` 列の値（1）が、USER側の `id`（1）と一致しています。この「値の一致」だけが2つのテーブルを結ぶ実体であり、矢印（リレーション）はその一致をたどっているにすぎない、と読んでください。
+
 マイグレーションを実行してテーブルを作ります（[前々ページ](/database/schema_and_migration/)の復習です）。
 
 ```bash
@@ -163,6 +183,20 @@ pnpm exec ts-node prisma/playground.ts
 
 - `posts: { create: [...] }` — ユーザーの作成と同時に、そのユーザーに属する投稿を作ります。`authorId` を自分で書いていないのに、各投稿の `authorId` に太郎のidが自動で入っている点に注目してください。リレーション定義のおかげです
 - `include: { posts: true }` — 戻り値に**リレーション先（posts）を含める**指定です。includeについては後で詳しく説明します
+
+いま作られた「太郎と2つの投稿」を図にすると、1対多の形がはっきり見えます。
+
+```mermaid
+flowchart TB
+    U["太郎<br>USER id = 1"]
+    U --> P1["投稿 id = 1<br>おはようございます"]
+    U --> P2["投稿 id = 2<br>今日はいい天気"]
+    style U fill:#e3f2fd,stroke:#1565c0
+    style P1 fill:#fff3e0,stroke:#ef6c00
+    style P2 fill:#fff3e0,stroke:#ef6c00
+```
+
+**図の読み方**: 1人のユーザー（上）から複数の投稿（下）へ枝が分かれています。枝の根元が常に1人である点が「1対多」の『1』、枝先が複数ありうる点が『多』を表します。
 
 既存のユーザーに投稿を追加する場合は、`connect`（既存の行へつなぐ）を使います。
 
@@ -310,6 +344,28 @@ erDiagram
 
 LIKEテーブルの1行が「いいね1回」に対応します。USERとPOSTの間に直接の線はなく、LIKEを経由して多対多が実現されている点を図で確認してください。
 
+中間テーブルが「橋渡し」をする様子を、具体的ないいねのデータでも見てみましょう。
+
+```mermaid
+flowchart LR
+    U1["太郎<br>USER id=1"]
+    U2["花子<br>USER id=2"]
+    L1["LIKE<br>userId=2 postId=1"]
+    L2["LIKE<br>userId=1 postId=3"]
+    P1["投稿A<br>POST id=1"]
+    P3["投稿C<br>POST id=3"]
+    U2 --> L1 --> P1
+    U1 --> L2 --> P3
+    style U1 fill:#e3f2fd,stroke:#1565c0
+    style U2 fill:#e3f2fd,stroke:#1565c0
+    style L1 fill:#f3e5f5,stroke:#6a1b9a
+    style L2 fill:#f3e5f5,stroke:#6a1b9a
+    style P1 fill:#fff3e0,stroke:#ef6c00
+    style P3 fill:#fff3e0,stroke:#ef6c00
+```
+
+**図の読み方**: USER（左）とPOST（右）は直接つながらず、必ず中央のLIKE（中間テーブル）を経由しています。LIKEの1行が「誰が・どの投稿に」の1組で、この行を増やすだけで自由な多対多を表現できる、と読んでください。
+
 ### スキーマ定義
 
 **`prisma/schema.prisma`**（Likeを追加し、User/Postにリレーションフィールドを追記）
@@ -443,6 +499,26 @@ playgroundの続きに書いて試しましょう（冒頭のdeleteManyに `awai
 **コード解説**
 
 - `likes: { some: { userId: hanako.id } }` — 「likesの中に、userIdが花子であるものが**1つでも存在する**(some)投稿」という条件です。リレーション先の条件には `some`（いずれかが一致）のほか、`every`（すべて一致）、`none`（1つも一致しない）が使えます
+
+## 補足：1対1のリレーション
+
+このページでは1対多と多対多を扱いましたが、リレーションにはもう1つ「**1対1（one-to-one）**」があります。たとえば「1人のユーザーは1つだけプロフィール（Profile）を持つ」という関係です。ここでコードを書く必要はありませんが、型として知っておきましょう。
+
+```mermaid
+erDiagram
+    USER ||--|| PROFILE : "1人が1つだけ持つ"
+    USER {
+        int id PK
+        string name
+    }
+    PROFILE {
+        int id PK
+        string bio
+        int userId FK "UNIQUE"
+    }
+```
+
+**図の読み方**: 両端がどちらも『1』（`||`）になっているのが1対1の印です。1対多との違いは、外部キー `userId` に `UNIQUE` 制約を付けて「1人につき1行まで」に制限する点で、これにより「1人＝1プロフィール」が保証されます。
 
 ## 理解度チェック
 
