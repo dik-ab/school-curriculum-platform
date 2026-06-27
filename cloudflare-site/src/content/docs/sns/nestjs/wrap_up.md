@@ -143,7 +143,7 @@ flowchart LR
 
 - [ ] ポーリング・SSE・WebSocketの違いと、チャットにWebSocketを選ぶ理由を説明できる
 - [ ] Conversationを `userOneId < userTwoId` の規約で一意にする設計の狙いを説明できる
-- [ ] WebSocket接続時のJWT検証（handshake.auth.token）がなぜ必要か説明できる
+- [ ] WebSocket接続時にhandshakeのCookieから `sns_session` を読み、JWTを検証する理由を説明できる
 - [ ] roomの概念と、`conversation:${id}` というroom設計を説明できる
 - [ ] 「DBに保存してからemitする」順序にした理由を説明できる
 - [ ] join時・送信時に「会話の当事者か」を検証しないと何が起きるか説明できる
