@@ -3,106 +3,60 @@ title: Next.js入門
 section_key: nextjs
 section_title: Next.js入門
 nav_order: 8
+has_children: true
+permalink: /nextjs/
 description: Reactを土台にしたフルスタック寄りのフレームワークとして、Next.jsの役割、ルーティング、レンダリング、サーバー機能を学びます。
 ---
 
 # Next.js入門
 
+Next.jsは、Reactを土台にして**ページ構成、サーバー側の処理、データ取得、デプロイしやすい設計**までまとめて扱うためのフレームワークです。
+
+Reactを学ぶと、コンポーネント、props、state、hooksを使って画面を作れるようになります。ただし実務のWebアプリでは、URLごとのページ分割、SEO、初回表示速度、サーバー側のデータ取得、認証、APIの入口も必要になります。Next.jsは、その不足しやすい部分をReactの上に足します。
+
+> このカリキュラムでは、TodoアプリとSNSアプリの実装解説はReactを基準に進めます。Next.jsは「Reactをアプリ全体に広げると何が変わるか」を理解するために学びます。
+
 ## フレームワークとは
 
 フレームワークは、アプリを作るための「決まった作り方」と「便利な機能」をまとめたものです。
 
-Reactだけでも画面は作れますが、実務のWebアプリでは次のようなことも必要になります。
+ライブラリであるReactはUI部品を作る力が中心です。Next.jsは、Reactで作ったUIを「URLを持つページ」「サーバーでデータを準備する画面」「APIを持つWebアプリ」に広げるための枠組みです。
 
-- URLごとにページを分ける
-- 初回表示を速くする
-- サーバー側でデータを取得する
-- APIの入口を用意する
-- 画像やフォントを最適化する
-- 本番環境にデプロイしやすくする
+## 学習ページ
 
-Next.jsは、Reactを土台にして、これらをまとめて扱えるようにしたフレームワークです。
-
-> 実務では、Reactは「UI部品を作る力」、Next.jsは「ページ、サーバー処理、デプロイまで含めてアプリ全体を作る力」と考えると分かりやすいです。
-
-## Next.jsでできること
-
-| 機能 | 何を解決するか |
+| ページ | 内容 |
 | --- | --- |
-| ファイルベースルーティング | ファイル構成からURLを作れる |
-| Server Components | サーバー側でデータ取得しやすい |
-| Client Components | クリックや入力などブラウザ上の操作を扱える |
-| API Route / Route Handler | 簡単なAPIを同じプロジェクト内に作れる |
-| SSR / SSG | 表示速度やSEOを考えたページ生成ができる |
+| [Next.jsとは何か](/nextjs/what_is_nextjs/) | Next.jsの役割、Reactだけでは足りない場面、現場での使われ方 |
+| [Reactとの違い](/nextjs/react_difference/) | ライブラリとフレームワークの違い、Server Components、Client Components |
+| [ルーティングとレンダリング](/nextjs/routing_and_rendering/) | App Router、layout、page、SSR/SSGの考え方 |
+| [サーバー機能とAPI](/nextjs/server_features/) | Route Handler、サーバー側データ取得、バックエンドとの分担 |
+| [このカリキュラムでの扱い](/nextjs/curriculum_scope/) | Todo/SNSをReact中心で扱う理由、Next.jsをどこまで学ぶか |
 
-## Reactとの関係
-
-Next.jsはReactの代わりではありません。Reactの上に乗るフレームワークです。
-
-Reactで学んだ内容は、そのままNext.jsでも使います。
-
-- コンポーネント
-- props
-- state
-- hooks
-- フォーム
-- API通信
-
-そのうえで、Next.jsでは「どのURLでどのページを表示するか」「サーバーでどこまで処理するか」を追加で学びます。
-
-## 最小イメージ
-
-Next.jsでは、`app` フォルダの中にページを作ります。
-
-```tsx
-export default function HomePage() {
-  return <h1>Home</h1>;
-}
+```mermaid
+flowchart LR
+    A["React基礎<br/>UI部品・state"] --> B["Next.jsとは<br/>アプリ全体の枠組み"]
+    B --> C["Reactとの違い<br/>server / client"]
+    C --> D["routing<br/>page / layout"]
+    D --> E["server features<br/>Route Handler"]
+    E --> F["React中心の実践へ<br/>Todo / SNS"]
+    style A fill:#e3f2fd,stroke:#1565c0
+    style E fill:#fff3e0,stroke:#ef6c00
+    style F fill:#e8f5e9,stroke:#2e7d32
 ```
 
-コードの意味です。
+## 最初に押さえること
 
-- `export default function HomePage()` は、ページコンポーネントを定義しています。
-- `return <h1>Home</h1>;` は、画面に表示するHTML相当の内容です。
-- Next.jsでは、このようなページファイルがURLと結びつきます。
+Next.jsを学ぶときは、最初から「全部バックエンドもNext.jsで作る」と考えない方が安全です。まずは次の順番で理解します。
 
-## バックエンドもできるとはどういうことか
-
-Next.jsは、画面だけでなくサーバー側の処理も一部書けます。
-
-例えば、次のような用途です。
-
-- フォーム送信を受け取る
-- DBからデータを取得する
-- ログイン状態を確認する
-- 外部APIを呼び出して画面に渡す
-
-ただし、複雑な業務APIを全部Next.jsに詰め込むべきとは限りません。大きなアプリでは、Next.jsをフロントエンド、NestJSやSpring BootをバックエンドAPIとして分ける構成もよくあります。
-
-## このカリキュラムでの位置づけ
-
-まずはReact基礎を学びます。その後、Next.jsでは次を扱うとよいです。
-
-1. App Routerの考え方
-2. ページとレイアウト
-3. Server ComponentとClient Component
-4. データ取得
-5. Route Handlerによる簡単なAPI
-6. 認証やDB接続は発展課題
-
-## 練習問題
-
-### 問題: ReactとNext.jsの違いを説明する
-
-ReactとNext.jsの違いを、1〜2文で説明してください。
-
-**答え例:**
-
-ReactはUIを部品として作るためのライブラリです。Next.jsはReactを土台に、ルーティング、サーバー側の処理、ページ生成、デプロイしやすい構成まで提供するフレームワークです。
+1. Reactのコンポーネントがそのまま使える
+2. `app` ディレクトリのファイル構成がURLになる
+3. サーバーで動くコンポーネントとブラウザで動くコンポーネントが分かれる
+4. 軽いAPIはRoute Handlerで書ける
+5. 大きな業務ロジックはNestJSやSpring Bootなど別APIに分けることも多い
 
 ## 参考リンク
 
 - [Next.js Docs](https://nextjs.org/docs) - Next.js公式ドキュメントです。
-- [Next.js Learn](https://nextjs.org/learn) - 公式の学習教材です。App Routerやデータ取得を順番に学べます。
+- [Next.js Learn](https://nextjs.org/learn) - 公式の学習教材です。
 - [Next.js: Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components) - サーバー側とブラウザ側の役割分担を確認できます。
-- [Vercel: Next.js Examples](https://vercel.com/templates/next.js) - 実際のテンプレートを見ながら構成を学べます。
+- [Next.js: Route Handlers](https://nextjs.org/docs/app/getting-started/route-handlers) - Next.js内でAPIの入口を作る方法を確認できます。
