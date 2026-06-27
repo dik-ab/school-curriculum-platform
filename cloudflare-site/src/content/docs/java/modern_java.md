@@ -2,7 +2,7 @@
 title: モダンJavaの入口
 section_key: java
 section_title: Java基礎
-nav_order: 13
+nav_order: 15
 description: ラムダ式、Stream API、Optional、record、JUnitの入口を学びます。
 ---
 
