@@ -8,7 +8,7 @@ section_title: SNS FastAPI + SQLAlchemy版
 
 # FastAPI + SQLAlchemy版
 
-Pythonで型付きAPIを素早く作るルートです。Pydanticによる入力検証、SQLAlchemyによるDB操作、AlembicによるMigration、pytestによるテストを組み合わせます。
+Pythonで型付きAPIを素早く作るルートです。Pydanticによる入力検証、SQLAlchemyによるDB操作、python-socketioによるリアルタイム通信、pytestによるテストを組み合わせます。
 
 ## 前提知識
 
@@ -28,15 +28,15 @@ DB操作はSQLAlchemy 2.xで書きます。教材本文ではPostgreSQLへ広げ
 
 ## 第1段階: 最低限SNS
 
-| 章 | FastAPIで作る主なファイル |
+| 章 | 現在の解答コードで対応する主なファイル |
 |---|---|
-| セットアップ | `main.py`、`database.py`、Alembic、Docker Compose |
-| 認証 | `auth/router.py`、`auth/service.py`、`get_current_user` dependency |
-| 投稿 | `posts/router.py`、`posts/service.py`、SQLAlchemy query |
-| いいね | `likes` 複合主キー、いいね/解除は冪等な204 |
-| フォロー | self join、フォロー中タイムライン |
-| プロフィール | Pydantic schema、部分更新 |
-| テスト | pytest、TestClient、テストDB |
+| セットアップ | `app/main.py`、`app/database.py`、`app/config.py`、`.env.example` |
+| 認証 | `app/main.py` の `/auth/*`、`app/security.py` のCookie/JWT dependency |
+| 投稿 | `app/main.py` の `/posts`、`Post` model、SQLAlchemy query |
+| いいね | `Like` 複合主キー、いいね/解除は冪等な204 |
+| フォロー | `Follow` model、self join、フォロー中タイムライン |
+| プロフィール | `app/schemas.py` のPydantic schema、`PATCH /users/me` |
+| テスト | `tests/test_api.py`、`tests/test_realtime.py`、pytest、TestClient、Uvicorn実サーバー |
 
 ## 第2段階: 応用SNS
 
@@ -69,8 +69,9 @@ VITE_SOCKET_URL="http://localhost:8000"
 
 ## 現在の解答コードの注意点
 
-現在のFastAPI回答コードは、教材としてローカルで投稿・いいね・フォロー・プロフィール・リアルタイムDMを確認できることを優先しています。そのため、共通仕様の理想形より簡略化している箇所があります。
+現在のFastAPI解答コードは、教材としてローカルで投稿・いいね・フォロー・プロフィール・リアルタイムDMを確認できることを優先しています。そのため、共通仕様の理想形より簡略化している箇所があります。
 
+- ファイル分割は、学習用に `app/main.py` へHTTP routeとSocket.IO eventを集約しています。`auth/router.py` や `posts/service.py` のような分割は、コード量が増えた後のリファクタリング課題です。
 - 既定DBはSQLiteです。PostgreSQLを使う場合は `DATABASE_URL` を差し替えます。
 - MigrationはAlembicではなく `Base.metadata.create_all()` で作成しています。Alembic導入は発展課題です。
 - パスワードハッシュは標準ライブラリのPBKDF2実装です。bcrypt/Argon2idへ差し替える課題を残しています。
@@ -81,6 +82,7 @@ VITE_SOCKET_URL="http://localhost:8000"
 ## 動作確認済みの範囲
 
 - `pytest` で投稿・いいね・フォロー・会話作成のAPIフローを確認
+- `pytest` で `/auth/logout` が `sns_session` Cookieを失効させることを確認
 - `pytest` でUvicorn実サーバーを起動し、Socket.IOの `sendMessage` から `newMessage` が届くことを確認
 - 共通Reactフロントから、投稿作成、別ユーザーによるいいね更新、別ブラウザコンテキスト間のリアルタイムチャット表示を確認
 
@@ -89,4 +91,4 @@ VITE_SOCKET_URL="http://localhost:8000"
 - [React共通フロントエンド](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/sns)
 - [FastAPI + SQLAlchemy バックエンド](https://github.com/dik-ab/curriculum-sns-fastapi-answer)
 
-FastAPI版は、薄く書ける一方でファイル分割の正解が複数あります。教材では「ルーターはHTTP、サービスは業務ロジック、モデルはDB」という分け方に固定します。
+FastAPI版は、薄く書ける一方でファイル分割の正解が複数あります。現在の解答コードでは、まず動く全体像を優先して `app/main.py` にrouteを集約しています。発展課題として分割する場合は、「ルーターはHTTP、サービスは業務ロジック、モデルはDB」という方針で `auth/`、`posts/`、`chat/` へ切り出すと、他スタックとの比較もしやすくなります。
