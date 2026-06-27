@@ -261,64 +261,62 @@ on:
 - `workflow_dispatch` — これを書いておくと、Actionsタブに「Run workflow」ボタンが表示され、好きなタイミングで実行できます。デバッグにも便利です
 - `schedule.cron` — cron（クーロン）式で定期実行を指定します。時刻は**UTC（協定世界時）**で解釈されるため、日本時間から9時間引いて指定します
 
-## 身近な実例 — このカリキュラムサイトのワークフロー
+## 身近な実例 — このカリキュラムサイトのCI
 
-実は、皆さんが読んでいるこのカリキュラムサイトも、GitHub Actionsで自動デプロイされています。リポジトリの `.github/workflows/jekyll.yml` がそのワークフローです。学んだ知識で読んでみましょう（抜粋）。
+実は、皆さんが読んでいるこのカリキュラムサイトも、GitHub Actionsで自動チェックされています。リポジトリの `.github/workflows/ci.yml` がそのワークフローです。学んだ知識で読んでみましょう（抜粋）。
 
-**`.github/workflows/jekyll.yml`**（抜粋）
-
+**`.github/workflows/ci.yml`**（抜粋）
 
 ```yaml
-name: Deploy Jekyll site to Pages
+name: CI
 
 on:
+  pull_request:
   push:
-    branches: ["main"]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  build:
+  cloudflare-site:
+    name: Cloudflare site build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cloudflare-site
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          ruby-version: '3.3'
-          bundler-cache: true
+          version: 10
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: cloudflare-site/pnpm-lock.yaml
 
-      - name: Build with Jekyll
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Build
+        run: pnpm build
 ```
-
 
 **コード解説**
 
-- `on.push.branches: ["main"]` — mainブランチへのpush（＝教材の更新）で起動します。`workflow_dispatch` もあるので手動再実行も可能です
-- `build` ジョブ — `actions/checkout` でコードを取得し、`ruby/setup-ruby` でRubyを準備します。このサイトはJekyll（ジキル）というRuby製のツールでMarkdownをHTMLに変換しているため、Node.jsではなくRubyをセットアップしています。`setup-node` と発想は同じで、「言語ランタイムを準備するアクション」が言語ごとにある、という例です
-- `actions/configure-pages` — GitHub Pagesの設定（公開URLのパスなど）を取得するアクションです。`id: pages` という名前を付けてあるので、次のステップから出力を参照できます
-- `run: bundle exec jekyll build ...` — サイトをビルド（Markdown→HTML変換）します。`${{ ... }}` は変数を埋め込むGitHub Actionsの記法で、ここでは直前の `Setup Pages` ステップ（`id: pages`）の出力 `base_path` を埋め込んでいます
-- `needs: build` — `deploy` ジョブは `build` ジョブの**成功を待ってから**実行する、という依存関係の指定です。ジョブは通常並列ですが、`needs` で順序を付けられます
-- `deploy` ジョブ — ビルド成果物をGitHub Pages（GitHubの静的サイト公開サービス）へデプロイします。なお実ファイルには、デプロイに必要な権限設定（`permissions`）や環境の指定（`environment`）もあります（抜粋では省略）
+- `on.pull_request` — Pull Request作成・更新時に起動します。本文やリンクを壊した変更を、mainに入れる前に検出するためです
+- `on.push.branches: main` — mainブランチへ入った変更でも起動します。mainの状態が常にビルド可能か確認します
+- `defaults.run.working-directory: cloudflare-site` — このリポジトリではサイト本体が `cloudflare-site/` 配下にあるため、`run` コマンドの実行場所を固定します
+- `pnpm/action-setup@v4` と `actions/setup-node@v4` — このサイトはAstro/Viteで作っているため、Node.jsとpnpmを準備します
+- `cache-dependency-path: cloudflare-site/pnpm-lock.yaml` — lockファイルがリポジトリ直下ではなく `cloudflare-site/` にあるため、キャッシュの基準ファイルを明示します
+- `pnpm install --frozen-lockfile` — lockファイル通りに依存を入れます。CIでは手元と違う依存が勝手に入らないように固定します
+- `pnpm build` — Astroサイトを静的ファイルへビルドします。Markdownやリンクの構文が壊れていると、このステップで失敗します
 
-つまりこのワークフローは、「**mainにpush → ビルド → 成功したらデプロイ**」という、前ページのシーケンス図そのものです。`build` と `deploy` の2ジョブ構成の意味は、[ビルドとデプロイの流れ](/cicd/build_and_deploy_flow/)で改めて掘り下げます。
+つまりこのワークフローは、「**PRまたはmainへのpush → 依存インストール → サイトビルド**」というCIです。実際のデプロイは、この後の[ビルドとデプロイの流れ](/cicd/build_and_deploy_flow/)と[AWSデプロイ](/aws/)で扱います。
 
 ## 失敗したときのログの読み方
 
