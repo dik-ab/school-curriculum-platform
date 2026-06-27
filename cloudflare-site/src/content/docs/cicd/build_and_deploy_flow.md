@@ -240,14 +240,14 @@ sequenceDiagram
 
 ポイントは、**CIとCDが同じ技術（GitHub ActionsのワークフローYAML）の延長線上にある**ことです。CIで書いた「checkout → pnpm/Node.jsの準備 → pnpm install --frozen-lockfile → pnpm run build」の後ろに、「成果物をAWSへ送るステップ」を足せばCDになります。新しい概念はAWS側の受け皿だけで、自動化の仕組み自体はすでに学び終えています。
 
-## 身近な実例 — このサイトのbuild→deploy
+## 身近な実例 — このサイトのbuildチェック
 
-[GitHub Actions入門](/cicd/github_actions_basics/)で読んだ、このカリキュラムサイト自身の `.github/workflows/jekyll.yml` を、今日の知識でもう一度見てみましょう。あのワークフローはまさに「ビルド→デプロイ」の2ジョブ構成でした。
+[GitHub Actions入門](/cicd/github_actions_basics/)で読んだ、このカリキュラムサイト自身の `.github/workflows/ci.yml` を、今日の知識でもう一度見てみましょう。現在のワークフローは、Astroサイトをビルドできるか確認するCIです。
 
-- **buildジョブ** — Jekyllが Markdown（ソースコード）から HTML（静的ファイル＝成果物）を生成し、`actions/upload-pages-artifact` で成果物をアップロードする
-- **deployジョブ** — `needs: build` でビルドの成功を待ち、`actions/deploy-pages` で成果物をGitHub Pages（静的ファイルの配信サービス）へ配置する
+- **cloudflare-siteジョブ** — `cloudflare-site/` で `pnpm install --frozen-lockfile` を実行し、`pnpm build` でMarkdownとAstroを静的ファイルへ変換できるか確認する
+- **デプロイ手順** — このワークフローにはまだ含めていません。CDを足す場合は、ビルド成功後にS3 + CloudFront、ECS、またはCloudflare Pagesなどへ成果物を配置するステップを追加します
 
-「ソースコードをビルドして静的ファイルを作り、配信サービスへ置く」——これは、vite buildの成果物をS3 + CloudFrontへ置く構成と**まったく同じ型**です。皆さんがこのページを読めているのは、誰かが手作業でサーバーにファイルをコピーしたからではなく、mainへのpushを引き金にこのCDが動いたからです。
+「ソースコードをビルドして静的ファイルを作り、配信サービスへ置く」——これは、vite buildの成果物をS3 + CloudFrontへ置く構成と同じ型です。このページではまず型を理解し、実際のCDは次の[AWSデプロイ](/aws/)で実装します。
 
 ## ここから先 — 実際のCDはAWSセクションで
 
