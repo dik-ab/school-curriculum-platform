@@ -106,7 +106,8 @@ frontendディレクトリでも同様に確認します。
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "vitest run"
   }
 }
 ```
@@ -114,10 +115,11 @@ frontendディレクトリでも同様に確認します。
 ```bash
 cd frontend
 pnpm run lint
+pnpm test
 pnpm run build
 ```
 
-Viteプロジェクトの `build` は `tsc && vite build` となっており、**型チェック（tsc）とバンドル（vite build）の両方**を行います。つまりfrontendでは、buildを回すだけで型の検査も兼ねられます。フロントエンドのテストはこのカリキュラムでは扱わないため（[バックエンドテスト](/testing/)参照）、frontendは lint + build の2つとします。
+Viteプロジェクトの `build` は `tsc && vite build` となっており、**型チェック（tsc）とバンドル（vite build）の両方**を行います。つまりfrontendでは、buildを回すだけで型の検査も兼ねられます。ただし、型が正しくてもAPIクライアントのURL、Cookie付き通信、エラー処理が壊れることはあります。そのため、React共通フロントエンドではVitestで軽い単体テストも回し、frontendも lint + test + build の3つをCIに含めます。
 
 ## ワークフローを書く
 
@@ -194,6 +196,9 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
+      - name: Test
+        run: pnpm test
+
       - name: Build
         run: pnpm run build
 ```
@@ -210,7 +215,7 @@ jobs:
 - `cache-dependency-path: backend/pnpm-lock.yaml` — pnpmキャッシュの鍵となるlockファイルの場所を指定します。lockファイルがルートにないリポジトリ構成では、この指定が必要です。これを忘れると「Dependencies lock file is not found」というエラーになります
 - `run: pnpm install --frozen-lockfile` — `backend/pnpm-lock.yaml` どおりに依存をインストールします
 - `run: pnpm run lint` → `run: pnpm test` → `run: pnpm run build` — 3つのチェックを順に実行します。**どれか1つでも失敗すると、その時点でジョブは失敗**になります。軽い（速く終わる）チェックを先に置くと、失敗時のフィードバックが早くなります
-- `frontend` ジョブ — 構成はbackendと同じで、`working-directory` と `cache-dependency-path` が `frontend` を指し、テストがない点だけが違います
+- `frontend` ジョブ — 構成はbackendと同じで、`working-directory` と `cache-dependency-path` が `frontend` を指します。React側では、APIクライアントやフォーム補助関数のような純粋なロジックをVitestでテストします
 
 ### 1ジョブにまとめてはだめなのか
 
@@ -431,7 +436,7 @@ sequenceDiagram
     B->>B: checkout → pnpm/Node.js準備 → pnpm install
     F->>F: checkout → pnpm/Node.js準備 → pnpm install
     B->>B: lint → test → build
-    F->>F: lint → build
+    F->>F: lint → test → build
     B-->>GH: ✓ 成功
     F-->>GH: ✓ 成功
     GH-->>Dev: PRに「All checks have passed」
