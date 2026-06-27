@@ -23,7 +23,25 @@ const {
     <script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
     <script is:inline>
       if (window.mermaid) {
-        window.mermaid.initialize({ startOnLoad: true });
+        window.mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: 'loose',
+          theme: 'default',
+          flowchart: { htmlLabels: true, useMaxWidth: true },
+          themeVariables: { fontSize: '15px' }
+        });
+        var runMermaid = function () {
+          try {
+            window.mermaid.run({ querySelector: 'pre.mermaid' });
+          } catch (e) {
+            console.error('mermaid render failed', e);
+          }
+        };
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', runMermaid);
+        } else {
+          runMermaid();
+        }
       }
     </script>
   </body>
