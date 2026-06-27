@@ -41,7 +41,7 @@ section_title: SNS 共通仕様
   <a class="course-card project" data-accent="purple" href="/sns/laravel/">
     <span>PHP</span>
     <h3>SNS Laravel + Eloquent版</h3>
-    <p>Laravel Sanctum、Eloquent、Broadcastingを使う実装方針を確認します。</p>
+    <p>Eloquent、HttpOnly Cookie、Workerman WebSocketで同じSNS仕様をPHPで実装します。</p>
   </a>
   <a class="course-card project" data-accent="ink" href="/sns/gin_gorm/">
     <span>Go</span>
