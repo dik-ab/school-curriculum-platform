@@ -12,7 +12,6 @@ export type DocItem = {
 
 export function slugFromId(id: string) {
   const withoutExt = id.replace(/\.md$/, '');
-  if (withoutExt === 'index') return 'legacy-home';
   if (withoutExt === 'README') return 'readme';
   if (withoutExt.endsWith('/index')) return withoutExt.slice(0, -'/index'.length);
   return withoutExt;
