@@ -108,6 +108,32 @@ erDiagram
     }
 ```
 
+`schema.prisma` のモデルが、データベースのテーブルにどう対応するのかを並べてみましょう。
+
+```mermaid
+flowchart LR
+    subgraph S["schema.prisma の model Memo"]
+        F1["id Int @id"]
+        F2["title String"]
+        F3["content String"]
+        F4["createdAt DateTime"]
+    end
+    subgraph T["Memo テーブルの列"]
+        C1["id SERIAL PRIMARY KEY"]
+        C2["title TEXT NOT NULL"]
+        C3["content TEXT NOT NULL"]
+        C4["createdAt TIMESTAMP"]
+    end
+    F1 --> C1
+    F2 --> C2
+    F3 --> C3
+    F4 --> C4
+    style S fill:#e3f2fd,stroke:#1565c0
+    style T fill:#e8f5e9,stroke:#2e7d32
+```
+
+**図の読み方**: 左の1行（モデルのフィールド）が、右の1列（テーブルの列）にそのまま対応します。Prismaの `Int @id` がSQLの `SERIAL PRIMARY KEY` に変換されているように、1対1で読み比べてください。モデルを書くことは、テーブルの列を設計することと同じです。
+
 ## マイグレーションとは
 
 `schema.prisma` にモデルを書いただけでは、**データベースには何も起きていません**。設計図を描いただけで、まだ建物は建っていない状態です。設計図を実際のテーブルに反映する仕組みが**マイグレーション（migration、マイグレーション＝移行）**です。
@@ -140,6 +166,25 @@ flowchart TB
 ```
 
 ポイントは「**差分**」です。Prismaはスキーマとデータベースの現状を比較し、足りない変更だけをSQLにします。そのため、スキーマを少し変えて `migrate dev` を繰り返す、という小さなサイクルで開発を進められます。
+
+同じ流れを、登場人物（開発者・Prisma・データベース）のやりとりとして見ると、誰が何をするのかがはっきりします。
+
+```mermaid
+sequenceDiagram
+    participant Dev as 開発者
+    participant CLI as Prisma CLI
+    participant Schema as schema.prisma
+    participant DB as データベース
+    Dev->>Schema: モデルを編集する
+    Dev->>CLI: migrate dev を実行
+    CLI->>Schema: 現在のスキーマを読む
+    CLI->>DB: 今の構造を問い合わせる
+    CLI->>CLI: 差分からSQLファイルを生成
+    CLI->>DB: SQLを適用してテーブルを変更
+    CLI->>Dev: Prisma Client を再生成して完了
+```
+
+**図の読み方**: 矢印は「誰から誰への依頼」かを表します。開発者がするのは最初の2つ（編集と実行）だけで、残りの差分計算・SQL生成・適用・再生成はすべてPrisma CLIが自動でやってくれる、と読んでください。
 
 ## マイグレーションを実行する
 
@@ -309,6 +354,22 @@ Prisma Studio is up on http://localhost:5555
 
 - **`Error: P1001: Can't reach database server`** — データベースに接続できていません。`docker compose ps` でPostgreSQLが起動しているか、`.env` の `DATABASE_URL` が正しいかを確認します
 - **`Drift detected`（スキーマのずれを検出）** — psqlなどで手作業でテーブルを変更すると、マイグレーション履歴と実際の構造がずれてこの警告が出ることがあります。開発用データベースであれば `pnpm exec prisma migrate reset` でデータベースを初期化し、全マイグレーションを最初から適用し直せます（**データはすべて消える**ので、開発環境専用の操作です）。Prismaを使い始めたら、テーブル構造の変更は必ずスキーマ＋マイグレーション経由で行いましょう
+
+マイグレーションを重ねると、データベースは「どこまで適用済みか」という状態を持ちます。これまでの2回のマイグレーションと、`reset` がその状態をどう戻すのかを図にします。
+
+```mermaid
+stateDiagram-v2
+    [*] --> S0
+    S0 --> S1 : "init を適用"
+    S1 --> S2 : "add_done_to_memo を適用"
+    S2 --> S0 : "migrate reset"
+    S1 --> S0 : "migrate reset"
+    S0 : 空のDB
+    S1 : init 適用済み
+    S2 : done列 追加済み
+```
+
+**図の読み方**: 上から下へ進むのがマイグレーションの適用（履歴が1つずつ積み重なる）、`migrate reset` の矢印が状態を最初の「空のDB」へ戻す動きです。resetは履歴を最初からたどり直すため全データが消える、開発環境専用の操作だと読み取れます。
 
 ## 理解度チェック
 
