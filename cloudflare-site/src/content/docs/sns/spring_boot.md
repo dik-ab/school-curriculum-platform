@@ -64,6 +64,8 @@ VITE_API_URL="http://localhost:8000"
 VITE_SOCKET_URL="http://localhost:8001"
 ```
 
+画面からの標準接続では、Socket.IO handshakeのCookieから `sns_session` を読みます。解答コードには互換確認用にauth token listenerも残していますが、React共通フロントではトークンをJavaScriptで保持せず、Cookie送信に統一します。
+
 ## 現在の解答コードの注意点
 
 現在のSpring解答コードは、教材としてローカルで投稿・いいね・フォロー・プロフィール・リアルタイムDMを確認できることを優先しています。そのため、共通仕様の理想形より簡略化している箇所があります。
