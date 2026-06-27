@@ -565,7 +565,7 @@ jobs:
 - [ ] PrismaServiceをモックして、例外（403/404）を投げるロジックのテストを写経せずに書ける
 - [ ] `expect.objectContaining`を使って実装の細部に依存しないアサーションを書ける
 - [ ] テスト用DB（`sns_test`）の作成・`.env.test`での切り替え・`prisma migrate deploy`の適用が一人でできる
-- [ ] 認証つきAPIのE2Eテストで、トークンを取得して`Authorization`ヘッダーに付ける流れを書ける
+- [ ] 認証つきAPIのE2Eテストで、ログインレスポンスの`Set-Cookie`を保存し、次のリクエストに`Cookie`ヘッダーとして付ける流れを書ける
 - [ ] 外部キー制約を考慮した順番でテーブルをクリアできる
 - [ ] CIでPostgreSQLを`services`として起動し、テストを自動実行する構成の要点を説明できる
 
