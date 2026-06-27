@@ -20,6 +20,34 @@ nav_order: 2
 - `psql` でDBへ接続できる
 - ボリュームを残す停止と、ボリュームごと消す初期化の違いを説明できる
 
+## ローカル開発環境の全体像
+
+まず、このページで扱うローカル開発環境の全体像を図で見てみましょう。あなたのPC（ホスト）の上でDockerが動き、その中でPostgreSQLコンテナとデータ用のボリュームが動いています。
+
+```mermaid
+flowchart LR
+    subgraph host["あなたのPC（ホスト）"]
+        T["psql / DBクライアント<br>などのツール"]
+        subgraph docker["Docker"]
+            subgraph net["app-network"]
+                PG["postgres<br>コンテナ"]
+            end
+            V[("ボリューム<br>postgres-data")]
+        end
+    end
+    T -->|"localhost:5432"| PG
+    PG -->|"データを保存"| V
+
+    style T fill:#fce4ec,stroke:#c2185b
+    style PG fill:#e8f5e9,stroke:#2e7d32
+    style V fill:#ede7f6,stroke:#6a1b9a
+    style net fill:#eceff1,stroke:#546e7a
+    style docker fill:#e1f5fe,stroke:#0277bd
+    style host fill:#f5f5f5,stroke:#9e9e9e
+```
+
+図の読み方: PCの上のツール（ピンク）から `localhost:5432` でPostgreSQLコンテナ（緑）へ接続します。コンテナはデータをボリューム（紫）に保存します。この「PC → コンテナ → ボリューム」の3層をイメージしておくと、以降の操作が理解しやすくなります。
+
 ## PostgreSQLだけのcompose.yaml
 
 作業フォルダに `compose.yaml` を作ります。
@@ -53,6 +81,31 @@ volumes:
 - `ports` でPCの5432番から接続できるようにします
 - `volumes` でDBデータをコンテナの外に保存します
 - `healthcheck` でPostgreSQLが接続可能な状態か確認します
+
+`ports` と `volumes` は、どちらも「PC側」と「コンテナ側」を線でつなぐ設定です。`compose.yaml` の `左側:右側` が、それぞれどこに対応するのかを図で確認しましょう。
+
+```mermaid
+flowchart LR
+    subgraph host["PC（ホスト）側"]
+        HP["localhost:5432"]
+        HV[("Docker管理のボリューム<br>postgres-data")]
+    end
+    subgraph cont["postgresコンテナ側"]
+        CP["コンテナの5432番"]
+        CV["/var/lib/postgresql/data"]
+    end
+    HP <-->|"ports 5432:5432"| CP
+    HV <-->|"volumes でマウント"| CV
+
+    style HP fill:#fce4ec,stroke:#c2185b
+    style CP fill:#e8f5e9,stroke:#2e7d32
+    style HV fill:#ede7f6,stroke:#6a1b9a
+    style CV fill:#e8f5e9,stroke:#2e7d32
+    style host fill:#f5f5f5,stroke:#9e9e9e
+    style cont fill:#eceff1,stroke:#546e7a
+```
+
+図の読み方: `ports` の `5432:5432` は、PCの入口（ピンク）とコンテナのポート（緑）をつなぎます。`volumes` の `postgres-data:/var/lib/postgresql/data` は、PC側の保存領域（紫）とコンテナ内のデータ置き場（緑）をつなぎます。`左側:右側` の左がPC側、右がコンテナ側だと覚えてください。
 
 ## 起動して状態を確認する
 
@@ -179,6 +232,25 @@ ports:
 ```
 
 左側がPC側、右側がコンテナ側です。この例では、PCからは `localhost:15432` で接続します。コンテナ内のPostgreSQLは変わらず5432番で動いています。
+
+## 毎日まわす開発ループ
+
+ここまでのコマンドは、実際の開発では毎日同じ順番でまわすことになります。「起動 → 状態確認 → 接続して作業 → 停止」という1日の流れを図にします。
+
+```mermaid
+stateDiagram-v2
+    [*] --> 起動: docker compose up -d
+    起動 --> 状態確認: docker compose ps
+    状態確認 --> 接続: healthy なら psql で接続
+    状態確認 --> ログ確認: 起動しないとき
+    ログ確認 --> 起動: 設定を直して再起動
+    接続 --> 作業: SQLを実行して開発
+    作業 --> 接続: もう一度つなぐ
+    作業 --> 停止: docker compose down
+    停止 --> [*]
+```
+
+図の読み方: 通常は「起動 → 状態確認 → 接続 → 作業 → 停止」と上から流れます。`ps` で `healthy` にならないときは、`logs` で原因を調べて設定を直し、もう一度起動に戻ります。コードを直して動かし直す開発のリズムも、この往復のくり返しです。
 
 ## このページで必ず覚えること
 
