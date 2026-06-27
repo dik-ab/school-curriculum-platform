@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import { remarkMermaid } from './src/lib/remark-mermaid.mjs';
 
 export default defineConfig({
   integrations: [mdx()],
@@ -9,6 +10,7 @@ export default defineConfig({
     format: 'directory'
   },
   markdown: {
+    remarkPlugins: [remarkMermaid],
     shikiConfig: {
       theme: 'github-dark'
     }
