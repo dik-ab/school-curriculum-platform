@@ -2,7 +2,7 @@
 title: カプセル化とパッケージ
 section_key: java
 section_title: Java基礎
-nav_order: 9
+nav_order: 11
 description: private、getter/setter、アクセス修飾子、パッケージ、importを学びます。
 ---
 
