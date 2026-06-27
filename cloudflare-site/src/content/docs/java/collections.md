@@ -2,7 +2,7 @@
 title: コレクション
 section_key: java
 section_title: Java基礎
-nav_order: 11
+nav_order: 13
 description: List、Set、Map、ジェネリクス、ArrayList、HashSet、HashMapの使い分けを学びます。
 ---
 
