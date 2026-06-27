@@ -95,6 +95,26 @@ volumes:
 - `ports: "5432:5432"` は、PCの5432番をコンテナの5432番につなぎます
 - `postgres-data:/var/lib/postgresql/data` は、PostgreSQLのデータ保存先をDockerボリュームに逃がします
 
+この `compose.yaml` で作られる構成を図にすると、次のようになります。アプリ（あとで作ります）・PostgreSQLコンテナ・ボリュームの関係をつかんでおきましょう。
+
+```mermaid
+flowchart LR
+    APP["app<br>アプリコンテナ<br>（あとで追加）"]
+    subgraph net["app-network"]
+        PG["postgres<br>PostgreSQLコンテナ"]
+    end
+    V[("ボリューム<br>postgres-data")]
+    APP -->|"postgres:5432 で接続"| PG
+    PG -->|"/var/lib/postgresql/data<br>に書き込み"| V
+
+    style APP fill:#e8f5e9,stroke:#2e7d32
+    style PG fill:#e8f5e9,stroke:#2e7d32
+    style V fill:#ede7f6,stroke:#6a1b9a
+    style net fill:#eceff1,stroke:#546e7a
+```
+
+図の読み方: アプリ（緑）はサービス名 `postgres` でDBコンテナ（緑）へ接続し、DBコンテナは実データをボリューム（紫）の `postgres-data` に書き込みます。データはコンテナの中ではなく、外のボリュームに置かれている点がポイントです。
+
 起動します。
 
 ```bash
@@ -396,6 +416,21 @@ flowchart LR
 
 `localhost` は常に「そのコマンドを実行している場所自身」を指します。PC側のツールから接続するなら `localhost` はPCです。別コンテナの中で `localhost` と書くと、そのコンテナ自身を指すため、DBコンテナには届きません。同じCompose内の別サービスへ接続するときは、`postgres` や `mysql` のようなサービス名を使います。
 
+別コンテナから `postgres` というサービス名で接続したとき、内部で住所（IPアドレス）が解決される流れを順番に見てみましょう。
+
+```mermaid
+sequenceDiagram
+    participant A as appコンテナ
+    participant N as Composeネットワーク
+    participant D as postgresコンテナ
+    A->>N: postgres:5432 につなぎたい
+    N-->>A: postgres の住所はこのIPです
+    A->>D: そのIPの5432番へ接続
+    D-->>A: 接続OK 結果を返す
+```
+
+図の読み方: アプリは `postgres` という名前で頼むだけで、Composeネットワークが自動でIPアドレスを教えてくれます。私たちはIPを覚える必要がなく、サービス名だけで接続できる、ということを表しています。
+
 ## ログと状態を確認する
 
 DBが起動しない、接続できない、パスワードが違う、というときはログを見ます。
@@ -445,6 +480,31 @@ docker compose down
 ```
 
 この場合、ボリュームは残るのでDBのデータも残ります。
+
+なぜ「コンテナを消してもデータが残る」のか、`docker compose down` の前後を図で見てみましょう。
+
+```mermaid
+flowchart LR
+    subgraph before["before（起動中）"]
+        PG1["postgres<br>コンテナ"]
+        V1[("ボリューム<br>postgres-data<br>データあり")]
+        PG1 --> V1
+    end
+    subgraph after["after（down のあと）"]
+        X["postgres<br>コンテナは消えた"]
+        V2[("ボリューム<br>postgres-data<br>データは残る")]
+    end
+    before -->|"docker compose down"| after
+
+    style PG1 fill:#e8f5e9,stroke:#2e7d32
+    style X fill:#ffebee,stroke:#c62828,stroke-dasharray: 5 5
+    style V1 fill:#ede7f6,stroke:#6a1b9a
+    style V2 fill:#ede7f6,stroke:#6a1b9a
+    style before fill:#eceff1,stroke:#546e7a
+    style after fill:#eceff1,stroke:#546e7a
+```
+
+図の読み方: `docker compose down` で消えるのはコンテナ（緑→赤の点線）だけで、ボリューム（紫）の `postgres-data` はそのまま残ります。だからもう一度 `up` すれば、前のテーブルやデータがそのまま使えます。
 
 データも含めて完全に消したい場合は、`-v` を付けます。
 
