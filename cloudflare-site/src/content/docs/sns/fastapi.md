@@ -34,7 +34,7 @@ DB操作はSQLAlchemy 2.xで書きます。教材本文ではPostgreSQLへ広げ
 | 認証 | `app/main.py` の `/auth/*`、`app/security.py` のCookie/JWT dependency |
 | 投稿 | `app/main.py` の `/posts`、`Post` model、SQLAlchemy query |
 | いいね | `Like` 複合主キー、いいね/解除は冪等な204 |
-| フォロー | `Follow` model、self join、フォロー中タイムライン |
+| フォロー | `Follow` model、self join、フォロー/解除は冪等な204、フォロー中タイムライン |
 | プロフィール | `app/schemas.py` のPydantic schema、`PATCH /users/me` |
 | テスト | `tests/test_api.py`、`tests/test_realtime.py`、pytest、TestClient、Uvicorn実サーバー |
 
