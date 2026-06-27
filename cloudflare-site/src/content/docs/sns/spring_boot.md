@@ -43,10 +43,7 @@ Spring SecurityのFilter/Interceptor化、Flywayによる厳密なMigration、Do
 |---|---|
 | メール確認 | `EmailVerificationToken`、確認URLのconsole出力、確認後ログイン許可 |
 | DMチャット | `netty-socketio`、Socket.IO互換サーバー、`/chat` namespace、Cookie認証 |
-| 画像アップロード | 現在の解答コードには未収録。`avatarUrl`へのURL保存のみ対応 |
-| ページネーション | 現在の解答コードには未収録。Spring Data Pageableまたはcursor方式は発展課題 |
 | CI/CD | `./mvnw test`、`./mvnw -DskipTests package`、GitHub Actions |
-| デプロイ | 現在の解答コードには未収録。Dockerfile、ECS、RDS、環境変数は発展課題 |
 
 ## ローカル起動の形
 
