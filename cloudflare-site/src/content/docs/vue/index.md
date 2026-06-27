@@ -3,94 +3,50 @@ title: Vue.js入門
 section_key: vue
 section_title: Vue.js入門
 nav_order: 9
+has_children: true
+permalink: /vue/
 description: Vue.jsの役割、テンプレート、リアクティブな状態、コンポーネント、Reactとの違いを学びます。
 ---
 
 # Vue.js入門
 
+Vue.jsは、HTMLに近いテンプレート構文とリアクティブな状態管理を使って、画面を作るためのフロントエンドフレームワークです。
+
+Reactと同じようにコンポーネントでUIを作りますが、Vue.jsは `.vue` ファイルの中で `<template>`、`<script>`、`<style>` を分けて書く構成がよく使われます。HTML/CSSを学んだ直後の人にとって、画面の構造を追いやすいのが特徴です。
+
+> このカリキュラムでは、TodoアプリとSNSアプリの実装解説はReactを基準に進めます。Vue.jsは、現場でVue案件に入ったときに「Reactと何が違うか」を読めるようにするために学びます。
+
 ## フレームワークとは
 
-フレームワークは、アプリを作るための「型」を用意してくれる道具です。
+フレームワークは、アプリを作るための基本ルールと便利な機能をまとめたものです。
 
-素のJavaScriptでも画面は作れます。しかし、フォーム、一覧、モーダル、検索、API通信が増えると、どのコードがどの画面を変更しているのか追いにくくなります。
+素のJavaScriptでも画面は作れます。しかし、フォーム、一覧、検索、モーダル、API通信が増えると、どのコードがどの画面を変更しているのか追いにくくなります。Vue.jsは、状態が変わったら画面も自動で変わる仕組みを提供し、そのうえでHTMLに近い形で画面を書けます。
 
-Vue.jsは、HTMLに近い書き方でUIを作りながら、状態が変わると画面も自動で更新される仕組みを提供します。
+## 学習ページ
 
-> 実務では、Vue.jsは「HTML/CSSに近い感覚で始めやすいフロントエンドフレームワーク」として採用されることがあります。既存の管理画面やLaravelとの組み合わせでも見かけます。
-
-## Vue.jsでできること
-
-| 機能 | 何を解決するか |
+| ページ | 内容 |
 | --- | --- |
-| テンプレート | HTMLに近い書き方で画面を作れる |
-| リアクティブな状態 | 値が変わると画面も更新される |
-| コンポーネント | UIを部品に分けられる |
-| ディレクティブ | `v-if`、`v-for`、`v-model` で表示や入力を扱える |
-| Composition API | 関連する状態と処理をまとめられる |
+| [Vue.jsとは何か](/vue/what_is_vue/) | Vue.jsの役割、どんな場面で使うか、Reactと同じ目的 |
+| [Reactとの違い](/vue/vue_vs_react/) | JSXとtemplate、stateとref、イベントやフォームの違い |
+| [リアクティブとコンポーネント](/vue/reactivity_and_components/) | `ref`、props、emit、`.vue` ファイルの読み方 |
+| [フォーム・一覧・API通信](/vue/directives_forms_api/) | `v-model`、`v-for`、`useFetch`ではなく通常のfetchで考える入口 |
+| [このカリキュラムでの扱い](/vue/curriculum_scope/) | React中心で実践する理由、Vueは比較知識として学ぶ範囲 |
 
-## Reactとの違い
-
-ReactはJSXでJavaScriptの中にHTMLのような記述を書きます。
-
-Vue.jsは、HTMLテンプレート、JavaScript、CSSを1つの `.vue` ファイルにまとめる書き方がよく使われます。
-
-```vue
-<script setup lang="ts">
-import { ref } from "vue";
-
-const count = ref(0);
-</script>
-
-<template>
-  <button @click="count++">
-    Count: {{ count }}
-  </button>
-</template>
+```mermaid
+flowchart LR
+    A["React基礎<br/>UIの考え方"] --> B["Vue.jsとは<br/>template + reactivity"]
+    B --> C["Reactとの差分<br/>JSX / template"]
+    C --> D["components<br/>props / emit"]
+    D --> E["forms / lists / API"]
+    E --> F["Nuxtの理解へ"]
+    style A fill:#e3f2fd,stroke:#1565c0
+    style B fill:#e8f5e9,stroke:#2e7d32
+    style F fill:#fff3e0,stroke:#ef6c00
 ```
-
-コードの意味です。
-
-- `<script setup lang="ts">` は、TypeScriptで処理を書く場所です。
-- `ref(0)` は、画面と連動する状態を作ります。
-- `<template>` は、画面のHTML相当を書く場所です。
-- `@click="count++"` は、クリック時に `count` を増やします。
-- `{{ count }}` は、状態の値を画面に表示します。
-
-## どんな場面で使うか
-
-Vue.jsは、次のような場面で使われます。
-
-- 管理画面
-- 既存HTMLに少しずつUI機能を足す
-- LaravelやRailsなどのバックエンドと組み合わせる
-- 小〜中規模のSPA
-- Nuxtの土台として使う
-
-## このカリキュラムでの位置づけ
-
-Reactを中心に学ぶ場合でも、Vue.jsの考え方を知っておくと、現場でVue案件に入ったときに対応しやすくなります。
-
-まずは次を押さえるとよいです。
-
-1. `.vue` ファイルの構成
-2. `ref` とリアクティブな状態
-3. `v-if`、`v-for`、`v-model`
-4. コンポーネントとprops
-5. API通信
-
-## 練習問題
-
-### 問題: Vue.jsの特徴を説明する
-
-Vue.jsがReactと比べて初学者に分かりやすいと言われる理由を1つ説明してください。
-
-**答え例:**
-
-Vue.jsは、HTMLに近いテンプレート構文で画面を書けるため、HTML/CSSを学んだ直後の初学者でも構造を追いやすいです。
 
 ## 参考リンク
 
 - [Vue.js Guide](https://vuejs.org/guide/introduction.html) - Vue公式ガイドです。
 - [Vue.js 日本語ドキュメント](https://ja.vuejs.org/guide/introduction.html) - 公式ガイドの日本語版です。
+- [Vue.js: Single-File Components](https://vuejs.org/guide/scaling-up/sfc.html) - `.vue` ファイルの構成を確認できます。
 - [MDN: Getting started with Vue](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Frameworks_libraries/Vue_getting_started) - MDNのVue入門です。
-- [Vue School](https://vueschool.io/courses) - Vueの学習用コースや動画教材を探せます。
