@@ -36,6 +36,22 @@ prisma.モデル名（小文字始まり）.メソッド(オプション)
 | `prisma.memo.update({ where: { id: 1 }, data: {...} })` | `UPDATE "Memo" SET ... WHERE id = 1;` | 更新 |
 | `prisma.memo.delete({ where: { id: 1 } })` | `DELETE FROM "Memo" WHERE id = 1;` | 削除 |
 
+それぞれの操作が `Memo` テーブルに対して何をするのかを、一枚の図にまとめてみましょう。
+
+```mermaid
+flowchart LR
+    Cr["create<br>（作成）"] -->|"行を1件 追加"| DB[("Memo テーブル")]
+    Re["findMany / findUnique<br>（取得）"] -->|"行を読み取る"| DB
+    Up["update<br>（更新）"] -->|"既存の行を書き換え"| DB
+    De["delete<br>（削除）"] -->|"行を削除"| DB
+    style Cr fill:#e8f5e9,stroke:#2e7d32
+    style Re fill:#e3f2fd,stroke:#1565c0
+    style Up fill:#fff3e0,stroke:#ef6c00
+    style De fill:#ffebee,stroke:#c62828
+```
+
+**図の読み方**: 中央の `Memo` テーブルに対し、4種類の操作がそれぞれ「追加・読み取り・書き換え・削除」を行います。CRUDという言葉は、このCreate・Read・Update・Deleteの頭文字です。どのメソッドがどの矢印か、上の表と見比べてみてください。
+
 2つ、重要な性質があります。
 
 1. **すべて非同期（Promiseを返す）** — データベースへの問い合わせはネットワーク越しの通信なので、結果は `await` で待ちます。[ReactのAPI通信](/react/api_fetch/)で学んだ `fetch` と同じ事情です
@@ -49,6 +65,21 @@ import { Memo } from '@prisma/client';
 ```
 
 スキーマを変更してマイグレーションすれば型も追従する、というのがPrismaの最大の強みです。
+
+では、`findMany()` を1回呼んだとき、アプリ・Prisma Client・データベースの間で何がやり取りされるのでしょうか。いちばん基本的な「取得」の流れを図で追ってみましょう。
+
+```mermaid
+sequenceDiagram
+    participant App as "アプリ（Service）"
+    participant P as "Prisma Client"
+    participant DB as "PostgreSQL"
+    App->>P: "prisma.memo.findMany()"
+    P->>DB: "SELECT * FROM Memo（SQLに変換）"
+    DB-->>P: "行データ"
+    P-->>App: "Memo の配列（型つき）"
+```
+
+**図の読み方**: アプリはTypeScriptのメソッドを呼ぶだけですが、Prisma ClientがそれをふさわしいSQLに翻訳してデータベースへ送ります。返ってきた生の行データを、Prisma Clientが `Memo` 型のオブジェクトに変換してアプリに戻す、という往復になっています。`await` で待つのは、この往復がネットワーク越しの通信だからです。
 
 検索条件や並べ替えはオプションで指定します。SQLの `WHERE` / `ORDER BY` / `LIMIT` に対応するイメージです。
 
@@ -66,6 +97,19 @@ const memos = await prisma.memo.findMany({
 - `where: { done: false }` — SQLの `WHERE done = false` に相当します
 - `orderBy: { createdAt: 'desc' }` — `ORDER BY "createdAt" DESC` に相当します。`'asc'` で昇順です
 - `take: 10` — `LIMIT 10` に相当します
+
+`where` / `orderBy` / `take` が、テーブル全体からどう結果を絞り込んでいくのかをイメージで掴みましょう。
+
+```mermaid
+flowchart TB
+    All[("Memo テーブル<br>すべての行")] -->|"where: done が false"| F1["未完了のメモだけ残す"]
+    F1 -->|"orderBy: 作成日時の新しい順"| F2["並べ替える"]
+    F2 -->|"take: 10"| F3["先頭の10件だけ取り出す"]
+    style All fill:#fff3e0,stroke:#ef6c00
+    style F3 fill:#e8f5e9,stroke:#2e7d32
+```
+
+**図の読み方**: 上から下へ、全部の行が段階的に「絞り込み → 並べ替え → 件数制限」と処理され、最後に欲しい10件だけが手元に残ります。オプションを増やすほど、ふるいの目が細かくなっていくイメージです。
 
 ## NestJSにPrismaを組み込む — PrismaService
 
