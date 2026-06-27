@@ -133,6 +133,30 @@ JOIN users ON posts.user_id = users.id;
 
 `ON posts.user_id = users.id` は「postsのuser_idとusersのidが一致する行をつなぐ」という意味です。SNSの投稿一覧、コメント一覧、いいね一覧ではJOINの考え方が必ず出てきます。
 
+JOINが `posts` と `users` の2つのテーブルを、外部キーを手がかりにどうつなぐのかを図で見てみましょう。
+
+```mermaid
+flowchart LR
+    subgraph posts["posts テーブル"]
+        direction TB
+        P1["content: Dockerを学習中<br>user_id: 1"]
+        P3["content: PostgreSQLでJOINを試す<br>user_id: 1"]
+    end
+    subgraph users["users テーブル"]
+        direction TB
+        U1["id: 1<br>name: 太郎"]
+    end
+    P1 -->|"user_id = id で一致"| U1
+    P3 -->|"user_id = id で一致"| U1
+    U1 --> RES["結合結果<br>content と name が<br>1行に並ぶ"]
+    style P1 fill:#e3f2fd,stroke:#1565c0
+    style P3 fill:#e3f2fd,stroke:#1565c0
+    style U1 fill:#f3e5f5,stroke:#6a1b9a
+    style RES fill:#e8f5e9,stroke:#2e7d32
+```
+
+図の読み方です。左の `posts`（青）が持つ `user_id` と、右の `users`（紫）が持つ `id` が一致する行どうしを線でつなぎます。たとえば `user_id` が1の投稿は、`id` が1の太郎さんと結びつきます。その結果（緑）、投稿本文（`content`）と投稿者名（`name`）が同じ1行に並んだ表が得られます。これがJOINの正体です。
+
 ## COUNT / GROUP BY: 集計する
 
 ユーザーごとの投稿数を数えます。
@@ -156,6 +180,33 @@ GROUP BY users.id, users.name;
 
 `COUNT(posts.id)` は投稿数を数えます。`GROUP BY` は「どの単位で集計するか」を指定します。この例ではユーザーごとに投稿をまとめています。
 
+`GROUP BY` が4件の投稿を「ユーザーごと」にまとめ、`COUNT` が各グループの件数を数える流れを図にしてみましょう。
+
+```mermaid
+flowchart LR
+    subgraph rows["posts（4行）"]
+        direction TB
+        A["太郎の投稿"]
+        B["花子の投稿"]
+        C["太郎の投稿"]
+        D["次郎の投稿"]
+    end
+    rows -->|"GROUP BY users.id<br>ユーザーごとにまとめる"| G
+    subgraph G["グループ化＋COUNT"]
+        direction TB
+        G1["太郎 → 2件"]
+        G2["花子 → 1件"]
+        G3["次郎 → 1件"]
+    end
+    style A fill:#e3f2fd,stroke:#1565c0
+    style C fill:#e3f2fd,stroke:#1565c0
+    style G1 fill:#e8f5e9,stroke:#2e7d32
+    style G2 fill:#e8f5e9,stroke:#2e7d32
+    style G3 fill:#e8f5e9,stroke:#2e7d32
+```
+
+図の読み方です。左の4行の投稿を `GROUP BY` でユーザーごとの山に仕分けします（青で示した2件はどちらも太郎の投稿です）。その後 `COUNT` で各山の件数を数えると、右のように「太郎=2件、花子=1件、次郎=1件」という集計結果（緑）になります。集計とは「行をグループにまとめて、各グループを1行に要約すること」だとイメージしてください。
+
 ## 実務でよくある組み合わせ
 
 タイムラインのように「新しい順で、投稿者名つきで、20件だけ取得する」SQLは次のようになります。
@@ -173,6 +224,19 @@ LIMIT 20;
 ```
 
 ここでは、列指定、JOIN、並び替え、件数制限を組み合わせています。実際のWebアプリでは、単独の構文よりもこのように複数の構文を組み合わせて使うことが多いです。
+
+この組み合わせSQLが、どんな順番で処理されてタイムラインのデータになるのかを図で追ってみましょう。
+
+```mermaid
+flowchart LR
+    F["① posts と users を<br>JOIN でつなぐ"] --> O["② created_at の<br>新しい順に並べる"] --> L["③ LIMIT 20 で<br>先頭20件に絞る"] --> R["タイムライン<br>表示用データ"]
+    style F fill:#e3f2fd,stroke:#1565c0
+    style O fill:#f3e5f5,stroke:#6a1b9a
+    style L fill:#fff3e0,stroke:#ef6c00
+    style R fill:#e8f5e9,stroke:#2e7d32
+```
+
+図の読み方です。まず①JOINで投稿に投稿者名を結びつけ（青）、②ORDER BYで新しい順に並べ替え（紫）、③LIMITで先頭20件だけに絞り込み（オレンジ）、最後に画面に出すタイムラインのデータ（緑）が完成します。複雑に見えるSQLも、このように「つなぐ→並べる→絞る」の段階に分けて読めば理解できます。
 
 ## 応用構文の優先順位
 
