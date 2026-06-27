@@ -2,7 +2,7 @@
 title: 配列
 section_key: java
 section_title: Java基礎
-nav_order: 6
+nav_order: 8
 description: 配列の宣言、代入、参照、ループ処理、多次元配列を学びます。
 ---
 
