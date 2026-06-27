@@ -79,10 +79,7 @@ pnpm run dev
 |---|---|
 | メール確認 | `email_verification_tokens`、`GET /auth/verify-email` |
 | DMチャット | Faye WebSocket、`joinConversation`、`sendMessage` |
-| 画像アップロード | 開発用PUT URL、`/uploads/avatars/:filename` |
-| ページネーション | 今後cursor方式に差し替え |
 | CI/CD | GitHub Actions、Minitest、Zeitwerk check |
-| デプロイ | Dockerfile、RDS、WebSocket対応のPuma構成を追加予定 |
 
 ## 実装ファイルの見方
 
@@ -126,6 +123,7 @@ end
 - `bin/rails zeitwerk:check`
 - `bin/rails routes`
 - Playwright MCPで、Alice/Bobの2セッションを使った画面検証
+  - メール確認後にログインできる
   - Aliceが投稿できる
   - Bobが投稿を見て、いいねできる
   - Alice/Bob間のDMがBob画面にリロードなしで届く
