@@ -98,10 +98,7 @@ pnpm run dev
 |---|---|
 | メール確認 | `email_verification_tokens`、`GET /auth/verify-email` |
 | DMチャット | Workerman、`scripts/websocket-server.php`、`joinConversation`、`sendMessage` |
-| 画像アップロード | 開発用PUT URL、`/uploads/avatars/:filename` |
-| ページネーション | 今後 `cursorPaginate` に差し替え |
 | CI/CD | GitHub Actions、Composer、PHPUnit |
-| デプロイ | Dockerfile、RDS、WebSocketプロセス分離を追加予定 |
 
 ## 実装ファイルの見方
 
@@ -152,6 +149,7 @@ return response()
 - `php artisan route:list --except-vendor`
 - 共通React `pnpm run build`
 - Playwright MCPで、Alice/Bobの2セッションを使った画面検証
+  - メール確認後にログインできる
   - Aliceが投稿できる
   - Bobが投稿を見て、いいねできる
   - Alice/Bob間のDMがBob画面にリロードなしで届く
