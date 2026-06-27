@@ -51,7 +51,7 @@ section_title: SNS 共通仕様
   <a class="course-card project" data-accent="purple" href="/sns/rails/">
     <span>Ruby</span>
     <h3>SNS Rails + Active Record版</h3>
-    <p>Rails API、Active Record、Action Cableを使う実装方針を確認します。</p>
+    <p>Rails API、Active Record、HttpOnly Cookie、WebSocket middlewareで同じSNS仕様を実装します。</p>
   </a>
   <a class="course-card project" data-accent="blue" href="/ai/">
     <span>AI</span>
