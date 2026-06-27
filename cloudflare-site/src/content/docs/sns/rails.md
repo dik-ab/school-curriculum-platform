@@ -66,8 +66,8 @@ npm run dev
 | セットアップ | `rails new --api`、`config/application.rb`、`config/routes.rb` |
 | 認証 | `SnsController`、`SessionToken`、`EmailVerificationToken` |
 | 投稿 | `Post` model、`POST /posts`、`GET /posts` |
-| いいね | `Like` model、unique index、`POST /posts/:id/likes` |
-| フォロー | `Follow` model、self association |
+| いいね | `Like` model、unique index、`find_or_create_by!`、操作後のPost JSON |
+| フォロー | `Follow` model、self association、操作後のProfile JSON |
 | プロフィール | `PATCH /users/me`、strong parameters相当の入力制御 |
 | テスト | `test/integration/sns_api_test.rb` |
 
