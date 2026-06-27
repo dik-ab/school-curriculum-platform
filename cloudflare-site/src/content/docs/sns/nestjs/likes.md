@@ -159,7 +159,7 @@ sequenceDiagram
         participant DB as PostgreSQL
     end
 
-    R->>C: POST /posts/1/likes（Bearer トークン）
+    R->>C: POST /posts/1/likes（Cookie: sns_session）
     C->>S: like(userId, postId)
     S->>DB: 投稿の存在チェック（SELECT）
     DB-->>S: 投稿あり
@@ -175,7 +175,7 @@ sequenceDiagram
     end
 ```
 
-挿入を試みて、データベースが重複エラーを返したら409に変換する——という流れです（`JwtAuthGuard` の検証は [投稿機能とタイムライン](/sns/nestjs/posts/) の図と同じため省略しています）。「先に存在チェック」ではなく「まず挿入してエラーを拾う」を選ぶ理由は、コードを見た後で説明します。
+挿入を試みて、データベースが重複エラーを返したら409に変換する——という流れです（`JwtAuthGuard` が `sns_session` Cookie内のJWTを検証する処理は [投稿機能とタイムライン](/sns/nestjs/posts/) の図と同じため省略しています）。「先に存在チェック」ではなく「まず挿入してエラーを拾う」を選ぶ理由は、コードを見た後で説明します。
 
 ### モジュールの生成
 
@@ -316,7 +316,7 @@ export class LikesController {
 **コード解説**
 
 - `@Controller('posts/:id/likes')` — 「投稿に属するいいね」というURL設計です。コントローラのパスに含まれる `:id` も、メソッド側の `@Param('id', ParseIntPipe)` で受け取れます（→ [Controller](/backend/controller/)）。
-- `@UseGuards(JwtAuthGuard)` と `@CurrentUser()` — [ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/) で作ったものをそのまま使います。「誰がいいねしたか」は検証済みトークンの `user.sub` だけを信頼します。
+- `@UseGuards(JwtAuthGuard)` と `@CurrentUser()` — [ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/) で作ったものをそのまま使います。「誰がいいねしたか」は `sns_session` Cookie内の検証済みJWTから取り出した `user.sub` だけを信頼します。
 - `@HttpCode(204)` を両方に付与 — いいねの登録・解除とも、クライアントに返すべき本文がないため204 No Contentにします。[ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/) で作った `apiFetch` は「204なら本文を読まずに返す」仕様なので、空ボディのレスポンスとも相性が良い設計です。
 
 ## GET /posts の拡張
@@ -369,11 +369,11 @@ export class LikesController {
 
 ## 動作確認（API）
 
-[投稿機能とタイムライン](/sns/nestjs/posts/) と同様に、aliceとbobのトークン（`TOKEN_ALICE` / `TOKEN_BOB`）を取得済みとします。bobの投稿（ここでは id: 2）にaliceがいいねしてみます。
+[投稿機能とタイムライン](/sns/nestjs/posts/) と同様に、aliceとbobのCookie jar（`alice.cookies` / `bob.cookies`）を用意済みとします。bobの投稿（ここでは id: 2）にaliceがいいねしてみます。
 
 ```bash
 curl -i -X POST http://localhost:3000/posts/2/likes \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+  -b alice.cookies
 ```
 
 ```
@@ -383,8 +383,7 @@ HTTP/1.1 204 No Content
 aliceとして一覧を取得すると、`likeCount` と `likedByMe` が反映されています。
 
 ```bash
-curl -s http://localhost:3000/posts \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+curl -s -b alice.cookies http://localhost:3000/posts
 ```
 
 実行結果の例（読みやすく整形しています）:
@@ -402,13 +401,13 @@ curl -s http://localhost:3000/posts \
 ]
 ```
 
-同じ一覧を**bobのトークン**で取得すると、`likeCount` は同じ1のまま `likedByMe` だけが `false` になります。`likedByMe` が「見ている人によって変わる」値であることを確認してください。
+同じ一覧を**bobのCookie**で取得すると、`likeCount` は同じ1のまま `likedByMe` だけが `false` になります。`likedByMe` が「見ている人によって変わる」値であることを確認してください。
 
 次に、aliceがもう一度同じ投稿にいいねしてみます。
 
 ```bash
 curl -i -X POST http://localhost:3000/posts/2/likes \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+  -b alice.cookies
 ```
 
 ```
@@ -421,7 +420,7 @@ HTTP/1.1 409 Conflict
 
 ```bash
 curl -i -X POST http://localhost:3000/posts/999/likes \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+  -b alice.cookies
 ```
 
 ```
@@ -434,7 +433,7 @@ HTTP/1.1 404 Not Found
 
 ```bash
 curl -i -X DELETE http://localhost:3000/posts/2/likes \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+  -b alice.cookies
 ```
 
 ```
@@ -443,7 +442,7 @@ HTTP/1.1 204 No Content
 
 ```bash
 curl -i -X DELETE http://localhost:3000/posts/2/likes \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+  -b alice.cookies
 ```
 
 ```
