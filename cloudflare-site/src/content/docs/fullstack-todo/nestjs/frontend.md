@@ -75,7 +75,7 @@ export type Todo = {
 ```typescript
 import type { Todo } from '../types/todo';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
@@ -122,7 +122,7 @@ export async function deleteTodo(id: number): Promise<void> {
 
 **コード解説**
 
-- `API_BASE_URL` — APIのURLの共通部分を定数にまとめます。接続先が変わったときに1か所だけ直せば済みます
+- `API_BASE_URL` — APIのURLの共通部分を定数にまとめます。`.env` に `VITE_API_URL` を書けば接続先を切り替えられ、未設定ならNestJS版の標準ポート `http://localhost:3000` を使います。Spring Boot版へ同じReact画面をつなぐときは `VITE_API_URL=http://localhost:8000` にします
 - `handleResponse` — どの関数でも必要な「`res.ok` の確認 → JSONの取り出し」を共通化したヘルパーです。`fetch` は**404や500でも例外を投げない**（通信自体は成功しているため）ので、`res.ok`（ステータスが200番台かどうか）を自分で確認して例外に変換する必要があるのでした（→ [fetchでAPI通信](/react/api_fetch/)）
 - `createTodo` — [API設計表](/fullstack-todo/)どおり、`POST /todos` にJSONのボディを送ります。`Content-Type: application/json` ヘッダーを忘れると、NestJS側でボディが解釈されず400エラーになります
 - `updateTodo` — PATCHは部分更新なので、引数 `data` は `title` と `completed` のどちらも省略可能な型にしています
