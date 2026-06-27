@@ -2,7 +2,7 @@
 title: Java基礎演習
 section_key: java
 section_title: Java基礎
-nav_order: 14
+nav_order: 18
 description: Java基礎で学んだ文法を使って、成績管理とユーザー管理の小さなプログラムを作ります。
 ---
 
@@ -33,6 +33,26 @@ int age = 20;
 成人です
 ```
 
+**解答例:**
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int age = 20;
+
+        if (age >= 18) {
+            System.out.println("成人です");
+        } else {
+            System.out.println("未成年です");
+        }
+    }
+}
+```
+
+- `int age = 20;` で年齢を数値として用意します。
+- `age >= 18` で18歳以上か判定します。
+- 条件が true なら `成人です`、false なら `未成年です` を表示します。
+
 ## 演習2: 点数の評価
 
 `score` の値に応じて評価を表示してください。
@@ -52,6 +72,27 @@ public static String grade(int score) {
 }
 ```
 
+**解答例:**
+
+```java
+public static String grade(int score) {
+    if (score >= 90) {
+        return "A";
+    }
+    if (score >= 70) {
+        return "B";
+    }
+    if (score >= 50) {
+        return "C";
+    }
+    return "D";
+}
+```
+
+- 点数が高い条件から順番に判定します。
+- `return` するとメソッドが終了するため、`else` を書かなくても動きます。
+- 実務では、評価やステータスの判定をメソッドに切り出すとテストしやすくなります。
+
 ## 演習3: 配列の平均点
 
 次の配列の平均点を表示してください。
@@ -65,6 +106,30 @@ int[] scores = {80, 90, 70, 60, 100};
 ```text
 平均点: 80.0
 ```
+
+**解答例:**
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int[] scores = {80, 90, 70, 60, 100};
+        int total = 0;
+
+        for (int score : scores) {
+            total += score;
+        }
+
+        double average = (double) total / scores.length;
+        System.out.println("平均点: " + average);
+    }
+}
+```
+
+- `int[] scores` で点数の配列を作ります。
+- `total` に合計点を入れます。
+- 拡張for文で、点数を1つずつ取り出します。
+- `(double) total` により、小数の割り算にします。
+- `scores.length` は、配列の要素数です。
 
 ## 演習4: Userクラス
 
@@ -90,6 +155,37 @@ System.out.println(user.displayName());
 ```text
 Sato <sato@example.com>
 ```
+
+**解答例:**
+
+```java
+public class User {
+    private final String name;
+    private final String email;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String displayName() {
+        return name + " <" + email + ">";
+    }
+}
+```
+
+- `private final` により、外から直接変更できないフィールドにします。
+- コンストラクタで、必要な値を受け取ります。
+- getterで、外から値を読み取れるようにします。
+- `displayName` は、表示用の文字列を作る責務を持ちます。
 
 ## 演習5: BankAccountクラス
 
@@ -122,6 +218,47 @@ System.out.println(account.getBalance());
 1200
 ```
 
+**解答例:**
+
+```java
+public class BankAccount {
+    private int balance;
+
+    public BankAccount(int balance) {
+        if (balance < 0) {
+            throw new IllegalArgumentException("初期残高は0円以上にしてください");
+        }
+        this.balance = balance;
+    }
+
+    public void deposit(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("入金額は1円以上にしてください");
+        }
+        balance += amount;
+    }
+
+    public void withdraw(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("出金額は1円以上にしてください");
+        }
+        if (amount > balance) {
+            throw new IllegalArgumentException("残高が不足しています");
+        }
+        balance -= amount;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+}
+```
+
+- `balance` は外から直接変更させないため `private` にします。
+- 入金と出金は、必ずメソッド経由にします。
+- 不正な金額は例外で止めます。
+- 実務では、残高や在庫のような値は「勝手に変更されない」設計が重要です。
+
 ## 演習6: Listでユーザー一覧
 
 `List<User>` を作り、複数のユーザーを追加して、全員の表示名を出力してください。
@@ -138,6 +275,30 @@ users.add(new User("Suzuki", "suzuki@example.com"));
 Sato <sato@example.com>
 Suzuki <suzuki@example.com>
 ```
+
+**解答例:**
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<User> users = new ArrayList<>();
+        users.add(new User("Sato", "sato@example.com"));
+        users.add(new User("Suzuki", "suzuki@example.com"));
+
+        for (User user : users) {
+            System.out.println(user.displayName());
+        }
+    }
+}
+```
+
+- `List<User>` は、Userだけを入れられる一覧です。
+- `new ArrayList<>()` で、追加できるリストを作ります。
+- `users.add(...)` で、ユーザーを追加します。
+- 拡張for文で、全ユーザーを順番に表示します。
 
 ## 演習7: Notifierインターフェース
 
@@ -167,6 +328,45 @@ Notifier notifier = new EmailNotifier();
 notifier.send("登録完了");
 ```
 
+**解答例:**
+
+```java
+public interface Notifier {
+    void send(String message);
+}
+```
+
+```java
+public class EmailNotifier implements Notifier {
+    @Override
+    public void send(String message) {
+        System.out.println("メール: " + message);
+    }
+}
+```
+
+```java
+public class ConsoleNotifier implements Notifier {
+    @Override
+    public void send(String message) {
+        System.out.println("コンソール: " + message);
+    }
+}
+```
+
+```java
+Notifier notifier = new EmailNotifier();
+notifier.send("登録完了");
+
+notifier = new ConsoleNotifier();
+notifier.send("登録完了");
+```
+
+- `Notifier` は、通知する機能の約束です。
+- `EmailNotifier` と `ConsoleNotifier` は、通知方法の実装です。
+- 変数の型を `Notifier` にすると、実装クラスを差し替えられます。
+- Spring BootのDIでは、この「インターフェース越しに使う」考え方がよく出ます。
+
 ## 演習8: 入力値の変換と例外処理
 
 文字列を整数に変換するメソッドを作ってください。
@@ -193,6 +393,27 @@ try {
 }
 ```
 
+**解答例:**
+
+```java
+public static int parseAge(String input) {
+    try {
+        int age = Integer.parseInt(input);
+        if (age < 0) {
+            throw new IllegalArgumentException("年齢は0以上で入力してください");
+        }
+        return age;
+    } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("年齢は整数で入力してください");
+    }
+}
+```
+
+- `Integer.parseInt(input)` で文字列を整数に変換します。
+- 変換できない文字列なら `NumberFormatException` が発生します。
+- `age < 0` の場合は、年齢として不正なので例外にします。
+- 実務では、フォーム入力やCSV取り込みでこのような検証が必要です。
+
 ## 演習9: Streamで絞り込み
 
 `List<User>` から、メールアドレスが `example.com` で終わるユーザーだけを取り出してください。
@@ -204,6 +425,32 @@ List<User> filtered = users.stream()
 ```
 
 `for` 文でも実装し、Stream版と比較してください。
+
+**解答例:**
+
+```java
+List<User> filtered = users.stream()
+    .filter(user -> user.getEmail().endsWith("example.com"))
+    .toList();
+```
+
+`for` 文で書く場合です。
+
+```java
+List<User> filtered = new ArrayList<>();
+
+for (User user : users) {
+    if (user.getEmail().endsWith("example.com")) {
+        filtered.add(user);
+    }
+}
+```
+
+- `stream()` は、ListをStreamとして扱います。
+- `filter` は、条件に合う要素だけを残します。
+- `endsWith("example.com")` は、メールアドレスの末尾を確認します。
+- `toList()` は、結果をListに戻します。
+- 条件が複雑なときは、`for` 文の方が読みやすい場合もあります。
 
 ## 確認観点
 
