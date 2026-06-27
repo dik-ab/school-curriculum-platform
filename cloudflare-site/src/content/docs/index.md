@@ -33,20 +33,16 @@ JavaScriptに型を追加したTypeScriptを学びます。入門編最後の大
 
 | 章 | 内容 |
 |---|---|
+| [Web基礎](/web-basics/) | ブラウザ、フロントエンド、API、バックエンド、DB、インフラの全体像 |
 | [Git/GitHub基礎](/git/) | バージョン管理、ブランチ、Pull Request |
 | [React基礎](/react/) | コンポーネント、状態管理、API通信 |
-| [バックエンド基礎（NestJS）](/backend/) | HTTP/REST、Controller/Service/DI、バリデーション |
-| [Docker基礎](/docker/) | コンテナ、Dockerfile、docker-compose |
-| [データベースとPrisma](/database/) | SQL、PostgreSQL、スキーマ設計、マイグレーション |
-| [実践: フルスタックTodoアプリ](/fullstack-todo/) | フロント+API+DBを初めて通しで構築 |
-| [コード品質と開発ツール](/tooling/) | Prettier、ESLint、エディタ連携 |
-| [バックエンドテスト](/testing/) | Jestによる単体テスト、E2Eテスト |
-| [CI/CD](/cicd/) | GitHub Actions、自動テスト・自動デプロイ |
-| [AWSデプロイ](/aws/) | S3/CloudFront、ECS、RDS、SES、CDK（IaC） |
-| [リアルタイム通信](/realtime/) | WebSocket、NestJS Gateway |
-| [AI開発入門](/ai/) | LLMの基礎、Claude Code、CLAUDE.md、skills |
-| [AIチャット開発（RAG）](/ai-chat/) | embeddings、pgvector、Claude APIでQ&Aボット構築 |
-| [SNS開発（最終プロジェクト）](/sns/) | 認証・投稿・いいね・フォロー・チャット・デプロイまで全部 |
+| [バックエンド言語基礎](/java/) | Java / Python / PHP / Go / Rubyの基礎 |
+| [Dockerとデータベース](/docker/) | Docker、Compose、PostgreSQL、SQL、スキーマ設計 |
+| フレームワーク実践 | NestJS / Spring Boot / FastAPI / Laravel / Gin / RailsのAPI・ORM・テスト |
+| 実践準備 | [CI/CD](/cicd/)、[リアルタイム通信](/realtime/)、[AI開発入門](/ai/) |
+| [Todoアプリ実践](/fullstack-todo/) | 共通Reactフロント + NestJS版 / Spring Boot版API |
+| [SNS開発](/sns/) | 共通仕様をもとに、NestJS / Spring Boot / FastAPI / Laravel / Gin / Rails版をカード単位で選んで実装 |
+| クラウド運用と拡張 | [AWSデプロイ](/aws/)、[AIチャット開発（RAG）](/ai-chat/) |
 
 ## 練習問題と回答コードについて
 
