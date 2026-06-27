@@ -33,18 +33,18 @@ Spring SecurityのFilter/Interceptor化、Flywayによる厳密なMigration、Do
 | 認証 | `User`、`SessionToken`、`AuthController`、`AuthService`、HttpOnly Cookie |
 | 投稿 | `Post`、`PostRepository`、`PostsController` |
 | いいね | `Like`、一意制約、いいね/解除は冪等な204 |
-| フォロー | `Follow`、自己参照、フォロー中タイムライン |
-| プロフィール | `UpdateProfileRequest`、Bean Validation |
+| フォロー | `Follow`、自己参照、フォロー/解除は冪等な204、フォロー中タイムライン |
+| プロフィール | `UpdateProfileRequest`、表示名・bio・avatarUrlの文字列更新 |
 | テスト | JUnit、Spring Boot Test、MockMvc |
 
 ## 第2段階: 応用SNS
 
 | 章 | Spring Bootで扱う主な技術 |
 |---|---|
-| メール確認 | JavaMailSenderまたはSES SDK、確認トークン |
+| メール確認 | `EmailVerificationToken`、確認URLのconsole出力、確認後ログイン許可 |
 | DMチャット | `netty-socketio`、Socket.IO互換サーバー、`/chat` namespace、Cookie認証 |
-| 画像アップロード | AWS SDK for Java、presigned URL |
-| ページネーション | Spring Data Pageableまたはcursor方式 |
+| 画像アップロード | 現在の回答コードには未収録。`avatarUrl`へのURL保存のみ対応 |
+| ページネーション | 現在の回答コードには未収録。Spring Data Pageableまたはcursor方式は発展課題 |
 | CI/CD | `./mvnw test`、将来的にDocker build |
 | デプロイ | 現在の回答コードには未収録。Dockerfile、ECS、RDS、環境変数は発展課題 |
 
@@ -70,6 +70,8 @@ VITE_SOCKET_URL="http://localhost:8001"
 
 - セッションは `session_tokens` に保存しますが、現時点ではトークンハッシュ化と有効期限カラムまでは実装していません。
 - `/auth/logout` はCookieを失効させます。DB上のセッショントークン削除は、発展課題として追加します。
+- メール確認は確認URLをconsoleへ出力するローカル実装です。JavaMailSender、SES SDK、再送、期限切れ処理は発展課題として追加します。
+- プロフィール画像は `avatarUrl` 文字列の保存までです。S3 presigned URLの発行、S3 CORS、画像アップロード処理は現在の回答コードには含めていません。
 - CSRF対策はCORS許可オリジンと `SameSite=Lax` が中心です。状態変更APIごとの明示的なOrigin検証は、発展課題として追加します。
 - ControllerからRepositoryを直接使っている箇所があります。大きくする場合はService層へ切り出します。
 
