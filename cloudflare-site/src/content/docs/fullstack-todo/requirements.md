@@ -10,16 +10,14 @@ section_title: Todoアプリ 共通仕様
 
 このページは、Todoアプリをどのバックエンドフレームワークで実装しても変えない**共通仕様**です。Reactフロントエンド、画面、API、データモデル、エラー形式、完成条件をここで固定し、各スタックのページでは「この仕様をそのフレームワークでどう作るか」だけに集中します。
 
-解答コードは、各バックエンド版のページから確認できます。Reactフロントエンドは共通リポジトリ、バックエンドはNestJS版とSpring Boot版を公開済みです。FastAPI版、Laravel版、Gin + GORM版、Rails版は、SNS版と同じ分割方針で順次追加します。
+解答コードは、各バックエンド版のページから確認できます。Reactフロントエンドは共通リポジトリ、バックエンドはNestJS版とSpring Boot版を公開済みです。
 
-対象スタックは次の6つです。
+Todoアプリは、全言語比較の最終成果物ではなく、React、API、DBを初めて通しで接続するための小さな実践です。そのため公開済みの実装は、詳細チュートリアルがあるTypeScript / NestJS版と、Java / Spring Boot版に絞ります。Python、PHP、Go、Rubyを含む6スタック比較は、次の[SNS開発](/sns/)で扱います。
+
+対象スタックは次の2つです。
 
 - TypeScript / NestJS + Prisma
 - Java / Spring Boot + JPA
-- Python / FastAPI + SQLAlchemy
-- PHP / Laravel + Eloquent
-- Go / Gin + GORM
-- Ruby / Rails + Active Record
 
 > 実務では、小さいCRUDアプリでも先に仕様を固定します。フロント担当とバックエンド担当が同じ表を見れば、別々に作業しても最後につなぎやすくなります。
 
@@ -200,4 +198,4 @@ Content-Type: application/json
 
 ## 次のステップ
 
-どのバックエンドで実装するかを選ぶ場合は、[Todo NestJS + Prisma版](/fullstack-todo/nestjs/) または [Todo Spring Boot + JPA版](/fullstack-todo/spring_boot/) の個別ページへ進みます。以降のセットアップ、バックエンド実装、フロントエンド接続、動作確認は、選んだ版のページ内で進めます。
+どのバックエンドで実装するかを選ぶ場合は、[Todo NestJS + Prisma版](/fullstack-todo/nestjs/) または [Todo Spring Boot + JPA版](/fullstack-todo/spring_boot/) の個別ページへ進みます。以降のセットアップ、バックエンド実装、フロントエンド接続、動作確認は、選んだ版のページ内で進めます。PHP、Go、Rubyなど別言語で同じ思想を比較したい場合は、次の[SNS開発](/sns/)で各言語版カードを選んでください。
