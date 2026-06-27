@@ -433,6 +433,6 @@ NULL許容にすれば、既存の行は「期限なし（NULL）」のまま、
 
 これで「実践: フルスタックTodoアプリ」のセクションは完了です。3層を自分の手で組み、貫いて変更する経験は、ここから先のすべての土台になります。
 
-次のセクションは[コード品質と開発ツール](/tooling/)です。今回書いたコードを題材に、PrettierとESLintでコードの品質を機械的に保つ方法を学びます。その後の[バックエンドテスト](/testing/)、そして最終プロジェクトの[SNS開発](/sns/)では、このTodoアプリとまったく同じ構成（DBはcompose、APIとフロントは `pnpm run dev`）・同じ開発の進め方（設計 → API → curl確認 → 画面 → つなぎ込み）を、より大きな規模で繰り返します。
+次の実践プロジェクトは[SNS開発](/sns/)です。Todoアプリと同じく、まず共通仕様を読み、作りたいバックエンド版のカードを選んで進めます。SNSでは認証、投稿、いいね、フォロー、リアルタイムDMが加わるため、[CI/CD](/cicd/)・[リアルタイム通信](/realtime/)・[AI開発入門](/ai/)で学んだ実践準備もそのまま使います。
 
-> **完成形のコード**: [practice/fullstack-todo](https://github.com/dik-ab/curriculum/tree/main/practice/fullstack-todo)（動作検証済み）。手詰まりになったら参照してください。
+> **完成形のコード**: [共通Reactフロントエンド](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/todo) / [NestJS + Prisma バックエンド](https://github.com/dik-ab/curriculum-todo-nestjs-answer)（動作検証済み）。手詰まりになったら参照してください。
