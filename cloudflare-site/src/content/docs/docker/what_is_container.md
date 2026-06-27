@@ -36,7 +36,31 @@ nav_order: 1
 - 開発PCはmacOS、本番サーバーはLinuxで、ファイルパスの扱いが違って動かない
 - 半年後に新メンバーが入ったが、開発環境の構築手順書が古くて1日かかっても環境ができない
 
-根本原因は、**アプリケーションが「コード」だけでは完結せず、「実行環境」に依存している**ことです。
+下の図は、まったく同じコードを2人の開発者が動かしたのに、環境がそろっていないせいで片方だけ失敗する様子です。コードは1文字も違わないのに、結果が変わってしまう点に注目してください。
+
+```mermaid
+flowchart TB
+    CODE["まったく同じコード<br>app.js"]
+    CODE --> DEVA
+    CODE --> DEVB
+    subgraph DEVA["開発者AのPC　→　動く ✅"]
+        direction TB
+        A1["Node.js 20"]
+        A2["pnpm あり"]
+        A3["macOS"]
+    end
+    subgraph DEVB["開発者BのPC　→　動かない ❌"]
+        direction TB
+        B1["Node.js 16"]
+        B2["pnpm なし"]
+        B3["Windows"]
+    end
+    style CODE fill:#e3f2fd,stroke:#1565c0
+    style DEVA fill:#e8f5e9,stroke:#2e7d32
+    style DEVB fill:#ffebee,stroke:#c62828
+```
+
+根本原因は、**アプリケーションが「コード」だけでは完結せず、「実行環境」に依存している**ことです。上の図でいえば、緑の枠（動く）と赤の枠（動かない）の違いは「コード」ではなく、それを取り巻く「環境」の差から生まれています。
 
 ## コンテナ＝アプリと実行環境をまるごと詰めた箱
 
@@ -146,6 +170,21 @@ graph LR
 
 この図のように、1つのイメージ（青）から複数のコンテナ（緑＝実行中、橙＝停止中）を作れます。イメージ自体は変化せず、各コンテナはそれぞれ独立して動きます。コンテナの中でファイルを書き換えても、元のイメージには影響しませんし、他のコンテナにも影響しません。
 
+コンテナには「状態」があり、コマンドによってその状態が移り変わります。生まれてから消えるまでの一生を図にすると、次のようになります。次のページでこれらのコマンドを実際に打つので、今は「コンテナには状態があって、コマンドで切り替わる」という雰囲気をつかめれば十分です。
+
+```mermaid
+stateDiagram-v2
+    [*] --> 作成済み: docker create
+    作成済み --> 実行中: docker start
+    [*] --> 実行中: docker run（作成と起動を同時に）
+    実行中 --> 停止中: docker stop
+    停止中 --> 実行中: docker start
+    停止中 --> 削除済み: docker rm
+    削除済み --> [*]
+```
+
+「停止中」はまだコンテナが残っている状態で、`docker start` でまた動かせます。一方「削除済み」になるとコンテナは消えてなくなります。ただし、それを生み出した**イメージは手元に残っている**ので、`docker run` でいつでも同じコンテナを作り直せます。ここが「コンテナは使い捨てにできる」と言える理由で、後半でもう一度詳しく扱います。
+
 イメージは**レジストリ（Registry、レジストリ）**と呼ばれる保管場所で共有されます。代表的なレジストリが [Docker Hub](https://hub.docker.com/) で、Node.js、PostgreSQL、nginxなど、主要なソフトウェアの公式イメージが公開されています。「PostgreSQLを使いたければ、公式イメージを取ってきてコンテナとして起動するだけ」という手軽さが、Dockerの大きな魅力です。
 
 この「イメージ → コンテナ」の流れは、次のページで実際にコマンドを打ちながら体験します。
@@ -222,6 +261,25 @@ Dockerは主に次の要素で構成されます。
 - **Docker CLI（コマンドラインツール）**: `docker` コマンド。利用者はこれを通じてEngineに指示を出す
 - **Docker Desktop（ドッカーデスクトップ）**: MacやWindowsでEngine・CLI・GUIをまとめて使えるようにしたアプリ
 - **Docker Hub**: イメージを共有する公式レジストリ
+
+これらがどう連携するのかを図にすると、次のようになります。あなたが打つ `docker` コマンドはCLIを通じてEngineに届き、Engineがイメージの取得やコンテナの起動を担当します。
+
+```mermaid
+flowchart LR
+    USER["あなた<br>（ターミナルで操作）"] -->|"docker コマンド"| CLI["Docker CLI"]
+    CLI -->|"指示を伝える"| ENGINE["Docker Engine<br>（常駐プログラム）"]
+    ENGINE -->|"作る・動かす・止める"| CONT["コンテナ"]
+    ENGINE -->|"docker pull<br>（イメージを取得）"| HUB["Docker Hub<br>（イメージ保管庫）"]
+    HUB -->|"イメージを返す"| ENGINE
+    ENGINE -->|"イメージから起動"| CONT
+    style USER fill:#fce7f3,stroke:#be185d
+    style CLI fill:#e0f2fe,stroke:#0369a1
+    style ENGINE fill:#e8f5e9,stroke:#2e7d32
+    style CONT fill:#dcfce7,stroke:#15803d
+    style HUB fill:#fef3c7,stroke:#b45309
+```
+
+ポイントは、あなたが直接コンテナをいじるのではなく、**常にCLI → Engine という順で指示が伝わる**ことです。`docker run` や `docker ps` といったコマンドは、すべてこの流れでEngineに届きます。次のページからはこの `docker` コマンドを実際に打っていきます。
 
 次のページでは、Docker Desktopをインストールして、実際にコンテナを動かしていきます。
 
