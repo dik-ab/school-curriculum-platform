@@ -2,7 +2,7 @@
 title: 変数と基本型
 section_key: java
 section_title: Java基礎
-nav_order: 3
+nav_order: 4
 description: Javaの変数宣言、基本型、参照型、型変換、定数を学びます。
 ---
 
