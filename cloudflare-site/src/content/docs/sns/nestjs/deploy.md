@@ -772,7 +772,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -789,7 +789,7 @@ jobs:
 - `on: push: branches: [main]` … mainブランチへのpush（PRのマージを含む）だけで起動します（→ [GitHub Actions基礎](/cicd/github_actions_basics/)）
 - `permissions: id-token: write` … OIDCトークンの発行をワークフローに許可します。**OIDC認証に必須**の1行でした（→ [CI/CDから自動デプロイ](/aws/deploy_from_cicd/)）
 - `test` ジョブ … [CIパイプラインを作る](/cicd/ci_pipeline/)で組んだlint + test + buildと同じ内容です。ここではDB不要の単体テストまでを回しています。E2Eテスト（テスト用DBが必要）も含めたい場合は、[SNSのテストを書く](/sns/nestjs/testing/)でCIの`backend`ジョブに足したservice container構成をこのジョブにも足してください
-- `pnpm/action-setup@v4` + `cache: pnpm` … ランナーにpnpm（バージョン9）をインストールし、依存のキャッシュで2回目以降の実行を速くします。`actions/setup-node` より**先に**置くのがポイントでした（→ [CI/CDから自動デプロイ](/aws/deploy_from_cicd/)と同じ書き方です）
+- `pnpm/action-setup@v4` + `cache: pnpm` … ランナーにpnpm（バージョン10）をインストールし、依存のキャッシュで2回目以降の実行を速くします。`actions/setup-node` より**先に**置くのがポイントでした（→ [CI/CDから自動デプロイ](/aws/deploy_from_cicd/)と同じ書き方です）
 
 次に、フロントエンドのデプロイジョブを追記します。
 
@@ -804,7 +804,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 20
