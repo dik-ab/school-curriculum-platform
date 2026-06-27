@@ -79,10 +79,10 @@ VITE_SOCKET_URL="http://localhost:8001"
 
 ## 動作確認済みの範囲
 
-- `./mvnw test` で登録、メール確認、ログイン、投稿作成、いいね、フォロー、会話作成のAPIフローを確認
+- `./mvnw test` で登録、メール未確認ログイン拒否、メール確認、ログイン、投稿作成のAPIフローを確認
 - `./mvnw -DskipTests package` でビルド成果物を作成できることを確認
 - 共通Reactフロントから、投稿作成、別ユーザーによるいいね更新、別ブラウザコンテキスト間のリアルタイムチャット表示を確認
-- CIではPR時に `./mvnw test` と `./mvnw -DskipTests package` を実行します。Socket.IOサーバーはテスト環境で `SOCKET_IO_ENABLED=false` にして無効化します。
+- CIではPR時に `./mvnw test` と `./mvnw -DskipTests package` を実行します。Socket.IOサーバーは `test` profile の `socketio.enabled=false` で無効化します。
 
 ## 解答コード
 
