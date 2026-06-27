@@ -8,7 +8,7 @@ nav_order: 3
 
 前のページでワークフローの書き方を学びました。このページではそれを実戦投入します。題材は、**NestJSのバックエンドとReactのフロントエンドを1つのリポジトリで管理する構成**です。ここに lint + test + build を自動実行するCIパイプラインを組み込み、Pull Requestでチェックが緑になるところまでを通しで実践します。
 
-> 実際の解答リポジトリでは、共通Reactフロントエンドと各バックエンドを別リポジトリに分けています。その場合も考え方は同じで、フロントエンド側のCIではReact appのtest/buildを、バックエンド側のCIでは各言語のtest/buildを実行します。このページの `backend` / `frontend` ジョブ分割は、複数プロジェクトをCIで扱うための基本形として読んでください。
+> 実際の解答リポジトリでは、共通Reactフロントエンドと各バックエンドを別リポジトリに分けています。その場合も考え方は同じで、フロントエンド側のCIではReact appの lint / test / build を、バックエンド側のCIでは各言語の test / build 相当を実行します。このページの `backend` / `frontend` ジョブ分割は、複数プロジェクトをCIで扱うための基本形として読んでください。実際の解答リポジトリでは、React共通repoは `todo` / `sns`、NestJSやSpringのバックエンドrepoは `test-build` のように、リポジトリごとにjob名が異なります。
 
 **パイプライン（pipeline）** とは、複数のチェックや処理を決まった順序・組み合わせで流す一連の流れのことです。「lintを通し、テストを通し、ビルドを通す」という処理の流れを、工場のパイプラインになぞらえてこう呼びます。
 
@@ -297,7 +297,7 @@ FAIL  src/posts/posts.service.spec.ts
 
 ここまでの仕組みでも、実は「赤いバツのままマージする」操作自体は可能です。これを禁止したい場合は、GitHubの **ブランチ保護ルール（branch protection rule）** を設定します。
 
-リポジトリの **Settings → Branches → Add branch ruleset**（または Add rule）で、mainブランチに対して「Require status checks to pass」（ステータスチェックの成功を必須にする）を有効にし、`backend` と `frontend` を必須チェックに指定します。これで、**CIが緑にならない限りマージボタンが押せなくなり**、壊れたコードがmainに入る経路が完全に塞がれます。チーム開発では必ず設定する項目です。
+リポジトリの **Settings → Branches → Add branch ruleset**（または Add rule）で、mainブランチに対して「Require status checks to pass」（ステータスチェックの成功を必須にする）を有効にします。このページの練習リポジトリなら `backend` と `frontend` を必須チェックに指定します。解答リポジトリでは、React共通repoなら `todo` / `sns`、バックエンドrepoなら `test-build` など、実際にActionsで表示されているjob名を指定してください。これで、**CIが緑にならない限りマージボタンが押せなくなり**、壊れたコードがmainに入る経路が完全に塞がれます。チーム開発では必ず設定する項目です。
 
 ## CIが失敗したときの対処フロー
 
