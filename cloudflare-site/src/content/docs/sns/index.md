@@ -31,7 +31,7 @@ section_title: SNS 共通仕様
   <a class="course-card project" data-accent="amber" href="/sns/spring_boot/">
     <span>Java</span>
     <h3>SNS Spring Boot + JPA版</h3>
-    <p>Spring Security、JPA、netty-socketioで同じSNS仕様をJavaで実装します。</p>
+    <p>Spring MVC、JPA、AuthService、netty-socketioで同じSNS仕様をJavaで実装します。</p>
   </a>
   <a class="course-card project" data-accent="blue" href="/sns/fastapi/">
     <span>Python</span>
