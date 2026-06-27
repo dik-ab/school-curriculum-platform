@@ -274,8 +274,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  app.enableCors({ origin: process.env.FRONTEND_URL });
-  await app.listen(3000);
+  app.enableCors({ origin: process.env.FRONTEND_URL, credentials: true });
+  await app.listen(Number(process.env.PORT ?? 3000));
 }
 bootstrap();
 ```
@@ -285,14 +285,14 @@ bootstrap();
 - `import 'dotenv/config';` — dotenvに `.env` を読み込ませ、`process.env` に反映します。**必ずファイルの先頭**に書きます。他のコードより先に環境変数を確定させるためです
 - `app.useGlobalPipes(new ValidationPipe({ whitelist: true }))` — [DTOとバリデーション](/backend/dto_and_validation/)で学んだValidationPipeを、アプリ全体のすべてのエンドポイントに適用します。コントローラごとに書く手間が省け、適用漏れも防げます
 - `whitelist: true` — DTOに定義されていないプロパティを、受信したボディから自動で取り除くオプションです。たとえば `{ "email": "...", "isAdmin": true }` のような余計な項目を混ぜて送られても、DTOにない `isAdmin` は捨てられます。**クライアントから送られるデータを信用しない**、というバックエンドの基本姿勢の表れです
-- `app.enableCors({ origin: process.env.FRONTEND_URL })` — `http://localhost:5173`（フロントエンド）からのAPI呼び出しを許可します（次項で説明します）
-- `await app.listen(3000)` — ポート3000で起動します
+- `app.enableCors({ origin: process.env.FRONTEND_URL, credentials: true })` — `http://localhost:5173`（フロントエンド）からのAPI呼び出しを許可します。`credentials: true` は、ブラウザが `sns_session` のHttpOnly CookieをAPIへ送るために必要です（次項で説明します）
+- `await app.listen(Number(process.env.PORT ?? 3000))` — `PORT` 環境変数があればその値で、なければポート3000で起動します
 
 ### CORSの復習
 
 **CORS（Cross-Origin Resource Sharing、コルス）**について簡単に復習しておきます（→ [HTTPとREST](/backend/http_and_rest/)、エラーに遭遇した経験は → [つなぎ込みで起きること](/fullstack-todo/nestjs/integration/)）。ブラウザには**同一オリジンポリシー**という安全装置があり、Webページは原則として「自分と同じオリジン（スキーム＋ホスト＋ポートの組）」のAPIしか利用できません。フロントエンドは `http://localhost:5173`、APIは `http://localhost:3000` で**ポートが違うので別オリジン**となり、そのままではブラウザが応答の利用をブロックします。
 
-`enableCors({ origin: ... })` を設定すると、APIが応答に「このオリジンからの利用は許可済み」というヘッダ（`Access-Control-Allow-Origin`）を付け、ブラウザがブロックを解除します。許可先を `*`（全部）にせず `FRONTEND_URL` に限定するのは、見知らぬサイトからAPIを呼ばれないようにするためです。本番では、この環境変数をCloudFrontのURLに差し替えるだけで対応できます（→ [AWSへの全体デプロイ](/sns/nestjs/deploy/)）。
+`enableCors({ origin: ..., credentials: true })` を設定すると、APIが応答に「このオリジンからの利用は許可済み」「Cookieつき通信を許可済み」というヘッダを付け、ブラウザがブロックを解除します。許可先を `*`（全部）にせず `FRONTEND_URL` に限定するのは、見知らぬサイトからAPIを呼ばれないようにするためです。本番では、この環境変数をCloudFrontのURLに差し替えるだけで対応できます（→ [AWSへの全体デプロイ](/sns/nestjs/deploy/)）。
 
 ## Prismaの導入
 
