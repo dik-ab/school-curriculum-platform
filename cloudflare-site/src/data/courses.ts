@@ -112,7 +112,7 @@ export const phases: Phase[] = [
     summary: '共通仕様を確認し、React共通フロントとバックエンド別APIをカード単位で選ぶ。',
     grid: 'featured',
     cards: [
-      { label: 'Todo Common', title: 'Todo共通仕様', description: 'React共通フロント、API、DB、完成条件を全スタック共通で固定する。', href: '/fullstack-todo/', accent: 'green', project: true },
+      { label: 'Todo Common', title: 'Todo共通仕様', description: 'React共通フロント、API、DB、完成条件をNestJS版とSpring Boot版で固定する。', href: '/fullstack-todo/', accent: 'green', project: true },
       { label: 'Todo / NestJS', title: 'Todo NestJS版', description: 'NestJS + Prisma + PostgreSQLでTodo CRUDを実装する詳細チュートリアル。', href: '/fullstack-todo/nestjs/', accent: 'blue', project: true },
       { label: 'Todo / Spring', title: 'Todo Spring Boot版', description: 'Spring Boot + JPA + PostgreSQLでTodo CRUDを実装するルート。', href: '/fullstack-todo/spring_boot/', accent: 'amber', project: true }
     ]
