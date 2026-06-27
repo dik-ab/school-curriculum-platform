@@ -263,7 +263,7 @@ jobs:
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - uses: actions/setup-node@v4
         with:
@@ -298,7 +298,7 @@ jobs:
 
 - `on.push.branches: [main]` + `paths: "frontend/**"` … mainブランチに**フロントエンドのファイルが変更されたとき**だけ起動します。リポジトリは `frontend/` と `backend/` を持つモノレポ構成（→ SNS開発の[プロジェクトセットアップ](/sns/nestjs/project_setup/)）を想定しています。ワークフローファイル自身も `paths` に含めているのは、ワークフローを修正したときにも動作確認できるようにするためです（→ [CIパイプライン](/cicd/ci_pipeline/)で学んだ定石です）
 - `permissions: id-token: write` … **OIDCの必須設定**です。ワークフローに「IDトークンを発行してもらう」許可を与えます。これがないと認証ステップが失敗します。`contents: read` はcheckout用です
-- `pnpm/action-setup@v4` … ランナーにpnpm（バージョン9）をインストールします。`actions/setup-node` より**先に**置くのがポイントで、こうすると次のステップのキャッシュ設定がpnpmを認識できます
+- `pnpm/action-setup@v4` … ランナーにpnpm（バージョン10）をインストールします。`actions/setup-node` より**先に**置くのがポイントで、こうすると次のステップのキャッシュ設定がpnpmを認識できます
 - `actions/setup-node@v4` … Node.js 20を用意し、`cache: 'pnpm'` でpnpmのキャッシュを効かせます（→ [CIパイプライン](/cicd/ci_pipeline/)と同じ書き方です）
 - `pnpm install --frozen-lockfile && pnpm run build` … ロックファイルどおりにクリーンインストールしてビルド。成果物が `frontend/dist` にできます
 - `aws-actions/configure-aws-credentials@v4` … 先ほどのシーケンス図の処理（トークン取得 → AssumeRole → 一時認証情報の設定）をすべて行う公式アクションです。`role-to-assume` に引き受けるロールのARNを渡します。**アクセスキーはどこにも書いていません**
