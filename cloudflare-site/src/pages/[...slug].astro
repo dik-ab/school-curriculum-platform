@@ -22,15 +22,20 @@ const next = currentIndex >= 0 && currentIndex < sectionEntries.length - 1 ? sec
 ---
 
 <BaseLayout title={`${item.title} | School Curriculum`}>
-  <main class="docs-layout">
-    <aside class="docs-sidebar">
-      <h2>{item.sectionTitle}</h2>
-      <nav aria-label="Course navigation">
-        {sectionEntries.map((entry) => (
-          <a href={`/${entry.slug}/`} aria-current={entry.slug === item.slug ? 'page' : undefined}>{entry.title}</a>
-        ))}
-      </nav>
-    </aside>
+  <main
+    class="docs-layout"
+    style={sectionEntries.length <= 1 ? 'grid-template-columns: minmax(0, 960px); justify-content: center;' : undefined}
+  >
+    {sectionEntries.length > 1 && (
+      <aside class="docs-sidebar">
+        <h2>{item.sectionTitle}</h2>
+        <nav aria-label="Course navigation">
+          {sectionEntries.map((entry) => (
+            <a href={`/${entry.slug}/`} aria-current={entry.slug === item.slug ? 'page' : undefined}>{entry.title}</a>
+          ))}
+        </nav>
+      </aside>
+    )}
 
     <article class="doc-shell">
       <div class="breadcrumb">
