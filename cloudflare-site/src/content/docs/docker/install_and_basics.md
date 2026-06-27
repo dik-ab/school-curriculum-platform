@@ -167,6 +167,25 @@ docker run --name my-nginx -d -p 8080:80 nginx:1.27
 - `-p 8080:80` — **ポート公開**。「PC（ホスト）の8080番ポートへのアクセスを、コンテナの80番ポートに転送する」という意味です（詳細は後述）。
 - `nginx:1.27` — 使用するイメージとタグです。
 
+このコマンドを実行したとき、あなた・ターミナル・Docker Engine・コンテナの間で何がやり取りされるのかをシーケンス図で見てみましょう。今回はイメージがすでに手元にあるため、ダウンロード（pull）は発生しません。
+
+```mermaid
+sequenceDiagram
+    participant U as "あなた"
+    participant CLI as "docker CLI"
+    participant Engine as "Docker Engine"
+    participant C as "nginx コンテナ"
+    U->>CLI: "docker run -d -p で起動を指示"
+    CLI->>Engine: "起動を依頼"
+    Engine->>Engine: "ローカルに nginx の1.27があるか確認"
+    Engine->>C: "イメージからコンテナを作成して起動"
+    Engine->>Engine: "8080番から80番への転送を設定"
+    Engine-->>CLI: "コンテナIDを返す"
+    CLI-->>U: "コンテナIDを表示"
+```
+
+図の読み方: 上から下へ時間が流れます。`docker run` の一言が、内部では「確認 → 作成 → 起動 → 転送設定」という複数の手順に分かれて実行されていることが分かります。最後にターミナルへ戻ってくるのが、実行結果に表示される長いコンテナIDです。
+
 ブラウザで `http://localhost:8080` を開いてください。「Welcome to nginx!」というページが表示されれば、コンテナの中で動いているWebサーバーにアクセスできています。Webサーバーを自分でインストールせずに、コマンド1つで起動できました。これがDockerの威力です。
 
 ### ポート公開（-p）の意味
@@ -183,6 +202,22 @@ graph LR
 ```
 
 コンテナ内のnginxは80番ポートで待ち受けていますが、私たちはホストの8080番を経由してアクセスしています。ホスト側のポート番号は空いていれば何番でも構いません。「左がホスト側、右がコンテナ側」という順序を覚えておいてください。
+
+ブラウザでアクセスしてからページが返ってくるまで、リクエストがどこを通っていくのかを時間の流れで追ってみましょう。
+
+```mermaid
+sequenceDiagram
+    participant B as "ブラウザ"
+    participant H as "ホストの8080番ポート"
+    participant N as "コンテナの80番ポート（nginx）"
+    B->>H: "8080番へリクエスト"
+    H->>N: "8080番から80番へ転送"
+    N->>N: "Welcome to nginx のHTMLを用意"
+    N-->>H: "HTMLを返す"
+    H-->>B: "ページを表示"
+```
+
+図の読み方: ブラウザは「ホストの8080番」だけを知っていればよく、コンテナが内部で80番を使っていることは意識しません。`-p 8080:80` という1つの設定が、この行き（転送）と帰り（応答）の両方の通り道になっています。
 
 ### 実行中のコンテナを一覧する: docker ps
 
@@ -322,9 +357,46 @@ docker rmi hello-world
 
 「停止（stop）」と「削除（rm）」が別の操作である点に注意してください。stopしたコンテナはrunし直さなくても `docker start my-nginx` で再開できます。一方rmで削除すると、コンテナ内での変更ごと消えます。
 
+ここまでのコマンドが、イメージとコンテナの「状態」をどう変えるのかを状態遷移図にまとめます。矢印の上の文字が、状態を変えるコマンドです。
+
+```mermaid
+stateDiagram-v2
+    state "イメージ（設計図）" as Image
+    state "実行中のコンテナ" as Running
+    state "停止中のコンテナ" as Stopped
+    [*] --> Image
+    Image --> Running: docker run
+    Running --> Stopped: docker stop
+    Stopped --> Running: docker start
+    Stopped --> [*]: docker rm
+    Image --> [*]: docker rmi
+```
+
+図の読み方: 同じイメージから `docker run` で何度でもコンテナを作れます。`docker stop` と `docker start` は「実行中」と「停止中」を行き来するだけで、コンテナは消えません。`docker rm` で初めてコンテナが消滅し（左下の終端）、`docker rmi` でイメージそのものが消えます。停止と削除が別物だという感覚を、この図で押さえておきましょう。
+
 ## 基本コマンドまとめ
 
 このページで学んだコマンドを整理します。これらはこの先のページでも前提知識として使います。
+
+まず、それぞれのコマンドが「イメージ」と「コンテナ」のどこに作用するのかを1枚の図で俯瞰しましょう。
+
+```mermaid
+flowchart LR
+    Reg["レジストリ<br>（Docker Hub）"] -->|"docker pull"| Img["ローカルのイメージ"]
+    Img -->|"docker run"| Run["実行中のコンテナ"]
+    Run -->|"docker stop"| Stop["停止中のコンテナ"]
+    Stop -->|"docker start"| Run
+    Stop -->|"docker rm"| Del["削除されて消える"]
+    Img -->|"docker rmi"| DelImg["イメージを削除"]
+    style Reg fill:#ede7f6,stroke:#5e35b1
+    style Img fill:#e3f2fd,stroke:#1565c0
+    style Run fill:#e8f5e9,stroke:#2e7d32
+    style Stop fill:#fff3e0,stroke:#ef6c00
+    style Del fill:#ffebee,stroke:#c62828
+    style DelImg fill:#ffebee,stroke:#c62828
+```
+
+図の読み方: 青がイメージ、緑が実行中のコンテナ、オレンジが停止中のコンテナ、赤が削除を表します。`docker ps` はこの中の「実行中のコンテナ」を、`docker images` は「ローカルのイメージ」を一覧表示するコマンドだと考えると、表との対応が取りやすくなります。
 
 | コマンド | 役割 |
 |---|---|
