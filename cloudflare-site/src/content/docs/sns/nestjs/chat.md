@@ -469,9 +469,7 @@ export class ChatGateway implements OnGatewayConnection {
 
   async handleConnection(client: Socket) {
     try {
-      const token =
-        (client.handshake.auth.token as string | undefined) ??
-        parseCookie(client.handshake.headers.cookie).sns_session;
+      const token = parseCookie(client.handshake.headers.cookie).sns_session;
       if (token === undefined) throw new Error('トークンがありません');
       const payload = await this.jwtService.verifyAsync<JwtPayload>(token);
       client.data.user = payload;
@@ -539,7 +537,6 @@ function parseCookie(header: string | undefined): Record<string, string> {
 - `constructor(private readonly jwtService: JwtService, ...)` — `JwtService`をDIで受け取ります。[認証のページ](/sns/nestjs/auth/)で`JwtModule.register({ global: true, ... })`としたおかげで、どのモジュールからもimportなしで注入できます。
 - `handleConnection` — 接続の瞬間に呼ばれます（→ [Gatewayのページ](/realtime/nestjs_gateway/)）。
   - `client.handshake.headers.cookie` — Socket.IO接続時のhandshakeに含まれるCookieヘッダです。React側が `withCredentials: true` で接続するため、ログイン時に発行された `sns_session` がここへ届きます。
-  - `client.handshake.auth.token` — Cookieを使わない手動検証や移行時のための予備経路です。通常の画面実装では使いません。
   - `verifyAsync<JwtPayload>(token)` — JwtAuthGuardの中でやっていた検証と同じものを、ここで自前実行します。署名が不正・期限切れなら例外になります。
   - 成功時は`client.data.user`にペイロードを保存します。以後のイベントハンドラはここから「誰の接続か」を取り出します。
   - 失敗時は`client.disconnect()`で即切断します。**認証できない相手はイベントを1つも処理させずに退場させる**のが方針です。
