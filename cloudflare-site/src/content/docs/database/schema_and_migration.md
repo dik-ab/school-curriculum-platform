@@ -455,4 +455,4 @@ NOT NULLの列を追加するとき、既存の行にもその列の値が必要
 
 - 前のページ: [Prismaの導入](/database/prisma_setup/)
 - 次のページ: [Prisma ClientでCRUD](/database/crud_with_prisma/)
-- ここで学んだ「スキーマ変更→migrate dev」のサイクルは、[リレーション](/database/relations/)でのモデル追加、[SNS開発](/sns/project_setup/)でのER図の実装まで、この先ずっと使い続けます
+- ここで学んだ「スキーマ変更→migrate dev」のサイクルは、[リレーション](/database/relations/)でのモデル追加、[SNS開発](/sns/nestjs/project_setup/)でのER図の実装まで、この先ずっと使い続けます

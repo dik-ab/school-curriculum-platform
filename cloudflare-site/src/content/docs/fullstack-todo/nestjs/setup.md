@@ -413,7 +413,7 @@ fullstack-todo/
     └── package.json
 ```
 
-開発時の起動手順は次の3つです。この形が**開発環境の標準形**であり、[SNS開発](/sns/project_setup/)でもそのまま使います。
+開発時の起動手順は次の3つです。この形が**開発環境の標準形**であり、[SNS開発](/sns/nestjs/project_setup/)でもそのまま使います。
 
 ```bash
 # ① データベースを起動（fullstack-todo/ で）
@@ -508,6 +508,6 @@ npmはプロジェクトごとに `node_modules/` へパッケージの実体を
 
 ## 次のステップ
 
-土台が完成しました。次の[バックエンド: Todo APIの実装](/fullstack-todo/backend/)では、NestJSとPrismaを使って[セクションの概要](/fullstack-todo/)で設計した5つのエンドポイントを実装し、curlで動作確認します。
+土台が完成しました。次の[バックエンド: Todo APIの実装](/fullstack-todo/nestjs/backend/)では、NestJSとPrismaを使って[セクションの概要](/fullstack-todo/)で設計した5つのエンドポイントを実装し、curlで動作確認します。
 
-なお、このページで確立した「リポジトリ構成 + DB起動 + Prisma初期化」の手順は、[SNS開発のプロジェクトセットアップ](/sns/project_setup/)でもほぼ同じ流れで繰り返します。手順の意味を理解しながら進めておくと、その時に迷わず進められます。
+なお、このページで確立した「リポジトリ構成 + DB起動 + Prisma初期化」の手順は、[SNS開発のプロジェクトセットアップ](/sns/nestjs/project_setup/)でもほぼ同じ流れで繰り返します。手順の意味を理解しながら進めておくと、その時に迷わず進められます。

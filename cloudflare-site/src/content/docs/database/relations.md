@@ -606,4 +606,4 @@ model Post {
 
 - 前のページ: [Prisma ClientでCRUD](/database/crud_with_prisma/)
 - 次のページ: [練習問題](/database/practice/)
-- このページのUser / Post / Likeは、[SNS開発](/sns/)でほぼそのままの形で再登場します。投稿機能は[投稿のCRUD](/sns/posts/)で、いいね機能は[いいね](/sns/likes/)で、さらにフォロー機能では「ユーザー対ユーザー」という自己参照の多対多（[フォロー](/sns/follow/)）に発展します
+- このページのUser / Post / Likeは、[SNS開発](/sns/)でほぼそのままの形で再登場します。投稿機能は[投稿のCRUD](/sns/nestjs/posts/)で、いいね機能は[いいね](/sns/nestjs/likes/)で、さらにフォロー機能では「ユーザー対ユーザー」という自己参照の多対多（[フォロー](/sns/nestjs/follow/)）に発展します

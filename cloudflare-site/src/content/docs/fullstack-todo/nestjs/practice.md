@@ -8,7 +8,7 @@ section_title: Todo NestJS + Prisma版
 
 # 練習問題
 
-[つなぎ込み](/fullstack-todo/integration/)までで、Todoアプリは一通り完成しました。このページでは、完成したアプリに**自力で機能を追加する**練習をします。
+[つなぎ込み](/fullstack-todo/nestjs/integration/)までで、Todoアプリは一通り完成しました。このページでは、完成したアプリに**自力で機能を追加する**練習をします。
 
 写経で動かすことと、自分で設計して追加できることの間には大きな差があります。ここでの課題はすべて「DBのスキーマ → API → 画面」という3層を貫く変更です。1つの機能を足すのに、どの層に何の変更が必要かを**先に紙に書き出してから**実装する癖をつけてください。それがそのまま[SNS開発](/sns/)での開発の進め方になります。
 
@@ -284,7 +284,7 @@ export async function fetchTodos(completed?: boolean): Promise<Todo[]> {
 <details markdown="1">
 <summary>ヒントを見る</summary>
 
-- **APIの変更は不要**です。`PATCH /todos/:id` はすでに `title` の部分更新に対応しています（[UpdateTodoDto](/fullstack-todo/backend/)を見直してください）。設計段階でPATCHを部分更新として作っておいたことが、ここで効いてきます
+- **APIの変更は不要**です。`PATCH /todos/:id` はすでに `title` の部分更新に対応しています（[UpdateTodoDto](/fullstack-todo/nestjs/backend/)を見直してください）。設計段階でPATCHを部分更新として作っておいたことが、ここで効いてきます
 - 画面側は「いま編集中のTodoのID」（`number | null`）と「編集中の入力値」の2つをstateに持つのが定石です。`editingId === todo.id` のときだけ入力欄を表示する条件付きレンダリングにします
 - 保存時は `updateTodo(id, { title })` を呼び、完了切替と同じく `map` でその1件だけ差し替えます
 

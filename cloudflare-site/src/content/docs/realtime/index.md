@@ -46,10 +46,10 @@ sequenceDiagram
 
 - [バックエンド基礎（NestJS）](/backend/) — 特に[HTTPとREST](/backend/http_and_rest/)で学んだリクエスト/レスポンスモデル
 - [React基礎](/react/) — 特に[fetchでAPI通信](/react/api_fetch/)で学んだフロントエンドからの通信と、useState / useEffectの使い方
-- [環境構築](/environment/) — Node.js 20とpnpmが使えること（pnpmの導入は[実践: フルスタックTodoアプリ](/fullstack-todo/setup/)を参照）
+- [環境構築](/environment/) — Node.js 20とpnpmが使えること（pnpmの導入は[実践: フルスタックTodoアプリ](/fullstack-todo/nestjs/setup/)を参照）
 
 ## この知識はどこで使うか
 
-ここで学ぶリアルタイム通信は、最終プロジェクトの[SNS開発](/sns/)で、ユーザー同士が1対1で会話できる[DMチャット機能](/sns/chat/)を実装するときに直接使います。SNSのDMは「特定の2人だけに届くチャット」なので、このセクションの最後に学ぶroom（ルーム）の考え方がそのまま活きてきます。
+ここで学ぶリアルタイム通信は、最終プロジェクトの[SNS開発](/sns/)で、ユーザー同士が1対1で会話できる[DMチャット機能](/sns/nestjs/chat/)を実装するときに直接使います。SNSのDMは「特定の2人だけに届くチャット」なので、このセクションの最後に学ぶroom（ルーム）の考え方がそのまま活きてきます。
 
 それでは、まず「なぜ普通のHTTPではリアルタイム通信が難しいのか」から見ていきましょう。

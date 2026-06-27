@@ -8,7 +8,7 @@ section_title: Todo NestJS + Prisma版
 
 # つなぎ込み: CORSとエラーハンドリング
 
-[前のページ](/fullstack-todo/frontend/)の最後で、ブラウザのコンソールに次のエラーが出ました。
+[前のページ](/fullstack-todo/nestjs/frontend/)の最後で、ブラウザのコンソールに次のエラーが出ました。
 
 ```
 Access to fetch at 'http://localhost:3000/todos' from origin 'http://localhost:5173'
@@ -159,7 +159,7 @@ bootstrap();
 - `app.enableCors(...)` — CORS関連のヘッダーの付与と、プリフライト（OPTIONS）への応答を有効化します
 - `origin: 'http://localhost:5173'` — 許可するオリジンを**Viteの開発サーバーだけに限定**します。`enableCors()` と引数なしで呼ぶとすべてのオリジン（`*`）を許可できますが、「誰にレスポンスを読ませてよいか」は明示的に絞るのが安全側の習慣です
 
-APIが再起動（watchモードなら自動）されたら、ブラウザで `http://localhost:5173/` を再読み込みしてください。今度はTodoの一覧（最初は[バックエンドの動作確認](/fullstack-todo/backend/)で作ったデータ）が表示されるはずです。
+APIが再起動（watchモードなら自動）されたら、ブラウザで `http://localhost:5173/` を再読み込みしてください。今度はTodoの一覧（最初は[バックエンドの動作確認](/fullstack-todo/nestjs/backend/)で作ったデータ）が表示されるはずです。
 
 ## 解決方法2: Viteのプロキシ
 
@@ -226,11 +226,11 @@ export default defineConfig({
 
 ## 通しの動作確認
 
-それでは、アプリ全体を通しで確認します。3つすべてが起動していることを確認してください（→ [起動手順](/fullstack-todo/setup/)）。
+それでは、アプリ全体を通しで確認します。3つすべてが起動していることを確認してください（→ [起動手順](/fullstack-todo/nestjs/setup/)）。
 
 ブラウザで `http://localhost:5173/` を開き、次を順に試します。
 
-1. **一覧** — [バックエンドの確認](/fullstack-todo/backend/)で作ったTodoが表示される
+1. **一覧** — [バックエンドの確認](/fullstack-todo/nestjs/backend/)で作ったTodoが表示される
 2. **追加** — 入力欄に「CORSを理解する」と入れて追加ボタンを押すと、一覧の先頭に現れる
 3. **完了切替** — チェックボックスを押すと打ち消し線が付く。**ページを再読み込みしても状態が保たれている**（DBに永続化されている証拠です）
 4. **削除** — 削除ボタンで一覧から消え、再読み込みしても復活しない
@@ -273,7 +273,7 @@ sequenceDiagram
     Note over JS: catchが捕まえて<br>エラーメッセージを表示
 ```
 
-このとき `fetch` は**例外を投げます**。404のような「サーバーからのエラー応答」とは違い、そもそも通信が成立していないからです。画面には[前のページ](/fullstack-todo/frontend/)で実装した `catch` → `setErrorMessage` の流れで、エラーメッセージが表示されるはずです。確認したらAPIを `pnpm run dev` で再起動してください。
+このとき `fetch` は**例外を投げます**。404のような「サーバーからのエラー応答」とは違い、そもそも通信が成立していないからです。画面には[前のページ](/fullstack-todo/nestjs/frontend/)で実装した `catch` → `setErrorMessage` の流れで、エラーメッセージが表示されるはずです。確認したらAPIを `pnpm run dev` で再起動してください。
 
 このように同じ「画面にエラーが出る」でも、原因は3種類に分けられます。
 
@@ -370,6 +370,6 @@ git add .
 git commit -m "CORSを設定してフロントとAPIを接続"
 ```
 
-次の[練習問題](/fullstack-todo/practice/)では、このアプリに期限・絞り込み・編集などの機能を自力で追加して、3層を貫く変更の感覚を定着させます。
+次の[練習問題](/fullstack-todo/nestjs/practice/)では、このアプリに期限・絞り込み・編集などの機能を自力で追加して、3層を貫く変更の感覚を定着させます。
 
 ここで学んだCORSの知識は、[SNS開発](/sns/)で本番ドメインを許可するときに再登場します。また「エラーの層を切り分ける」習慣は、この先のすべての開発で使い続けることになります。

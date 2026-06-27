@@ -433,4 +433,4 @@ CloudFrontの `errorResponses`（カスタムエラーレスポンス）で「S3
 
 フロントエンドが世界に公開されました。次のページ[ECR + ECS Fargate](/aws/ecr_ecs/)では、もう1つの入口であるAPI側——NestJSアプリのDockerイメージをECRに置き、ECS Fargate + ALBで動かす構成を作ります。[Docker基礎](/docker/dockerfile/)で書いたDockerfileがついに本番で活躍します。
 
-このページの「sync + invalidation」は、[CI/CDから自動デプロイ](/aws/deploy_from_cicd/)でGitHub Actionsのジョブとして自動化します。また、S3へのファイル配置はSNS開発の[プロフィールと画像アップロード](/sns/profile_and_images/)でも別の形（presigned URL）で再登場します。
+このページの「sync + invalidation」は、[CI/CDから自動デプロイ](/aws/deploy_from_cicd/)でGitHub Actionsのジョブとして自動化します。また、S3へのファイル配置はSNS開発の[プロフィールと画像アップロード](/sns/nestjs/profile_and_images/)でも別の形（presigned URL）で再登場します。

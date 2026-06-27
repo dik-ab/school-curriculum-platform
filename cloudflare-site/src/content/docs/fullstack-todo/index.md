@@ -111,7 +111,7 @@ flowchart LR
 2. 画面上のReactアプリが、`fetch` でNestJSのAPI（`localhost:3000`）を呼び出し、JSON形式でデータをやり取りします（→ [fetchでAPI通信](/react/api_fetch/)）
 3. NestJSはPrismaを通じてPostgreSQLにSQLを発行し、データを読み書きします（→ [Prisma ClientでCRUD](/database/crud_with_prisma/)）
 
-「ブラウザ→Vite」と「ブラウザ→NestJS」の2本の矢印が**別のサーバーに向かっている**ことに注目してください。ポート番号が違う（5173と3000）ため、ブラウザから見るとこの2つは「別のサイト」です。これが後で[CORSという問題](/fullstack-todo/integration/)を引き起こします。詳しくはつなぎ込みのページで扱います。
+「ブラウザ→Vite」と「ブラウザ→NestJS」の2本の矢印が**別のサーバーに向かっている**ことに注目してください。ポート番号が違う（5173と3000）ため、ブラウザから見るとこの2つは「別のサイト」です。これが後で[CORSという問題](/fullstack-todo/nestjs/integration/)を引き起こします。詳しくはつなぎ込みのページで扱います。
 
 ## 開発環境の標準形
 
@@ -173,7 +173,7 @@ erDiagram
 
 [RDBとは](/database/what_is_database/)で学んだとおり、`id` は各行を一意に識別する**主キー（PK: Primary Key）**です。自動採番にして、アプリ側でIDを管理しなくて済むようにします。
 
-「ユーザーごとにTodoを分けなくていいの？」と思った人は良い着眼です。実際のアプリならUserテーブルとの**1対多のリレーション**（→ [リレーション](/database/relations/)）が必要ですが、今回はあえてユーザーの概念を省きます。理由は、**このセクションの主題は3層の「つなぎ込み」であって、認証ではない**からです。ログインやユーザー管理は[SNS開発の認証](/sns/auth/)でじっくり扱います。一度に学ぶことを絞るのは、挫折しないための重要な戦略です。
+「ユーザーごとにTodoを分けなくていいの？」と思った人は良い着眼です。実際のアプリならUserテーブルとの**1対多のリレーション**（→ [リレーション](/database/relations/)）が必要ですが、今回はあえてユーザーの概念を省きます。理由は、**このセクションの主題は3層の「つなぎ込み」であって、認証ではない**からです。ログインやユーザー管理は[SNS開発の認証](/sns/nestjs/auth/)でじっくり扱います。一度に学ぶことを絞るのは、挫折しないための重要な戦略です。
 
 ## このセクションの進め方
 
@@ -183,11 +183,11 @@ erDiagram
 |---|---|
 | [共通要件定義・仕様書](/fullstack-todo/requirements/) | 全スタックで変えない画面、API、DB、エラー形式、完成条件 |
 | [Todo開発ロードマップ（言語別）](/fullstack-todo/framework_roadmap/) | NestJS、Spring Boot、FastAPI、Laravel、Gin/GORM、Railsの実装方針 |
-| [プロジェクトのセットアップ](/fullstack-todo/setup/) | pnpmの導入、リポジトリ構成、DBの起動、Prismaの初期化 |
-| [バックエンド: Todo APIの実装](/fullstack-todo/backend/) | NestJS + PrismaでCRUD APIを実装し、curlで動作確認 |
-| [フロントエンド: 画面の実装](/fullstack-todo/frontend/) | Reactで一覧・追加・完了切替・削除の画面を実装 |
-| [つなぎ込み: CORSとエラーハンドリング](/fullstack-todo/integration/) | フロントとAPIを接続し、CORSを理解して解決する |
-| [練習問題](/fullstack-todo/practice/) | 期限・絞り込み・編集などの拡張課題 |
+| [プロジェクトのセットアップ](/fullstack-todo/nestjs/setup/) | pnpmの導入、リポジトリ構成、DBの起動、Prismaの初期化 |
+| [バックエンド: Todo APIの実装](/fullstack-todo/nestjs/backend/) | NestJS + PrismaでCRUD APIを実装し、curlで動作確認 |
+| [フロントエンド: 画面の実装](/fullstack-todo/nestjs/frontend/) | Reactで一覧・追加・完了切替・削除の画面を実装 |
+| [つなぎ込み: CORSとエラーハンドリング](/fullstack-todo/nestjs/integration/) | フロントとAPIを接続し、CORSを理解して解決する |
+| [練習問題](/fullstack-todo/nestjs/practice/) | 期限・絞り込み・編集などの拡張課題 |
 
 作業時間の目安は、セットアップから一通り動くまでで半日〜1日です。エラーが出ても焦らず、**エラーメッセージを読む → どの層（フロント/API/DB）の問題かを切り分ける**、という手順を意識してください。この切り分け能力こそ、フルスタック開発で最も価値のあるスキルです。
 
@@ -233,7 +233,7 @@ PUTは「リソース全体を送られた内容で置き換える」、PATCHは
 
 ブラウザはオリジン（スキーム + ホスト + ポート番号の組）でサイトを区別するためです。`http://localhost:5173` と `http://localhost:3000` は、スキーム（http）とホスト（localhost）は同じでも**ポート番号が異なる**ため、別のオリジン＝別のサイトとして扱われます。
 
-このため、フロントからAPIへの `fetch` は「別のサイトへのリクエスト」となり、CORSという仕組みの制約を受けます。詳細は[つなぎ込みのページ](/fullstack-todo/integration/)で学びます。
+このため、フロントからAPIへの `fetch` は「別のサイトへのリクエスト」となり、CORSという仕組みの制約を受けます。詳細は[つなぎ込みのページ](/fullstack-todo/nestjs/integration/)で学びます。
 
 </details>
 
@@ -259,7 +259,7 @@ PUTは「リソース全体を送られた内容で置き換える」、PATCHは
 
 ## 次のステップ
 
-それでは実装を始めましょう。まずは[プロジェクトのセットアップ](/fullstack-todo/setup/)で、pnpmの導入とリポジトリ構成の作成、データベースの起動を行います。
+それでは実装を始めましょう。まずは[プロジェクトのセットアップ](/fullstack-todo/nestjs/setup/)で、pnpmの導入とリポジトリ構成の作成、データベースの起動を行います。
 
 このセクションで確立する開発スタイルとAPI設計の感覚は、[コード品質と開発ツール](/tooling/)（このTodoアプリにPrettier/ESLintを導入します）と、最終プロジェクトの[SNS開発](/sns/)でそのまま土台になります。
 

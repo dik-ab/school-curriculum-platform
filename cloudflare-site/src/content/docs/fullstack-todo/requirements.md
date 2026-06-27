@@ -200,4 +200,4 @@ Content-Type: application/json
 
 ## 次のステップ
 
-どのバックエンドで実装するかを選ぶ場合は、[Todo開発ロードマップ（言語別）](/fullstack-todo/framework_roadmap/)へ進みます。TypeScriptでまず動くものを作る場合は、既存の[NestJS + Prisma版セットアップ](/fullstack-todo/setup/)から始めてください。
+どのバックエンドで実装するかを選ぶ場合は、[Todo開発ロードマップ（言語別）](/fullstack-todo/framework_roadmap/)へ進みます。TypeScriptでまず動くものを作る場合は、既存の[NestJS + Prisma版セットアップ](/fullstack-todo/nestjs/setup/)から始めてください。

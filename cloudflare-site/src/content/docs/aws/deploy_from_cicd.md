@@ -234,7 +234,7 @@ CicdStack.DeployRoleArn = arn:aws:iam::123456789012:role/github-actions-deploy
 | `DISTRIBUTION_ID` | `E1ABCDEFGHIJK` |
 | `ECR_REPOSITORY` | `sns-api` |
 
-この4つの変数は、このページの2本のワークフローだけでなく、[SNS開発の全体デプロイ](/sns/deploy/)でも同じ名前のまま使い回します。
+この4つの変数は、このページの2本のワークフローだけでなく、[SNS開発の全体デプロイ](/sns/nestjs/deploy/)でも同じ名前のまま使い回します。
 
 ワークフローを書きます。YAMLの基本文法は[GitHub Actions基礎](/cicd/github_actions_basics/)の復習です。
 
@@ -296,7 +296,7 @@ jobs:
 
 **コード解説**
 
-- `on.push.branches: [main]` + `paths: "frontend/**"` … mainブランチに**フロントエンドのファイルが変更されたとき**だけ起動します。リポジトリは `frontend/` と `backend/` を持つモノレポ構成（→ SNS開発の[プロジェクトセットアップ](/sns/project_setup/)）を想定しています。ワークフローファイル自身も `paths` に含めているのは、ワークフローを修正したときにも動作確認できるようにするためです（→ [CIパイプライン](/cicd/ci_pipeline/)で学んだ定石です）
+- `on.push.branches: [main]` + `paths: "frontend/**"` … mainブランチに**フロントエンドのファイルが変更されたとき**だけ起動します。リポジトリは `frontend/` と `backend/` を持つモノレポ構成（→ SNS開発の[プロジェクトセットアップ](/sns/nestjs/project_setup/)）を想定しています。ワークフローファイル自身も `paths` に含めているのは、ワークフローを修正したときにも動作確認できるようにするためです（→ [CIパイプライン](/cicd/ci_pipeline/)で学んだ定石です）
 - `permissions: id-token: write` … **OIDCの必須設定**です。ワークフローに「IDトークンを発行してもらう」許可を与えます。これがないと認証ステップが失敗します。`contents: read` はcheckout用です
 - `pnpm/action-setup@v4` … ランナーにpnpm（バージョン9）をインストールします。`actions/setup-node` より**先に**置くのがポイントで、こうすると次のステップのキャッシュ設定がpnpmを認識できます
 - `actions/setup-node@v4` … Node.js 20を用意し、`cache: 'pnpm'` でpnpmのキャッシュを効かせます（→ [CIパイプライン](/cicd/ci_pipeline/)と同じ書き方です）
@@ -497,4 +497,4 @@ sequenceDiagram
 
 おめでとうございます。これでAWSデプロイのセクションは完了です。「クラウドの概念 → 各サービスの役割 → IaC → CDKでの構築 → 自動デプロイ」と積み上げ、**コードをpushすれば本番に反映される**一連の仕組みを自分の手で作れるようになりました。
 
-この後のセクション（[リアルタイム通信](/realtime/)、[AI開発入門](/ai/)）を経て、[SNS開発（最終プロジェクト）](/sns/)では、このセクションの構成一式（S3/CloudFront + ECS + RDS + SES + CI/CD）を[全体デプロイ](/sns/deploy/)で実際のSNSアプリに適用します。`sns-infra` プロジェクトと2本のワークフローは、そのときの土台になります。大切に取っておいてください。
+この後のセクション（[リアルタイム通信](/realtime/)、[AI開発入門](/ai/)）を経て、[SNS開発（最終プロジェクト）](/sns/)では、このセクションの構成一式（S3/CloudFront + ECS + RDS + SES + CI/CD）を[全体デプロイ](/sns/nestjs/deploy/)で実際のSNSアプリに適用します。`sns-infra` プロジェクトと2本のワークフローは、そのときの土台になります。大切に取っておいてください。

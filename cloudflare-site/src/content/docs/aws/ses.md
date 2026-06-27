@@ -8,7 +8,7 @@ nav_order: 8
 
 Webアプリには「メールを送る」場面が必ずあります。会員登録の確認、パスワードの再設定、通知——SNSアプリも例外ではありません。このページでは **SES（Simple Email Service）** を使ったメール送信を学びます。SES特有の**サンドボックス**という制限を理解し、メールアドレスを**検証**し、**@aws-sdk/client-ses（AWS SDK for JavaScript v3）** でNestJSから送信する実装までを行います。
 
-ここで作る `MailService` は、SNS開発の[メールアドレス確認](/sns/email_verification/)でそのまま登場します。
+ここで作る `MailService` は、SNS開発の[メールアドレス確認](/sns/nestjs/email_verification/)でそのまま登場します。
 
 ## 学習目標
 
@@ -267,7 +267,7 @@ sequenceDiagram
     API-->>U: 201 Created（メールを確認してください）
 ```
 
-これはSNS開発の[メールアドレス確認](/sns/email_verification/)で実装する登録フローの先取りです。このページのMailServiceがそのまま部品として使われます。
+これはSNS開発の[メールアドレス確認](/sns/nestjs/email_verification/)で実装する登録フローの先取りです。このページのMailServiceがそのまま部品として使われます。
 
 ## 理解度チェック
 
@@ -337,4 +337,4 @@ SESの送信はアプリ（NestJS）が行うので、**タスクロール**に 
 
 メール送信の部品が揃いました。次は仕上げです。[CI/CDから自動デプロイ](/aws/deploy_from_cicd/)で、ここまで手作業で行ってきたデプロイ（S3 sync、ECRへのpush、サービス更新）をGitHub Actionsに自動化させ、「mainにマージしたら本番に反映される」開発フローを完成させます。
 
-このページのMailServiceは、SNS開発の[メールアドレス確認](/sns/email_verification/)で確認トークン付きメールの送信に使います。コードを残しておいてください。
+このページのMailServiceは、SNS開発の[メールアドレス確認](/sns/nestjs/email_verification/)で確認トークン付きメールの送信に使います。コードを残しておいてください。

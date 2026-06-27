@@ -66,11 +66,11 @@ section_title: Todoアプリ 共通仕様
 
 | ページ | 内容 |
 |---|---|
-| [プロジェクトのセットアップ](/fullstack-todo/setup/) | pnpm、NestJS、React、Docker Compose、Prismaの準備 |
-| [バックエンド: Todo APIの実装](/fullstack-todo/backend/) | NestJS + PrismaでCRUD APIを実装 |
-| [フロントエンド: 画面の実装](/fullstack-todo/frontend/) | ReactでTodo画面を作る |
-| [つなぎ込み: CORSとエラーハンドリング](/fullstack-todo/integration/) | ReactとAPIを接続し、CORSを理解する |
-| [練習問題](/fullstack-todo/practice/) | 期限、絞り込み、編集などを追加する |
+| [プロジェクトのセットアップ](/fullstack-todo/nestjs/setup/) | pnpm、NestJS、React、Docker Compose、Prismaの準備 |
+| [バックエンド: Todo APIの実装](/fullstack-todo/nestjs/backend/) | NestJS + PrismaでCRUD APIを実装 |
+| [フロントエンド: 画面の実装](/fullstack-todo/nestjs/frontend/) | ReactでTodo画面を作る |
+| [つなぎ込み: CORSとエラーハンドリング](/fullstack-todo/nestjs/integration/) | ReactとAPIを接続し、CORSを理解する |
+| [練習問題](/fullstack-todo/nestjs/practice/) | 期限、絞り込み、編集などを追加する |
 
 解答コード:
 

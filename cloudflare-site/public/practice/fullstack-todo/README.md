@@ -3,10 +3,10 @@
 カリキュラム「[実践: フルスタックTodoアプリ](/fullstack-todo/)」の回答コードです。
 React（Vite）+ NestJS + Prisma + PostgreSQL の3層構成で、TodoのCRUD（一覧・1件取得・作成・部分更新・削除）を実装しています。
 
-- [プロジェクトのセットアップ](/fullstack-todo/setup/) — `compose.yaml` / `backend/` / `frontend/` の構成、Prisma初期化
-- [バックエンド: Todo APIの実装](/fullstack-todo/backend/) — `backend/src/` のCRUD API
-- [フロントエンド: 画面の実装](/fullstack-todo/frontend/) — `frontend/src/` の画面
-- [つなぎ込み: CORSとエラーハンドリング](/fullstack-todo/integration/) — `backend/src/main.ts` の `enableCors`
+- [プロジェクトのセットアップ](/fullstack-todo/nestjs/setup/) — `compose.yaml` / `backend/` / `frontend/` の構成、Prisma初期化
+- [バックエンド: Todo APIの実装](/fullstack-todo/nestjs/backend/) — `backend/src/` のCRUD API
+- [フロントエンド: 画面の実装](/fullstack-todo/nestjs/frontend/) — `frontend/src/` の画面
+- [つなぎ込み: CORSとエラーハンドリング](/fullstack-todo/nestjs/integration/) — `backend/src/main.ts` の `enableCors`
 
 ## 構成
 

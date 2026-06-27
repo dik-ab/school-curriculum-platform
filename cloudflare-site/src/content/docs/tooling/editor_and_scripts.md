@@ -302,4 +302,4 @@ All matched files use Prettier code style!
 - 前のページ: [リンタとESLint](/tooling/eslint/)
 - 次の章: [バックエンドテスト](/testing/) — 「コードの動作が正しいか」を自動で検証するテストを学びます。lintが「書き方」の品質なら、テストは「振る舞い」の品質です。
 - この章の続きは[CIパイプラインの構築](/cicd/ci_pipeline/)で登場します。ここで整備した `lint` や `format:check` をGitHub Actionsに組み込み、プッシュのたびに自動実行させます。
-- [SNS開発（最終プロジェクト）](/sns/project_setup/)でも、プロジェクトの立ち上げ時にこの章の手順で開発環境を整えます。
+- [SNS開発（最終プロジェクト）](/sns/nestjs/project_setup/)でも、プロジェクトの立ち上げ時にこの章の手順で開発環境を整えます。
