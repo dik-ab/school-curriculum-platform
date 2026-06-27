@@ -540,12 +540,12 @@ jobs:
 
 </details>
 
-**Q3. CIのworkflowでは`.env.test`を使わず、jobの`env:`で環境変数を設定しました。なぜですか。**
+**Q3. CIのworkflowではjobの`env:`と、runner上で生成する`.env.test`の両方を使っています。役割を分ける理由は何ですか。**
 
 <details markdown="1">
 <summary>解答を見る</summary>
 
-`.env.test`は`.gitignore`に入れており、リポジトリに含まれないからです。CIのrunner上にはそのファイルが存在しないため、`dotenv -e .env.test`を使うスクリプトは失敗します。代わりにworkflowの`env:`で`DATABASE_URL`などを直接設定し、jestを直接起動します。なお、ここで設定しているのはテスト専用の値（CI上の使い捨てDBやダミーの`JWT_SECRET`）なので、workflowファイルに書いても問題ありません。本物の秘密情報は[CI/CD](/cicd/)で学んだとおりSecretsを使います。
+jobの`env:`は、unit test、build、Prismaなど複数ステップで共通して使う環境変数を渡すために使います。一方で、ローカルの`test:e2e`や`prisma migrate deploy`は`dotenv -e .env.test`で実行する形にしているため、CIのrunner上でも一時的に`.env.test`を生成します。`.env.test`自体は`.gitignore`に入れてGitへ含めませんが、CI内で作ればローカルと同じコマンドをそのまま使えます。ここで書いているのはテスト専用の値なのでworkflowに置けますが、本物の秘密情報は[CI/CD](/cicd/)で学んだとおりSecretsを使います。
 
 </details>
 
