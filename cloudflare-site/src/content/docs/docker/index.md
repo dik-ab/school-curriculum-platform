@@ -86,6 +86,30 @@ flowchart TB
     Browser -->|"localhost:8080 など"| Nginx
 ```
 
+Port・Volume・Networkという言葉は、最初は抽象的でピンと来ないかもしれません。そこで、この先の実践でよく作る「Webアプリ＋データベース」の構成を具体例として見てみましょう。下の図のように、ブラウザは**ポート**を通ってアプリに入り、アプリは**ネットワーク**を通ってDBにつながり、DBの中身は**ボリューム**に保存されてコンテナを消しても残ります。
+
+```mermaid
+flowchart LR
+    Browser["ブラウザ<br>localhost:3000"]
+    subgraph host["自分のPC（Docker）"]
+        subgraph net["app-network（コンテナ同士の通り道）"]
+            App["アプリ コンテナ<br>（Node.js）"]
+            DB["DB コンテナ<br>（PostgreSQL）"]
+        end
+        Vol[("ボリューム<br>db-data<br>データを保存")]
+    end
+    Browser -->|"Port 3000:3000<br>（入口）"| App
+    App -->|"Network<br>db:5432 で接続"| DB
+    DB -->|"Volume<br>消えないように保存"| Vol
+    style Browser fill:#fce7f3,stroke:#be185d
+    style App fill:#dcfce7,stroke:#15803d
+    style DB fill:#dcfce7,stroke:#15803d
+    style Vol fill:#ede9fe,stroke:#7c3aed
+    style net fill:#f1f5f9,stroke:#475569
+```
+
+この1枚に、Port（入口）・Network（コンテナ同士の通り道）・Volume（消したくないデータ置き場）が全部入っています。今は「こういう絵を組み立てていくんだな」と眺めるだけで十分です。それぞれの作り方は各ページで1つずつ手を動かして学びます。
+
 この章では「箱を作る」「箱を起動する」「箱の中のログや状態を見る」ことを中心に学びます。DBの永続化や接続は、独立した実践教材で扱います。
 
 ## 前提条件
