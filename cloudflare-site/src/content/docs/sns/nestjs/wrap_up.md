@@ -12,7 +12,7 @@ section_title: SNS NestJS + Prisma版
 
 このページはカリキュラムの最終ページです。3つのことを行います。第一に、学んだ内容の全体を地図として見渡すこと。第二に、全機能を対象にしたセルフレビューで「分かったつもり」を洗い出すこと。第三に、ここから先へ進むための追加課題と学び方を知ることです。追加課題には完成コードを載せません。**設計のヒントだけを頼りに自力で作る**ことが、最後の課題だからです。
 
-> **完成形のコード**: [practice/sns-app](https://github.com/dik-ab/curriculum/tree/main/practice/sns-app)（全機能・テスト・Docker動作検証済み）。手詰まりになったら参照してください。
+> **完成形のコード**: [共通Reactフロントエンド](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/sns) / [NestJS + Prisma バックエンド](https://github.com/dik-ab/curriculum-sns-nestjs-answer)（全機能・テスト・Docker動作検証済み）。手詰まりになったら参照してください。
 
 ## 学習目標
 
