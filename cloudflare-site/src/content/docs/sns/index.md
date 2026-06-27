@@ -67,7 +67,7 @@ section_title: SNS 共通仕様
 | フロントエンド | React + Vite + TypeScriptを共通フロントエンドとして使う |
 | 認証 | `sns_session` のHttpOnly Cookieを標準にする |
 | 基本機能 | 登録、ログイン、投稿、いいね、フォロー、プロフィール編集 |
-| 応用機能 | メール確認、DMチャット、画像アップロード、テスト、CI/CD、デプロイ |
+| 応用機能 | メール確認、DMチャット、テスト、CI/CD。画像アップロードとデプロイは発展課題 |
 | API | URL、HTTPメソッド、JSON形式、エラー形式 |
 | DB | users、posts、likes、follows、conversations、messagesなどの役割 |
 
