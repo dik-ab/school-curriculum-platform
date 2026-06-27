@@ -2,6 +2,8 @@
 title: "NestJS版: 総仕上げ（セルフレビューと追加課題）"
 parent: SNS開発（最終プロジェクト）
 nav_order: 40
+section_key: sns-nestjs
+section_title: SNS NestJS + Prisma版
 ---
 
 # 総仕上げ（セルフレビューと追加課題）

@@ -3,6 +3,8 @@ title: SNS開発（最終プロジェクト）
 nav_order: 19
 has_children: true
 permalink: /sns/
+section_key: sns-common
+section_title: SNS 共通仕様
 ---
 
 # SNS開発（最終プロジェクト）

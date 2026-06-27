@@ -2,6 +2,8 @@
 title: SNS開発ロードマップ（言語別）
 parent: SNS開発（最終プロジェクト）
 nav_order: 2
+section_key: sns-common
+section_title: SNS 共通仕様
 ---
 
 # SNS開発ロードマップ（言語別）

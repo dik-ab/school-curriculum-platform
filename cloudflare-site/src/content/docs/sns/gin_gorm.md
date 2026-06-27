@@ -1,7 +1,9 @@
 ---
 title: Gin + GORM版
 parent: SNS開発（最終プロジェクト）
-nav_order: 24
+nav_order: 0
+section_key: sns-gin-gorm
+section_title: SNS Gin + GORM版
 ---
 
 # Gin + GORM版

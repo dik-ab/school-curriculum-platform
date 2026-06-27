@@ -2,6 +2,8 @@
 title: プロジェクトのセットアップ
 parent: "実践: フルスタックTodoアプリ"
 nav_order: 3
+section_key: todo-nestjs
+section_title: Todo NestJS + Prisma版
 ---
 
 # プロジェクトのセットアップ

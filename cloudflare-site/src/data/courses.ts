@@ -96,12 +96,20 @@ export const phases: Phase[] = [
     id: 'projects',
     number: '06',
     title: '実践開発',
-    summary: 'Gitで変更を管理しながら、共通の課題を複数の言語スタックで実装する。',
+    summary: '共通仕様とフレームワーク別実装をカード単位で選ぶ。',
     grid: 'featured',
     cards: [
       { label: 'Git / GitHub', title: 'Git/GitHub基礎', description: 'commit、push、fetch、pull、stash、ブランチ、マージ、コンフリクト解消。', href: '/git/', accent: 'green', project: true },
-      { label: 'Todo Project', title: 'Todoアプリ実践', description: '共通仕様をもとに、Reactフロント、API、DB、Dockerを言語別に実装。', href: '/fullstack-todo/', accent: 'green', project: true },
-      { label: 'SNS Project', title: 'SNS開発実践', description: '共通仕様をもとに、認証、投稿、いいね、フォロー、DM、画像、AWSデプロイを実装。', href: '/sns/', accent: 'green', project: true }
+      { label: 'Todo Common', title: 'Todo共通仕様', description: 'React共通フロント、API、DB、完成条件を全スタック共通で固定する。', href: '/fullstack-todo/', accent: 'green', project: true },
+      { label: 'Todo / NestJS', title: 'Todo NestJS版', description: 'NestJS + Prisma + PostgreSQLでTodo CRUDを実装する詳細チュートリアル。', href: '/fullstack-todo/nestjs/', accent: 'blue', project: true },
+      { label: 'Todo / Spring', title: 'Todo Spring Boot版', description: 'Spring Boot + JPA + PostgreSQLでTodo CRUDを実装するルート。', href: '/fullstack-todo/spring_boot/', accent: 'amber', project: true },
+      { label: 'SNS Common', title: 'SNS共通仕様', description: '認証、投稿、いいね、フォロー、DM、Cookie、DB設計を全スタック共通で固定する。', href: '/sns/', accent: 'green', project: true },
+      { label: 'SNS / NestJS', title: 'SNS NestJS版', description: 'NestJS + Prisma + Socket.IOでSNSを作るTypeScriptルート。', href: '/sns/nestjs/', accent: 'blue', project: true },
+      { label: 'SNS / Spring', title: 'SNS Spring Boot版', description: 'Spring Boot + JPA + netty-socketioでSNSを作るJavaルート。', href: '/sns/spring_boot/', accent: 'amber', project: true },
+      { label: 'SNS / FastAPI', title: 'SNS FastAPI版', description: 'FastAPI + SQLAlchemyでSNS APIを作るPythonルート。', href: '/sns/fastapi/', accent: 'blue', project: true },
+      { label: 'SNS / Laravel', title: 'SNS Laravel版', description: 'Laravel + EloquentでSNS APIを作るPHPルート。', href: '/sns/laravel/', accent: 'purple', project: true },
+      { label: 'SNS / Gin', title: 'SNS Gin + GORM版', description: 'Gin + GORMでSNS APIを作るGoルート。', href: '/sns/gin_gorm/', accent: 'ink', project: true },
+      { label: 'SNS / Rails', title: 'SNS Rails版', description: 'Rails API + Active RecordでSNS APIを作るRubyルート。', href: '/sns/rails/', accent: 'purple', project: true }
     ],
     stacks: ['TypeScript / NestJS', 'Java / Spring Boot', 'Python / FastAPI', 'PHP / Laravel', 'Go / Gin', 'Ruby / Rails']
   },

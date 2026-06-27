@@ -2,6 +2,8 @@
 title: "NestJS版: メールアドレス確認（SES）"
 parent: SNS開発（最終プロジェクト）
 nav_order: 32
+section_key: sns-nestjs
+section_title: SNS NestJS + Prisma版
 ---
 
 # メールアドレス確認（SES）

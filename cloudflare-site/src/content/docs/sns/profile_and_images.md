@@ -2,6 +2,8 @@
 title: "NestJS版: プロフィール編集と画像アップロード"
 parent: SNS開発（最終プロジェクト）
 nav_order: 37
+section_key: sns-nestjs
+section_title: SNS NestJS + Prisma版
 ---
 
 # プロフィール編集と画像アップロード

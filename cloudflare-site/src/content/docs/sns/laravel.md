@@ -1,7 +1,9 @@
 ---
 title: Laravel + Eloquent版
 parent: SNS開発（最終プロジェクト）
-nav_order: 23
+nav_order: 0
+section_key: sns-laravel
+section_title: SNS Laravel + Eloquent版
 ---
 
 # Laravel + Eloquent版

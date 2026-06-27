@@ -2,6 +2,8 @@
 title: 共通要件定義・仕様書
 parent: "実践: フルスタックTodoアプリ"
 nav_order: 1
+section_key: todo-common
+section_title: Todoアプリ 共通仕様
 ---
 
 # 共通要件定義・仕様書

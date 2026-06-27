@@ -3,6 +3,8 @@ title: "実践: フルスタックTodoアプリ"
 nav_order: 11
 has_children: true
 permalink: /fullstack-todo/
+section_key: todo-common
+section_title: Todoアプリ 共通仕様
 ---
 
 # 実践: フルスタックTodoアプリ

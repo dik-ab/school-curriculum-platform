@@ -2,6 +2,8 @@
 title: "NestJS版: AWSへの全体デプロイ"
 parent: SNS開発（最終プロジェクト）
 nav_order: 39
+section_key: sns-nestjs
+section_title: SNS NestJS + Prisma版
 ---
 
 # AWSへの全体デプロイ

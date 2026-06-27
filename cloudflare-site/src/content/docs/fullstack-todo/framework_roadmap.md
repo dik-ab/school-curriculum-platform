@@ -2,6 +2,8 @@
 title: Todo開発ロードマップ（言語別）
 parent: "実践: フルスタックTodoアプリ"
 nav_order: 2
+section_key: todo-common
+section_title: Todoアプリ 共通仕様
 ---
 
 # Todo開発ロードマップ（言語別）

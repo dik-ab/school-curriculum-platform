@@ -2,6 +2,8 @@
 title: "NestJS版: DMチャット（リアルタイム）"
 parent: SNS開発（最終プロジェクト）
 nav_order: 36
+section_key: sns-nestjs
+section_title: SNS NestJS + Prisma版
 ---
 
 # DMチャット（リアルタイム）

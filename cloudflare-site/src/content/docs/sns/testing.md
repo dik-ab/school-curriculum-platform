@@ -2,6 +2,8 @@
 title: "NestJS版: SNSのテストを書く"
 parent: SNS開発（最終プロジェクト）
 nav_order: 38
+section_key: sns-nestjs
+section_title: SNS NestJS + Prisma版
 ---
 
 # SNSのテストを書く

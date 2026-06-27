@@ -2,6 +2,8 @@
 title: "つなぎ込み: CORSとエラーハンドリング"
 parent: "実践: フルスタックTodoアプリ"
 nav_order: 6
+section_key: todo-nestjs
+section_title: Todo NestJS + Prisma版
 ---
 
 # つなぎ込み: CORSとエラーハンドリング

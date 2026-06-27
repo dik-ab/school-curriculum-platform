@@ -2,6 +2,8 @@
 title: "バックエンド: Todo APIの実装"
 parent: "実践: フルスタックTodoアプリ"
 nav_order: 4
+section_key: todo-nestjs
+section_title: Todo NestJS + Prisma版
 ---
 
 # バックエンド: Todo APIの実装

@@ -2,6 +2,8 @@
 title: 共通要件定義・仕様書
 parent: SNS開発（最終プロジェクト）
 nav_order: 1
+section_key: sns-common
+section_title: SNS 共通仕様
 ---
 
 # 共通要件定義・仕様書
