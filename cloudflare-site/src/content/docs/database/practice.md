@@ -12,6 +12,23 @@ nav_order: 7
 
 問題は段階的に難しくなります。まず自分で考えて書き、行き詰まったらヒントを見て、それでも難しければ解答例を確認してください。解答例を見た場合も、**必ず自分の手で打ち直して動作確認まで行う**ことが力になります。
 
+この練習全体で、メモAPIをどう育てていくのかを最初に俯瞰しておきましょう。
+
+```mermaid
+flowchart TB
+    Start["メモAPI（出発点）<br>Memo テーブルだけ"]
+    Start -->|"問題1: 優先度"| P1["Memo に priority を追加"]
+    P1 -->|"問題2-4: 検索/絞り込み/ページ分割"| P2["GET /memos を強化"]
+    P2 -->|"問題5: カテゴリ（1対多）"| P3["Category を追加"]
+    P3 -->|"問題6: タグ（多対多）"| P4["Tag / MemoTag を追加"]
+    P4 --> Goal["検索・分類・タグ付けができる<br>本格的なメモAPI"]
+    style Start fill:#e3f2fd,stroke:#1565c0
+    style P3 fill:#fff3e0,stroke:#ef6c00
+    style Goal fill:#e8f5e9,stroke:#2e7d32
+```
+
+**図の読み方**: 上から下へ問題を解くたびに、メモAPIに機能が1つずつ積み上がっていきます。左の出発点はテーブル1つだけのシンプルなAPIですが、最後にはカテゴリやタグまで備えた本格的なAPIに成長します。いま自分がどの段階にいるのか、迷ったらこの図に戻ってきてください。
+
 ## 学習目標
 
 - スキーマ変更からマイグレーション、API実装までの一連の流れを自力で実行できる
@@ -27,6 +44,27 @@ nav_order: 7
 - `Memo` モデルに `done Boolean @default(false)` まで追加済み（[スキーマ定義とマイグレーション](/database/schema_and_migration/)）
 
 各問題の動作確認にはcurlを使います。データの中身の確認には `pnpm exec prisma studio` が便利です。
+
+これから何度も `curl` を打つことになりますが、そのリクエストがどこを通ってデータベースに届くのかを思い出しておきましょう。問題2のキーワード検索を例にした、データの流れです。
+
+```mermaid
+sequenceDiagram
+    participant C as "クライアント（curl）"
+    participant Ct as "MemosController"
+    participant S as "MemosService"
+    participant P as "PrismaService"
+    participant DB as "PostgreSQL"
+    C->>Ct: "GET /memos?keyword=牛乳"
+    Ct->>S: "findAll(keyword)"
+    S->>P: "prisma.memo.findMany({ where })"
+    P->>DB: "SELECT ... WHERE ... LIKE"
+    DB-->>P: "条件に合う行"
+    P-->>S: "Memo の配列"
+    S-->>Ct: "Promise<Memo[]>"
+    Ct-->>C: "200 OK（JSON）"
+```
+
+**図の読み方**: curlのリクエストはController（受付）→ Service（処理）→ PrismaService（DB操作）の順に下りていき、PostgreSQLでSQLが実行されます。結果は逆向きに上ってJSONとして返ります。各問題で書き換えるのは主にService層（とController層）であり、この流れ自体は変わりません。
 
 ## 問題1: 優先度フィールドの追加
 
