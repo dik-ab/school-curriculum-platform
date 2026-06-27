@@ -1,6 +1,6 @@
 ---
 title: "フロントエンド: 画面の実装"
-parent: "実践: フルスタックTodoアプリ"
+parent: Todo NestJS + Prisma版
 nav_order: 5
 section_key: todo-nestjs
 section_title: Todo NestJS + Prisma版

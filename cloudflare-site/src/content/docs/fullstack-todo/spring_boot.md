@@ -1,6 +1,6 @@
 ---
 title: Todo Spring Boot + JPA版
-parent: "実践: フルスタックTodoアプリ"
+parent: Todo Spring Boot + JPA版
 nav_order: 0
 section_key: todo-spring-boot
 section_title: Todo Spring Boot + JPA版

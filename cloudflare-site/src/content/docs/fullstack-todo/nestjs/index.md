@@ -1,6 +1,6 @@
 ---
 title: Todo NestJS + Prisma版
-parent: "実践: フルスタックTodoアプリ"
+parent: Todo NestJS + Prisma版
 nav_order: 0
 section_key: todo-nestjs
 section_title: Todo NestJS + Prisma版

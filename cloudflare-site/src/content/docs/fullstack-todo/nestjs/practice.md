@@ -1,6 +1,6 @@
 ---
 title: 練習問題
-parent: "実践: フルスタックTodoアプリ"
+parent: Todo NestJS + Prisma版
 nav_order: 7
 section_key: todo-nestjs
 section_title: Todo NestJS + Prisma版

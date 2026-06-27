@@ -1,6 +1,6 @@
 ---
 title: Rails + Active Record版
-parent: SNS開発（最終プロジェクト）
+parent: SNS Rails + Active Record版
 nav_order: 0
 section_key: sns-rails
 section_title: SNS Rails + Active Record版

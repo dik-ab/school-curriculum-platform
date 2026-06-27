@@ -1,6 +1,6 @@
 ---
 title: Spring Boot + JPA版
-parent: SNS開発（最終プロジェクト）
+parent: SNS Spring Boot + JPA版
 nav_order: 0
 section_key: sns-spring-boot
 section_title: SNS Spring Boot + JPA版

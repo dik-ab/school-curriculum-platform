@@ -1,6 +1,6 @@
 ---
 title: "NestJS版: 投稿機能とタイムライン"
-parent: SNS開発（最終プロジェクト）
+parent: SNS NestJS + Prisma版
 nav_order: 33
 section_key: sns-nestjs
 section_title: SNS NestJS + Prisma版

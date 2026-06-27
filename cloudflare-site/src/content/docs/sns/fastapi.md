@@ -1,6 +1,6 @@
 ---
 title: FastAPI + SQLAlchemy版
-parent: SNS開発（最終プロジェクト）
+parent: SNS FastAPI + SQLAlchemy版
 nav_order: 0
 section_key: sns-fastapi
 section_title: SNS FastAPI + SQLAlchemy版
