@@ -75,7 +75,7 @@ composer ws
 VITE_API_URL=http://127.0.0.1:8010 \
 VITE_SOCKET_URL=ws://127.0.0.1:8021 \
 VITE_REALTIME_DRIVER=websocket \
-npm run dev
+pnpm run dev
 ```
 
 ## 第1段階: 最低限SNS
@@ -149,7 +149,7 @@ return response()
 - `composer validate --strict`
 - `php artisan test`（4 tests / 32 assertions）
 - `php artisan route:list --except-vendor`
-- 共通React `npm run build`
+- 共通React `pnpm run build`
 - Playwright MCPで、Alice/Bobの2セッションを使った画面検証
   - Aliceが投稿できる
   - Bobが投稿を見て、いいねできる
