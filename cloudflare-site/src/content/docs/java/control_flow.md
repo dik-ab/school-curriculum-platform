@@ -2,7 +2,7 @@
 title: 条件分岐と繰り返し
 section_key: java
 section_title: Java基礎
-nav_order: 5
+nav_order: 7
 description: if、switch、for、while、break、continueを学びます。
 ---
 
