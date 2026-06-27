@@ -77,6 +77,27 @@ SELECT * FROM users WHERE id = 2;
 
 `WHERE id = 2` は「id列が2の行だけ」という意味です。
 
+`WHERE` が4行のテーブルからどの行を残し、どの行を除くのかを図で見てみましょう。
+
+```mermaid
+flowchart LR
+    subgraph all["users テーブル（全4行）"]
+        direction TB
+        R1["id=1 太郎"]
+        R2["id=2 花子"]
+        R3["id=3 次郎"]
+        R4["id=4 美咲"]
+    end
+    all -->|"WHERE id = 2<br>でふるい分け"| F["結果<br>id=2 花子 だけ"]
+    style R2 fill:#e8f5e9,stroke:#2e7d32
+    style F fill:#e8f5e9,stroke:#2e7d32
+    style R1 fill:#eceff1,stroke:#90a4ae
+    style R3 fill:#eceff1,stroke:#90a4ae
+    style R4 fill:#eceff1,stroke:#90a4ae
+```
+
+図の読み方です。左が全4行のテーブルで、`WHERE id = 2` という条件のふるいにかけると、条件に合う行（緑＝花子）だけが結果に残り、合わない行（灰色）は取り除かれます。`WHERE` は「テーブルから条件に合う行だけをすくい取る道具」だとイメージしてください。
+
 年齢で絞り込むこともできます。
 
 ```sql
@@ -172,6 +193,21 @@ DELETE FROM users;
 
 これは `users` テーブルの全行削除です。実務では事故になりやすいので、`UPDATE` と `DELETE` は必ず条件を確認してから実行します。
 
+ここまでに出てきた `INSERT`・`UPDATE`・`DELETE` が、テーブルに対してそれぞれどんな作用をするのかを1枚の図に整理しましょう。
+
+```mermaid
+flowchart LR
+    INS["INSERT<br>行を追加"] -->|"健太を1行足す"| T["users テーブル"]
+    T -->|"age を 23 に書き換え"| UPD["UPDATE<br>行を更新"]
+    T -->|"健太の行を取り除く"| DEL["DELETE<br>行を削除"]
+    style INS fill:#e8f5e9,stroke:#2e7d32
+    style UPD fill:#fff3e0,stroke:#ef6c00
+    style DEL fill:#fff3e0,stroke:#ef6c00
+    style T fill:#f3e5f5,stroke:#6a1b9a
+```
+
+図の読み方です。中央の紫が `users` テーブルです。`INSERT`（緑）はテーブルに新しい行を増やす操作、`UPDATE` と `DELETE`（オレンジ＝既存データを変える注意操作）はそれぞれ既存の行を書き換える・取り除く操作です。`UPDATE` と `DELETE` は一度実行すると元のデータが変わってしまうため、オレンジで「注意」を表しています。
+
 ## 基本構文の読み方
 
 SQLは英語の語順に近い構造です。
@@ -187,6 +223,19 @@ WHERE role = 'student';
 1. `users` テーブルから
 2. `role` が `student` の行だけを選び
 3. `name` と `email` の列を返す
+
+この「テーブルを決める→行を絞る→列を選ぶ」という処理の順番を図にすると、SQLの動きがつかみやすくなります。
+
+```mermaid
+flowchart LR
+    F["① FROM users<br>どのテーブルか"] --> W["② WHERE role = 'student'<br>どの行に絞るか"] --> S["③ SELECT name, email<br>どの列を返すか"] --> R["結果<br>必要な列だけの表"]
+    style F fill:#e3f2fd,stroke:#1565c0
+    style W fill:#fff3e0,stroke:#ef6c00
+    style S fill:#f3e5f5,stroke:#6a1b9a
+    style R fill:#e8f5e9,stroke:#2e7d32
+```
+
+図の読み方です。SQLは書く順番こそ `SELECT` が先頭ですが、データベースの中では「①テーブルを決める（青）→②行を絞る（オレンジ）→③列を選ぶ（紫）」という順で処理が進み、最後に必要な部分だけの表（緑）が返ってきます。この流れを意識すると、複雑なSQLも段階に分けて読めるようになります。
 
 最初はこの読み方ができれば十分です。次は、並び替え、件数制限、曖昧検索、JOIN、集計といった応用構文へ進みます。
 
