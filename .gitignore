@@ -14,3 +14,5 @@ dist/
 # Local reference materials
 2024curriculum/
 java/
+!cloudflare-site/src/content/docs/java/
+!cloudflare-site/src/content/docs/java/*.md
