@@ -44,10 +44,7 @@ DB操作はSQLAlchemy 2.xで書きます。教材本文ではPostgreSQLへ広げ
 |---|---|
 | メール確認 | 開発用console mailer、確認トークン、確認後ログイン許可 |
 | DMチャット | `python-socketio`、ASGI、`/chat` namespace、Cookie認証 |
-| 画像アップロード | 現在の解答コードは互換用の簡易upload URL。S3 presigned URLは発展課題 |
-| ページネーション | 現在の解答コードには未収録。cursor queryは発展課題 |
 | CI/CD | `python -m compileall app tests`、pytest、Socket.IO統合テスト、GitHub Actions |
-| デプロイ | ASGI server、Dockerfile、ECSは発展課題 |
 
 ## ローカル起動の形
 
@@ -85,6 +82,7 @@ VITE_SOCKET_URL="http://localhost:8000"
 - `pytest` で `/auth/logout` が `sns_session` Cookieを失効させることを確認
 - `pytest` でUvicorn実サーバーを起動し、Socket.IOの `sendMessage` から `newMessage` が届くことを確認
 - `python -m compileall app tests` でbuild相当の構文チェックを確認
+- 共通Reactフロントから、メール確認後にログインできることを確認
 - 共通Reactフロントから、投稿作成、別ユーザーによるいいね更新、別ブラウザコンテキスト間のリアルタイムチャット表示を確認
 
 ## 解答コード
