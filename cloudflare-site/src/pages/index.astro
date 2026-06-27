@@ -36,7 +36,17 @@ import { phases } from '../data/courses';
           </div>
           <div class:list={['course-grid', phase.grid === 'wide' && 'wide', phase.grid === 'featured' && 'featured']}>
             {phase.cards.map((card) => (
-              card.href ? (
+              card.prerequisites ? (
+                <div class:list={['course-card', 'with-prerequisites', card.project && 'project']} data-accent={card.accent}>
+                  <span>{card.label}</span>
+                  {card.href ? <h3><a href={card.href}>{card.title}</a></h3> : <h3>{card.title}</h3>}
+                  <p>{card.description}</p>
+                  <div class="prerequisite-links" aria-label={`${card.title}の前提教材`}>
+                    <strong>前提</strong>
+                    {card.prerequisites.map((item) => <a href={item.href}>{item.title}</a>)}
+                  </div>
+                </div>
+              ) : card.href ? (
                 <a class:list={['course-card', card.project && 'project']} data-accent={card.accent} href={card.href}>
                   <span>{card.label}</span>
                   <h3>{card.title}</h3>
