@@ -15,12 +15,12 @@ section_title: Todoアプリ 共通仕様
 ## スタックを選ぶ
 
 <div class="course-grid wide">
-  <a class="course-card project" data-accent="ink" href="/fullstack-todo/setup/">
+  <a class="course-card project" data-accent="ink" href="/fullstack-todo/nestjs/">
     <span>TypeScript</span>
     <h3>NestJS + Prisma</h3>
     <p>既存の詳細チュートリアル。Controller、Service、DTO、PrismaでCRUDを作る標準ルート。</p>
   </a>
-  <a class="course-card project" data-accent="amber" href="#spring-boot-jpa">
+  <a class="course-card project" data-accent="amber" href="/fullstack-todo/spring_boot/">
     <span>Java</span>
     <h3>Spring Boot + JPA</h3>
     <p>Controller、Service、Repository、Entity、Bean Validationで実装するルート。</p>
@@ -157,4 +157,4 @@ POST /todos を受ける
 
 ## 次のステップ
 
-初回は [共通要件定義・仕様書](/fullstack-todo/requirements/) を読み、TypeScriptで実装する場合は [プロジェクトのセットアップ](/fullstack-todo/setup/) に進んでください。別スタックで実装する場合も、API表、エラー形式、完成条件は共通仕様から変えないようにします。
+初回は [共通要件定義・仕様書](/fullstack-todo/requirements/) を読み、TypeScriptで実装する場合は [Todo NestJS + Prisma版](/fullstack-todo/nestjs/) に進んでください。Javaで実装する場合は [Todo Spring Boot + JPA版](/fullstack-todo/spring_boot/) に進みます。別スタックで実装する場合も、API表、エラー形式、完成条件は共通仕様から変えないようにします。

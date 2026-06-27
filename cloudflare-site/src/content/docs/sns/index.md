@@ -34,7 +34,7 @@ section_title: SNS 共通仕様
 
 ## 言語別SNS開発の進め方
 
-SNS開発は、Reactフロントエンドを共通にし、バックエンドだけを言語・フレームワークごとに差し替えられる構成にします。まず [共通要件定義・仕様書](/sns/requirements/) で、画面、API、データモデル、認証方式、エラー形式を固定します。その後、[SNS開発ロードマップ（言語別）](/sns/framework_roadmap/) から自分のスタックを選びます。
+SNS開発は、Reactフロントエンドを共通にし、バックエンドだけを言語・フレームワークごとに差し替えられる構成にします。まず [共通要件定義・仕様書](/sns/requirements/) で、画面、API、データモデル、認証方式、エラー形式を固定します。その後、作りたいバックエンド版のページを選びます。
 
 <div class="course-grid wide">
   <a class="course-card project" data-accent="green" href="/sns/requirements/">
@@ -42,10 +42,40 @@ SNS開発は、Reactフロントエンドを共通にし、バックエンドだ
     <h3>共通要件定義・仕様書</h3>
     <p>全スタックで変えない仕様。HttpOnly Cookie認証、API、DB、完成条件を定義します。</p>
   </a>
+  <a class="course-card project" data-accent="blue" href="/sns/nestjs/">
+    <span>TypeScript</span>
+    <h3>SNS NestJS + Prisma版</h3>
+    <p>詳細チュートリアルがある標準ルート。投稿、認証、リアルタイムDMまで実装します。</p>
+  </a>
+  <a class="course-card project" data-accent="amber" href="/sns/spring_boot/">
+    <span>Java</span>
+    <h3>SNS Spring Boot + JPA版</h3>
+    <p>Spring Security、JPA、netty-socketioで同じSNS仕様をJavaで実装します。</p>
+  </a>
+  <a class="course-card project" data-accent="blue" href="/sns/fastapi/">
+    <span>Python</span>
+    <h3>SNS FastAPI + SQLAlchemy版</h3>
+    <p>Pydantic、SQLAlchemy、Alembicで同じAPIとデータモデルを実装します。</p>
+  </a>
+  <a class="course-card project" data-accent="purple" href="/sns/laravel/">
+    <span>PHP</span>
+    <h3>SNS Laravel + Eloquent版</h3>
+    <p>Laravel Sanctum、Eloquent、Broadcastingを使う実装方針を確認します。</p>
+  </a>
+  <a class="course-card project" data-accent="ink" href="/sns/gin_gorm/">
+    <span>Go</span>
+    <h3>SNS Gin + GORM版</h3>
+    <p>薄いフレームワークで、HTTP、DB、認証、WebSocketの責務を明確に分けます。</p>
+  </a>
+  <a class="course-card project" data-accent="purple" href="/sns/rails/">
+    <span>Ruby</span>
+    <h3>SNS Rails + Active Record版</h3>
+    <p>Rails API、Active Record、Action Cableを使う実装方針を確認します。</p>
+  </a>
   <a class="course-card project" data-accent="ink" href="/sns/framework_roadmap/">
     <span>Roadmap</span>
-    <h3>言語別ロードマップ</h3>
-    <p>NestJS、Spring Boot、FastAPI、Laravel、Gin/GORM、Railsの入口です。</p>
+    <h3>全スタック比較</h3>
+    <p>各フレームワークでのORM、認証、リアルタイム通信、テスト方針を一覧で比較します。</p>
   </a>
   <a class="course-card project" data-accent="blue" href="/ai/">
     <span>AI</span>
@@ -54,7 +84,7 @@ SNS開発は、Reactフロントエンドを共通にし、バックエンドだ
   </a>
 </div>
 
-既存の詳細チュートリアルは NestJS + Prisma 版として残しています。現在の既存版は `localStorage` + `Authorization: Bearer` のJWT方式で実装されていますが、新しい言語別カリキュラムでは [共通要件定義・仕様書](/sns/requirements/) に合わせて HttpOnly Cookie セッション方式を標準にします。
+既存の詳細チュートリアルは NestJS + Prisma 版として残しています。現在の既存版は `localStorage` + `Authorization: Bearer` のJWT方式で実装されていますが、新しい言語別カリキュラムと解答コードでは [共通要件定義・仕様書](/sns/requirements/) に合わせて HttpOnly Cookie セッション方式を標準にします。サイドバーも版ごとに分けているため、NestJS版を開いたときにSpring Boot版や他言語版のページが混ざることはありません。
 
 ## 学習目標
 
