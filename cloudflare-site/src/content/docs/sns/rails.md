@@ -56,7 +56,7 @@ bin/rails server -b 127.0.0.1 -p 8012
 VITE_API_URL=http://127.0.0.1:8012 \
 VITE_SOCKET_URL=ws://127.0.0.1:8012 \
 VITE_REALTIME_DRIVER=websocket \
-npm run dev
+pnpm run dev
 ```
 
 ## 第1段階: 最低限SNS
