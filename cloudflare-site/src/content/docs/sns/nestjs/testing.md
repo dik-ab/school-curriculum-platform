@@ -258,11 +258,17 @@ import * as bcrypt from 'bcrypt';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/prisma/prisma.service';
 
+function getSetCookie(res: request.Response): string[] {
+  const cookie = res.headers['set-cookie'];
+  if (!cookie) throw new Error('Set-Cookie header is missing');
+  return Array.isArray(cookie) ? cookie : [cookie];
+}
+
 describe('Follow API (e2e)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
-  let aliceToken: string;
-  let bobToken: string;
+  let aliceCookie: string[];
+  let bobCookie: string[];
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -304,26 +310,26 @@ describe('Follow API (e2e)', () => {
       ],
     });
 
-    // ログインしてそれぞれのトークンを取得する
+    // ログインしてそれぞれのHttpOnly Cookieを取得する
     const aliceRes = await request(app.getHttpServer())
       .post('/auth/login')
       .send({ email: 'alice@example.com', password: 'password123' });
-    aliceToken = aliceRes.body.accessToken;
+    aliceCookie = getSetCookie(aliceRes);
 
     const bobRes = await request(app.getHttpServer())
       .post('/auth/login')
       .send({ email: 'bob@example.com', password: 'password123' });
-    bobToken = bobRes.body.accessToken;
+    bobCookie = getSetCookie(bobRes);
 
-    expect(aliceToken).toBeDefined();
-    expect(bobToken).toBeDefined();
+    expect(aliceCookie).toBeDefined();
+    expect(bobCookie).toBeDefined();
   });
 
   afterAll(async () => {
     await app.close();
   });
 
-  it('トークンなしではフォローできない（401）', async () => {
+  it('Cookieなしではフォローできない（401）', async () => {
     await request(app.getHttpServer())
       .post('/users/bob/follow')
       .expect(401);
@@ -332,21 +338,21 @@ describe('Follow API (e2e)', () => {
   it('aliceがbobをフォローすると201が返る', async () => {
     await request(app.getHttpServer())
       .post('/users/bob/follow')
-      .set('Authorization', `Bearer ${aliceToken}`)
+      .set('Cookie', aliceCookie)
       .expect(201);
   });
 
   it('同じ相手への二重フォローは409が返る', async () => {
     await request(app.getHttpServer())
       .post('/users/bob/follow')
-      .set('Authorization', `Bearer ${aliceToken}`)
+      .set('Cookie', aliceCookie)
       .expect(409);
   });
 
   it('bobのプロフィールにフォロー状態が反映される', async () => {
     const res = await request(app.getHttpServer())
       .get('/users/bob')
-      .set('Authorization', `Bearer ${aliceToken}`)
+      .set('Cookie', aliceCookie)
       .expect(200);
 
     expect(res.body.isFollowing).toBe(true);
@@ -356,13 +362,13 @@ describe('Follow API (e2e)', () => {
   it('フォロー中タイムラインにbobの投稿が表示される', async () => {
     await request(app.getHttpServer())
       .post('/posts')
-      .set('Authorization', `Bearer ${bobToken}`)
+      .set('Cookie', bobCookie)
       .send({ content: 'ボブの投稿です' })
       .expect(201);
 
     const res = await request(app.getHttpServer())
       .get('/posts/timeline')
-      .set('Authorization', `Bearer ${aliceToken}`)
+      .set('Cookie', aliceCookie)
       .expect(200);
 
     const contents = res.body.map((post: { content: string }) => post.content);
@@ -372,12 +378,12 @@ describe('Follow API (e2e)', () => {
   it('フォローを解除するとタイムラインからbobの投稿が消える', async () => {
     await request(app.getHttpServer())
       .delete('/users/bob/follow')
-      .set('Authorization', `Bearer ${aliceToken}`)
+      .set('Cookie', aliceCookie)
       .expect(204);
 
     const res = await request(app.getHttpServer())
       .get('/posts/timeline')
-      .set('Authorization', `Bearer ${aliceToken}`)
+      .set('Cookie', aliceCookie)
       .expect(200);
 
     const contents = res.body.map((post: { content: string }) => post.content);
@@ -389,10 +395,11 @@ describe('Follow API (e2e)', () => {
 **コード解説**
 
 - `app.useGlobalPipes(new ValidationPipe({ whitelist: true }))` — `main.ts`（→ [プロジェクトセットアップ](/sns/nestjs/project_setup/)）と同じ設定をテスト用アプリにも適用します。E2Eテストのアプリは`main.ts`を通らずに起動されるため、これを忘れるとバリデーション関連の挙動が本番と変わってしまいます（→ [E2Eテスト](/testing/e2e_test/)）。
+- `getSetCookie` — `POST /auth/login` のレスポンスヘッダから `Set-Cookie` を取り出す小さなヘルパーです。実装ではJWTをレスポンス本文に返さず `sns_session` HttpOnly Cookieとして発行するため、E2EテストでもCookieヘッダを保存して次のリクエストに渡します。
 - `deleteMany`の順番 — 外部キー制約があるため、**参照している側から先に**消します。SNSはモデルが増えたので削除順も長くなりました（Message → Conversation → Like → Post → Follow → EmailVerificationToken → User）。
 - `bcrypt.hash('password123', 10)` — ユーザーは`POST /auth/register`を呼ばずに**DBへ直接**作ります。register経由だと確認メールの処理が絡むうえ、テストの前提条件が別のAPIの実装に依存してしまうからです。直接作る場合、パスワードは[ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/)と同じくbcrypt（ソルトラウンド10）でハッシュ化しておく必要があります。平文のまま入れるとログインで照合に失敗します。
 - `emailVerified: true` — [メールアドレス確認（SES）](/sns/nestjs/email_verification/)で「未確認のユーザーはログインできない（403）」仕様にしたため、テストユーザーは最初から確認済みにしておきます。これを忘れるとログインの段階で全テストが失敗します。
-- `aliceRes.body.accessToken` — `POST /auth/login`のレスポンス`{ accessToken }`からトークンを取り出し、以降のリクエストで`.set('Authorization', \`Bearer ${...}\`)`として付与します。`apiFetch`がフロントエンドでやっていたことを、テストでは手で書いているわけです。
+- `aliceCookie` / `bobCookie` — aliceとbobでログインしたときの `Set-Cookie` を保存しています。以降のリクエストでは `.set('Cookie', aliceCookie)` のように付けることで、ブラウザが `credentials: "include"` でCookieを送る動きをSupertest上で再現します。
 - 各`it`が、401 → フォロー201 → 二重フォロー409 → プロフィール反映 → タイムライン表示 → 解除で消える、というシナリオを順に進めます。フォローの「数」だけでなく、フォローの**目的であるタイムラインへの反映**まで検証するのがこのテストの価値です。
 - `.delete(...).expect(204)` — [フォローとフォロー中タイムライン](/sns/nestjs/follow/)のunfollowには`@HttpCode(204)`を付けたので、成功時は204 No Contentが返ります。もし`@HttpCode`を付けていない場合は、NestJSの`@Delete`はデフォルトで200を返すため、期待値を自分の実装に合わせてください。
 
@@ -407,7 +414,7 @@ pnpm run test:e2e
 ```text
  PASS  test/follow.e2e-spec.ts (8.12 s)
   Follow API (e2e)
-    ✓ トークンなしではフォローできない（401） (74 ms)
+    ✓ Cookieなしではフォローできない（401） (74 ms)
     ✓ aliceがbobをフォローすると201が返る (61 ms)
     ✓ 同じ相手への二重フォローは409が返る (32 ms)
     ✓ bobのプロフィールにフォロー状態が反映される (45 ms)
