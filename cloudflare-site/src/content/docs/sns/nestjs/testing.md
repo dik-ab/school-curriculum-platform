@@ -218,7 +218,7 @@ pnpm add -D dotenv-cli
 ```json
 {
   "scripts": {
-    "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json"
+    "test:e2e": "prisma generate && dotenv -e .env.test -- jest --config ./test/jest-e2e.json"
   }
 }
 ```
