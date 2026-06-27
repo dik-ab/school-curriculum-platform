@@ -35,8 +35,8 @@ DBはローカル検証ではSQLiteを既定にし、`DATABASE_URL` が `postgre
 | セットアップ | `go.mod`、`main.go`、`Config`、DB接続、GORM `AutoMigrate` |
 | 認証 | `User`、`EmailVerificationToken`、bcrypt、JWT Cookie、`requireUser` middleware |
 | 投稿 | `Post`、`POST /posts`、`GET /posts`、280文字制限 |
-| いいね | `Like`、複合主キー、`POST /posts/:id/likes`、`DELETE /posts/:id/likes` |
-| フォロー | `Follow`、自己参照、フォロー中タイムライン |
+| いいね | `Like`、複合主キー、いいね/解除は冪等な204 |
+| フォロー | `Follow`、自己参照、フォロー/解除は冪等な204、フォロー中タイムライン |
 | プロフィール | `PATCH /users/me`、表示名・bio・avatarUrlの文字列更新 |
 | テスト | Go標準 `testing`、`httptest`、SQLite in-memory DB |
 
