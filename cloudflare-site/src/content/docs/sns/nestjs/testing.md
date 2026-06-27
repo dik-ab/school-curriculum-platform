@@ -430,60 +430,92 @@ Time:        8.305 s
 
 ## CIで回す
 
-テストは「pushのたびに必ず実行される」ようになって初めて力を発揮します。[CIパイプラインを作る](/cicd/ci_pipeline/)で作ったSNSのCI（`ci.yml`）には、すでに`backend`ジョブがあり、lint → `pnpm run test` → build を実行しています。つまり、このページで書いた**単体テストは、追加の作業なしで既にCIで回っています**。組み込みが必要なのはE2Eテストの方です。
+テストは「pushのたびに必ず実行される」ようになって初めて力を発揮します。このSNS NestJS版の解答リポジトリでは、`.github/workflows/ci.yml` に `pnpm test`、`pnpm build`、PostgreSQLを使ったE2Eテストをまとめて定義します。つまり、このページで書いた**単体テストとE2Eテストの両方**が、Pull Requestとmainへのpushで自動実行されます。
 
-既存の`backend`ジョブに、(1) PostgreSQLのサービスコンテナ、(2) テスト用の環境変数、(3) `prisma migrate deploy`とE2E実行の2ステップ、を追加します（workflowの基本構造は[GitHub Actionsの基礎](/cicd/github_actions_basics/)を参照してください）。
+ポイントは、(1) PostgreSQLのサービスコンテナ、(2) テスト用の環境変数、(3) `.env.test` の生成、(4) `prisma migrate deploy`、(5) `pnpm run test:e2e` の順に並べることです（workflowの基本構造は[GitHub Actionsの基礎](/cicd/github_actions_basics/)を参照してください）。
 
-**`.github/workflows/ci.yml`（既存のbackendジョブへの追記後の要点）**
+**`.github/workflows/ci.yml`（SNS NestJS版の要点）**
 
 ```yaml
-  backend:
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-build:
+    name: Test and build
     runs-on: ubuntu-latest
-    services:                  # ← 追加
+
+    services:
       postgres:
         image: postgres:16
         env:
+          POSTGRES_DB: sns_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: sns_test
         ports:
-          - "5432:5432"
+          - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 5s
+          --health-cmd "pg_isready -U postgres -d sns_test"
+          --health-interval 10s
           --health-timeout 5s
-          --health-retries 10
-    defaults:
-      run:
-        working-directory: backend
-    env:                       # ← 追加
-      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/sns_test?schema=public"
-      JWT_SECRET: "ci-test-secret"
-      FRONTEND_URL: "http://localhost:5173"
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/sns_test?schema=public
+      JWT_SECRET: test-secret
+      FRONTEND_URL: http://localhost:5173
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          version: 9
-      - uses: actions/setup-node@v4
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
-          cache-dependency-path: backend/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint
-      - run: pnpm run test
-      - run: pnpm run build
-      - run: pnpm exec prisma migrate deploy            # ← 追加
-      - run: pnpm exec jest --config ./test/jest-e2e.json # ← 追加
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Prepare E2E environment
+        run: |
+          cat > .env.test <<'EOF'
+          DATABASE_URL="postgresql://postgres:postgres@localhost:5432/sns_test?schema=public"
+          JWT_SECRET="test-secret"
+          FRONTEND_URL="http://localhost:5173"
+          EOF
+
+      - name: Apply database migrations
+        run: pnpm exec dotenv -e .env.test -- prisma migrate deploy
+
+      - name: E2E tests
+        run: pnpm run test:e2e
 ```
 
 **コード解説**
 
-- `services: postgres:` — jobの実行中だけ、横でPostgreSQL 16のコンテナが起動します。ローカルのcomposeの役割をCI上で果たすものです。`options`のヘルスチェックで「DBの起動完了を待ってからstepを始める」ようにしています。E2Eテストを足すまでは不要だったので、ここで初めて追加します。
-- `env:`（jobレベル） — `.env.test`はGitに入れていないので、CIでは**同じ内容をjobの環境変数として直接設定**します。だからE2Eの実行も`pnpm run test:e2e`（dotenv-cli経由）ではなく、`pnpm exec jest --config ./test/jest-e2e.json`でjestを直接起動しています。
-- `pnpm exec prisma migrate deploy` — E2Eテストの前に、まっさらなDBへマイグレーションを適用します。ローカルで手順としてやったことが、CIでは毎回自動で行われます。
-- lint・単体テスト・buildのステップは[CIパイプラインを作る](/cicd/ci_pipeline/)で作ったままです。
+- `services: postgres:` — jobの実行中だけ、横でPostgreSQL 16のコンテナが起動します。ローカルのcomposeの役割をCI上で果たすものです。`options`のヘルスチェックで「DBの起動完了を待ってからstepを始める」ようにしています。
+- `env:`（jobレベル） — `DATABASE_URL`、`JWT_SECRET`、`FRONTEND_URL` をCI上の各stepへ渡します。`pnpm test` や `pnpm build` の中でPrisma Clientを生成するときにも `DATABASE_URL` が必要です。
+- `Prepare E2E environment` — `.env.test` はGitに入れないため、CIのランナー上で同じ内容を一時ファイルとして作ります。これにより、ローカルと同じ `pnpm run test:e2e` をそのまま使えます。
+- `pnpm exec dotenv -e .env.test -- prisma migrate deploy` — E2Eテストの前に、まっさらなDBへマイグレーションを適用します。ローカルで手順としてやったことが、CIでは毎回自動で行われます。
+- `pnpm run test:e2e` — `package.json` の `test:e2e` スクリプトを使い、`.env.test` を読み込んだ状態でsupertestのE2Eテストを実行します。
 
 これで、pushのたびに既存のチェックに加えてE2Eテストも自動で走ります。デプロイのworkflowとの関係は、次のページ[AWSへの全体デプロイ](/sns/nestjs/deploy/)で扱います。
 
