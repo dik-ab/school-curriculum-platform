@@ -34,11 +34,12 @@ export const phases: Phase[] = [
     id: 'frontend',
     number: '02',
     title: 'フロントエンド',
-    summary: 'TypeScriptを使ってUIとAPI連携を作る。',
+    summary: 'TypeScriptを使ってUI、ルーティング、API連携を作る。',
     cards: [
-      { label: 'React', title: 'React基礎', description: 'コンポーネント、props、state、hooks。', href: '/react/', accent: 'blue' },
-      { label: 'Frontend', title: 'フォームと一覧', description: 'フォーム入力、リスト表示、状態更新、画面分割。React基礎の中で学ぶ。', href: '/react/', accent: 'blue' },
-      { label: 'API', title: 'API通信', description: 'fetch、エラーハンドリング、ローディング、再取得。React基礎の中で学ぶ。', href: '/react/', accent: 'blue' }
+      { label: 'React', title: 'React基礎', description: 'コンポーネント、props、state、hooks、フォーム、一覧、API通信をまとめて学ぶ。', href: '/react/', accent: 'blue' },
+      { label: 'Next.js', title: 'Next.js入門', description: 'Reactを土台に、ルーティング、SSR/SSG、API Route、フルスタック構成を学ぶ。', href: '/nextjs/', accent: 'blue' },
+      { label: 'Vue.js', title: 'Vue.js入門', description: 'テンプレート、リアクティブな状態、コンポーネント、フォーム、一覧表示を学ぶ。', href: '/vue/', accent: 'blue' },
+      { label: 'Nuxt', title: 'Nuxt入門', description: 'Vueを土台に、ファイルベースルーティング、SSR、データ取得、サーバー機能を学ぶ。', href: '/nuxt/', accent: 'blue' }
     ]
   },
   {
@@ -49,10 +50,10 @@ export const phases: Phase[] = [
     cards: [
       { label: 'TypeScript', title: 'TypeScript基礎', description: '型、class、module、async/await、DTOの前提。', href: '/typescript/', accent: 'amber' },
       { label: 'Java', title: 'Java基礎', description: '型、class、interface、collection、例外処理。', href: '/java/', accent: 'amber' },
-      { label: 'Python', title: 'Python基礎', description: '関数、型ヒント、class、venv、非同期処理。', accent: 'amber' },
-      { label: 'PHP', title: 'PHP基礎', description: '型、配列、関数、class、Composer、Laravelの前提。', accent: 'amber' },
-      { label: 'Go', title: 'Go基礎', description: '型、struct、interface、goroutine、module管理。', accent: 'amber' },
-      { label: 'Ruby', title: 'Ruby基礎', description: 'オブジェクト、block、module、Bundler、Railsの前提。', accent: 'amber' }
+      { label: 'Python', title: 'Python基礎', description: '関数、型ヒント、class、venv、FastAPIの前提。', href: '/python/', accent: 'amber' },
+      { label: 'PHP', title: 'PHP基礎', description: '型、配列、関数、class、Composer、Laravelの前提。', href: '/php/', accent: 'amber' },
+      { label: 'Go', title: 'Go基礎', description: '型、struct、interface、goroutine、module管理。', href: '/go/', accent: 'amber' },
+      { label: 'Ruby', title: 'Ruby基礎', description: 'オブジェクト、block、module、Bundler、Railsの前提。', href: '/ruby/', accent: 'amber' }
     ]
   },
   {
@@ -74,7 +75,7 @@ export const phases: Phase[] = [
     summary: '言語別にAPI、ORM、Migration、軽いテストまで実装する。',
     grid: 'wide',
     cards: [
-      { label: 'NestJS', title: 'NestJS + Prisma', description: 'NestJS APIにPrismaを接続し、Migration、CRUD、Jestまで実装。', href: '/database/prisma_setup/', accent: 'ink' },
+      { label: 'NestJS', title: 'NestJS + Prisma', description: 'NestJS APIにPrismaを接続し、Migration、CRUD、基本的なテストまで実装。', href: '/database/prisma_setup/', accent: 'ink' },
       { label: 'Spring', title: 'Spring Boot + JPA', description: 'Spring MVC、JPA/Hibernate、Flyway、JUnit。', accent: 'ink' },
       { label: 'FastAPI', title: 'FastAPI + SQLAlchemy', description: 'API、Pydantic、SQLAlchemy、Alembic、pytest。', accent: 'ink' },
       { label: 'Laravel', title: 'Laravel + Eloquent', description: 'MVC、Eloquent、Laravel Migrations、Pest/PHPUnit。', accent: 'ink' },
@@ -86,9 +87,10 @@ export const phases: Phase[] = [
     id: 'projects',
     number: '06',
     title: '実践開発',
-    summary: '共通の課題を、複数の言語スタックで実装する。',
+    summary: 'Gitで変更を管理しながら、共通の課題を複数の言語スタックで実装する。',
     grid: 'featured',
     cards: [
+      { label: 'Git / GitHub', title: 'Git/GitHub基礎', description: 'commit、push、fetch、pull、stash、ブランチ、マージ、コンフリクト解消。', href: '/git/', accent: 'green', project: true },
       { label: 'Todo Project', title: 'Todoアプリ実践', description: 'Reactフロント、API、DB、Docker、テストを言語別に実装。', href: '/fullstack-todo/', accent: 'green', project: true },
       { label: 'SNS Project', title: 'SNS開発実践', description: '認証、投稿、いいね、フォロー、DM、Redis、画像、AWSデプロイ。', href: '/sns/', accent: 'green', project: true }
     ],
