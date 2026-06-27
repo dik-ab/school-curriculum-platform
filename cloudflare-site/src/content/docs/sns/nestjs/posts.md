@@ -59,8 +59,8 @@ sequenceDiagram
         participant DB as PostgreSQL
     end
 
-    R->>G: POST /posts { content }<br>Authorization: Bearer トークン
-    G->>G: トークンを検証し<br>request.user に payload を格納
+    R->>G: POST /posts { content }<br>Cookie: sns_session
+    G->>G: Cookie内のJWTを検証し<br>request.user に payload を格納
     G->>C: 検証OK（リクエストを通す）
     C->>C: CreatePostDto でバリデーション
     C->>S: create(user.sub, dto.content)
@@ -73,7 +73,7 @@ sequenceDiagram
     R->>R: GET /posts で一覧を再取得して画面更新
 ```
 
-ポイントは2つあります。1つ目は、**「誰が投稿したか」をクライアントから受け取らない**ことです。リクエストボディに `authorId` を含めると、他人のIDを名乗った偽装が可能になってしまいます。投稿者IDは、`JwtAuthGuard` が検証済みトークンから取り出した `request.user`（`JwtPayload` の `sub`）だけを信頼します。2つ目は、各層の役割分担が [NestJSとは何か](/backend/what_is_nestjs/) で学んだ通りであることです。Controllerは入出力、Serviceは業務ロジック、Prismaがデータベースアクセスを担当します。
+ポイントは2つあります。1つ目は、**「誰が投稿したか」をクライアントから受け取らない**ことです。リクエストボディに `authorId` を含めると、他人のIDを名乗った偽装が可能になってしまいます。投稿者IDは、`JwtAuthGuard` が `sns_session` Cookie内のJWTから取り出した `request.user`（`JwtPayload` の `sub`）だけを信頼します。2つ目は、各層の役割分担が [NestJSとは何か](/backend/what_is_nestjs/) で学んだ通りであることです。Controllerは入出力、Serviceは業務ロジック、Prismaがデータベースアクセスを担当します。
 
 ## スキーマ差分とマイグレーション
 
@@ -276,7 +276,7 @@ export class PostsService {
 
 - `authorSelect` — 投稿者として返すフィールドの一覧を定数にまとめています。`include: { author: true }` と書いてしまうと `passwordHash` を含む**Userの全列**がレスポンスに乗ってしまうため、`select` で必要な5つに絞ります（→ [リレーション](/database/relations/) の include / select）。同じ指定を3か所に書くとずれの原因になるので、定数化して使い回します。
 - `constructor(private readonly prisma: PrismaService)` — [ServiceとDI](/backend/service_and_di/) で学んだ依存性注入です。
-- `create(authorId, content)` — 投稿を1件作成します。`include` を付けているのは、作成直後のレスポンスにも投稿者情報を含めるためです。`authorId` はControllerが検証済みトークンから渡してくる値で、クライアントの入力ではありません。
+- `create(authorId, content)` — 投稿を1件作成します。`include` を付けているのは、作成直後のレスポンスにも投稿者情報を含めるためです。`authorId` はControllerがCookie内JWTから特定して渡してくる値で、クライアントの入力ではありません。
 - `findAll()` — `orderBy: { createdAt: 'desc' }` で作成日時の降順、つまり**新しい投稿が先頭**になるよう並べます。タイムラインの「新着順」はデータベースのソートで実現します。
 - `remove(userId, postId)` — まず投稿を取得し、(1) 存在しなければ `NotFoundException`（404）、(2) 存在するが投稿者が本人でなければ `ForbiddenException`（403）を投げます（→ 例外とステータスコードの対応は [CRUD実践](/backend/crud_practice/) と [HTTPとREST](/backend/http_and_rest/)）。両方のチェックを通過した場合だけ削除します。
 
@@ -358,33 +358,35 @@ pnpm run start:dev
 
 ユーザーは [ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/)・[メールアドレス確認（SES）](/sns/nestjs/email_verification/) の動作確認で作成した `alice` と `bob`（どちらもメール確認済み）を使います。まだ作っていない場合は、先にその2ページの手順で2人分の登録とメール確認を済ませてください。
 
-まずaliceでログインしてトークンを取得します。
+まずaliceでログインし、Cookie jarに `sns_session` を保存します。
 
 ```bash
-curl -s -X POST http://localhost:3000/auth/login \
+curl -i -c alice.cookies -X POST http://localhost:3000/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"alice@example.com","password":"password123"}'
 ```
 
 実行結果の例:
 
-```json
-{"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWxpY2UiLCJpYXQiOjE3NjU1MjAwMDAsImV4cCI6MTc2NTYwNjQwMH0.S3xkQ..."}
+```http
+HTTP/1.1 200 OK
+Set-Cookie: sns_session=...; HttpOnly; Path=/; SameSite=Lax
 ```
 
-`accessToken` の値をシェル変数に入れておくと、以降のコマンドが楽になります。同じ手順でbobのトークンも取得しておきます。
+同じ手順でbobもログインし、別のCookie jarに保存しておきます。`-c` はレスポンスのCookieをファイルへ保存するcurlのオプションです。
 
 ```bash
-TOKEN_ALICE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEs...（aliceのトークン）"
-TOKEN_BOB="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIs...（bobのトークン）"
+curl -i -c bob.cookies -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"bob@example.com","password":"password123"}'
 ```
 
 ### 投稿の作成
 
 ```bash
 curl -i -X POST http://localhost:3000/posts \
+  -b alice.cookies \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $TOKEN_ALICE" \
   -d '{"content":"はじめての投稿です"}'
 ```
 
@@ -397,22 +399,21 @@ Content-Type: application/json; charset=utf-8
 {"id":1,"content":"はじめての投稿です","authorId":1,"createdAt":"2026-06-12T12:10:00.000Z","author":{"id":1,"username":"alice","displayName":"アリス","bio":"","avatarUrl":null}}
 ```
 
-`author` に `passwordHash` や `email` が**含まれていない**ことを確認してください。`select` で絞った効果です。なお、`Authorization` ヘッダなしで叩くとGuardに弾かれて `401 Unauthorized` が、`content` を空文字列にするとDTOのバリデーションに弾かれて `400 Bad Request` が返ります。余裕があれば試してみてください。
+`author` に `passwordHash` や `email` が**含まれていない**ことを確認してください。`select` で絞った効果です。なお、Cookieなしで叩くとGuardに弾かれて `401 Unauthorized` が、`content` を空文字列にするとDTOのバリデーションに弾かれて `400 Bad Request` が返ります。余裕があれば試してみてください。
 
 bobでも1件投稿しておきます。
 
 ```bash
 curl -s -X POST http://localhost:3000/posts \
+  -b bob.cookies \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $TOKEN_BOB" \
   -d '{"content":"bobです。よろしくお願いします"}'
 ```
 
 ### タイムラインの取得
 
 ```bash
-curl -s http://localhost:3000/posts \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+curl -s -b alice.cookies http://localhost:3000/posts
 ```
 
 実行結果の例（読みやすく整形しています）:
@@ -440,11 +441,11 @@ curl -s http://localhost:3000/posts \
 
 ### 投稿の削除（403 / 404 / 204）
 
-まず、**bobのトークンでaliceの投稿（id: 1）を削除**しようとしてみます。
+まず、**bobのCookieでaliceの投稿（id: 1）を削除**しようとしてみます。
 
 ```bash
 curl -i -X DELETE http://localhost:3000/posts/1 \
-  -H "Authorization: Bearer $TOKEN_BOB"
+  -b bob.cookies
 ```
 
 ```
@@ -457,7 +458,7 @@ HTTP/1.1 403 Forbidden
 
 ```bash
 curl -i -X DELETE http://localhost:3000/posts/999 \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+  -b alice.cookies
 ```
 
 ```
@@ -470,7 +471,7 @@ HTTP/1.1 404 Not Found
 
 ```bash
 curl -i -X DELETE http://localhost:3000/posts/1 \
-  -H "Authorization: Bearer $TOKEN_ALICE"
+  -b alice.cookies
 ```
 
 ```
@@ -481,7 +482,7 @@ HTTP/1.1 204 No Content
 
 ## フロントエンド
 
-次にタイムライン画面を作ります。[ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/) で作った `apiFetch`（トークンを自動付与する自作ラッパー）と `useHashRoute` をそのまま使います。
+次にタイムライン画面を作ります。[ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/) で作った `apiFetch`（`credentials: "include"` でCookie送信を共通化した自作ラッパー）と `useHashRoute` をそのまま使います。
 
 ### Post型の追加
 
@@ -510,15 +511,15 @@ export type Post = {
 
 ```tsx
 import { ReactNode } from 'react';
-import { clearToken } from '../lib/apiClient';
+import { logout } from '../lib/apiClient';
 
 type Props = {
   children: ReactNode;
 };
 
 export function Layout({ children }: Props) {
-  const handleLogout = () => {
-    clearToken();
+  const handleLogout = async () => {
+    await logout();
     location.hash = '#/login';
   };
 
@@ -546,7 +547,7 @@ export function Layout({ children }: Props) {
 - `children: ReactNode` — ヘッダーの下に表示する中身を [propsとstate](/react/props_and_state/) で学んだpropsとして受け取ります。これで各ページを `<Layout>...</Layout>` で包むだけになります。
 - `<a href="#/...">` — ルーティングはハッシュベース（→ [ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/) の `useHashRoute`）なので、リンクは普通の `<a>` タグで書けます。
 - 「チャット」「設定」のリンク先は、それぞれ [DMチャット（リアルタイム）](/sns/nestjs/chat/) と [プロフィール編集と画像アップロード](/sns/nestjs/profile_and_images/) で実装します。**今はリンクだけ用意しておき、クリックしても「ページが見つかりません」と表示されるだけ**で問題ありません。
-- `handleLogout` — `apiFetch` と一緒に作った `clearToken()` でlocalStorageのトークンを消し、ログイン画面へ移動します。
+- `handleLogout` — `apiFetch` と一緒に作った `logout()` で `/auth/logout` を呼び、サーバーから `sns_session` Cookieを失効させてからログイン画面へ移動します。HttpOnly CookieはJavaScriptから直接削除できないため、API経由で消します。
 
 ### PostCard コンポーネント
 
@@ -721,7 +722,6 @@ export function TimelinePage() {
 
 ```tsx
 import { useHashRoute } from './hooks/useHashRoute';
-import { isLoggedIn } from './lib/apiClient';
 import { Layout } from './components/Layout';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
@@ -735,12 +735,6 @@ export default function App() {
   if (path === '/register') return <RegisterPage />;
   if (path === '/login') return <LoginPage navigate={navigate} />;
   if (path.startsWith('/verify-email')) return <VerifyEmailPage path={path} />;
-
-  // ここから下はログイン必須
-  if (!isLoggedIn()) {
-    location.hash = '#/login';
-    return null;
-  }
 
   if (path === '/') {
     return (
@@ -762,7 +756,7 @@ export default function App() {
 
 - `useHashRoute()` — `#` 以降のパスと遷移用の `navigate` を返す自作フックです（→ [ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/)）。
 - import の書き分けに注意してください。`RegisterPage` / `LoginPage` / `VerifyEmailPage` は **default export** で定義したページなので `import RegisterPage from ...` の形で読み込みます。`LoginPage` と `VerifyEmailPage` には必要なprops（`navigate` / `path`）を渡し、`RegisterPage` は[メールアドレス確認（SES）](/sns/nestjs/email_verification/)でPropsを削除したので何も渡しません（→ [ユーザー登録とログイン（JWT認証）](/sns/nestjs/auth/)）。一方、`Layout` のような部品コンポーネントと、このページで named export として定義した `TimelinePage` は `import { ... }` の形で読み込みます。
-- `isLoggedIn()` — localStorageにトークンがあるかを見るだけの簡易チェックです。トークンが期限切れでも `true` になりますが、その場合は最初のAPI呼び出しが401になり、`apiFetch` がトークンを消してログイン画面へ戻してくれるので問題ありません。
+- HttpOnly CookieはJavaScriptから読めないため、ブラウザ内の保存値を読んでログイン判定する関数は使いません。保護されたページでは最初のAPI呼び出し（`GET /auth/me` や `GET /posts`）が401を返したときに、`apiFetch` がログイン画面へ戻します。
 - 最後の `return` — `#/chat` や `#/settings` など、まだ実装していないパスの受け皿です。[フォローとフォロー中タイムライン](/sns/nestjs/follow/) 以降のページで、ここに分岐を増やしていきます。
 
 ### CSSの追記
@@ -848,12 +842,12 @@ pnpm run dev
 
 1. ブラウザで `http://localhost:5173` を開き、aliceでログインします。タイムライン画面（投稿フォームと一覧）が表示されます。
 2. フォームに「画面からの投稿です」と入力して「投稿する」を押すと、一覧の先頭に自分の投稿が現れ、フォームが空に戻ります。
-3. **別のブラウザ（またはシークレットウィンドウ）**で `http://localhost:5173` を開き、bobでログインして何か投稿します。シークレットウィンドウを使うのは、localStorageが分離されていて2人のログイン状態を同時に保てるためです。
+3. **別のブラウザ（またはシークレットウィンドウ）**で `http://localhost:5173` を開き、bobでログインして何か投稿します。同じブラウザの通常タブ同士ではCookieを共有するため、2人のログイン状態を同時に持つにはCookieストアが分かれる環境を使います。
 4. aliceのウィンドウを再読み込みすると、**aliceとbobの投稿が新しい順に混ざって**表示されます。これが全体タイムラインです。
 5. aliceの画面では、aliceの投稿にだけ「削除」ボタンが表示され、bobの投稿には表示されないことを確認します。
 6. aliceが自分の投稿を削除すると、確認ダイアログのあと一覧から消えます。
 
-うまく動かないときは、ブラウザの開発者ツールのNetworkタブでリクエストとレスポンスを確認するのでした（→ [fetchでAPI通信](/react/api_fetch/)）。401が返っている場合はトークン切れなので、ログインし直してください。
+うまく動かないときは、ブラウザの開発者ツールのNetworkタブでリクエストとレスポンスを確認するのでした（→ [fetchでAPI通信](/react/api_fetch/)）。401が返っている場合はCookieがないか期限切れなので、ログインし直してください。
 
 ## 理解度チェック
 
