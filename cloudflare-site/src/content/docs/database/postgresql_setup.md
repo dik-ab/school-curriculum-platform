@@ -90,6 +90,28 @@ myapp-db-1   postgres:16   "docker-entrypoint.s…"   db        10 seconds ago  
 
 **psql（ピーエスキューエル）**は、PostgreSQLに付属するコマンドラインクライアントです。SQLを直接打ち込んで実行できます。
 
+ここで「サーバー」と「クライアント」という2つの役割を整理しておきましょう。データを保管して問い合わせに答えるのが**サーバー**（PostgreSQL本体）、そこにSQLを送って結果を受け取るのが**クライアント**（psqlなど）です。
+
+```mermaid
+flowchart LR
+    subgraph Host["手元のPC（クライアント側）"]
+        Q["psql"]
+        DBT["GUIのDBクライアント"]
+    end
+    subgraph Cont["dbコンテナ（サーバー側）"]
+        SV["PostgreSQL サーバー<br>ポート 5432 で待ち受け"]
+        VOL[("ボリューム<br>データの保存先")]
+    end
+    Q -->|"SQLを送る"| SV
+    DBT -->|"SQLを送る"| SV
+    SV -->|"結果を返す"| Q
+    SV <--> VOL
+    style SV fill:#e3f2fd,stroke:#1565c0
+    style VOL fill:#fff3e0,stroke:#ef6c00
+```
+
+**図の読み方**: 左のクライアントがSQLを送り、右のサーバーが処理して結果を返します。データ本体はサーバーにつながった「ボリューム」に保存されるので、クライアントを閉じてもデータは消えません。psqlは数あるクライアントの1つにすぎず、後の章で使うアプリやPrismaも同じサーバーに接続します。
+
 コンテナの中でpsqlを起動しましょう。[コンテナ内でコマンドを実行する](/docker/install_and_basics/) `docker compose exec` を使います。
 
 ```bash
@@ -101,6 +123,22 @@ docker compose exec db psql -U postgres -d app_db
 - `docker compose exec db` — `db` サービスのコンテナ内でコマンドを実行します
 - `psql -U postgres` — ユーザー `postgres`（compose.yamlの `POSTGRES_USER`）として接続します
 - `-d app_db` — 接続先のデータベース名（compose.yamlの `POSTGRES_DB`）です
+
+長いコマンドに見えますが、「どこで・何を・誰として・どのDBに」という4つの部品の組み合わせです。図で分解してみましょう。
+
+```mermaid
+flowchart TB
+    CMD["docker compose exec db psql -U postgres -d app_db"]
+    CMD --> A["docker compose exec db<br>（dbコンテナの中で実行）"]
+    CMD --> B["psql<br>（クライアントを起動）"]
+    CMD --> C["-U postgres<br>（接続ユーザー）"]
+    CMD --> E["-d app_db<br>（接続先データベース）"]
+    style CMD fill:#e3f2fd,stroke:#1565c0
+    style C fill:#e8f5e9,stroke:#2e7d32
+    style E fill:#fff3e0,stroke:#ef6c00
+```
+
+**図の読み方**: いちばん上の1行が、下の4つの部品に分かれます。`-U` のユーザー名と `-d` のデータベース名は、先ほどのcompose.yamlで決めた `POSTGRES_USER` と `POSTGRES_DB` に対応しています。接続できないときは、この対応がずれていないかを確認します。
 
 実行結果の例:
 
