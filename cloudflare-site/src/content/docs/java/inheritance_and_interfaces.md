@@ -2,7 +2,7 @@
 title: 継承、抽象クラス、インターフェース
 section_key: java
 section_title: Java基礎
-nav_order: 10
+nav_order: 12
 description: extends、super、オーバーライド、抽象クラス、interface、多態性を学びます。
 ---
 
