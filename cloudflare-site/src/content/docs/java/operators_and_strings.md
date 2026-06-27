@@ -2,7 +2,7 @@
 title: 演算子と文字列
 section_key: java
 section_title: Java基礎
-nav_order: 4
+nav_order: 5
 description: 算術演算、比較、論理演算、文字列結合、equalsによる比較を学びます。
 ---
 
