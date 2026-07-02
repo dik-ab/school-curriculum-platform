@@ -77,16 +77,24 @@ type Post = {
 
 const posts = ref<Post[]>([]);
 const loading = ref(true);
+const error = ref<string | null>(null);
 
 onMounted(async () => {
-  const response = await fetch("/api/posts");
-  posts.value = await response.json();
-  loading.value = false;
+  try {
+    const response = await fetch("/api/posts");
+    if (!response.ok) throw new Error("読み込みに失敗しました");
+    posts.value = await response.json();
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : "読み込みに失敗しました";
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
 
 <template>
   <p v-if="loading">読み込み中...</p>
+  <p v-else-if="error">{{ error }}</p>
   <ul v-else>
     <li v-for="post in posts" :key="post.id">
       {{ post.title }}
@@ -100,10 +108,13 @@ onMounted(async () => {
 - `Post` は、APIから返る投稿データの型です。
 - `posts` は、投稿一覧の状態です。
 - `loading` は、読み込み中かどうかの状態です。
+- `error` は、失敗したときのメッセージを持つ状態です。
 - `onMounted` は、コンポーネントが画面に出たあとに処理を実行します。
-- `fetch("/api/posts")` は、APIから投稿一覧を取得します。
+- `try / catch / finally` — `fetch` が失敗したら `catch` で `error` にメッセージを入れ、成功・失敗にかかわらず `finally` で `loading` を必ず `false` にします。
+- `fetch("/api/posts")` は、APIから投稿一覧を取得します。`response.ok` が `false`（404など）のときは自分でエラーにします。
 - `v-if="loading"` は、読み込み中だけメッセージを表示します。
-- `v-else` は、読み込み完了後に一覧を表示します。
+- `v-else-if="error"` は、失敗したときにエラーメッセージを表示します。
+- `v-else` は、読み込みが成功したときに一覧を表示します。
 
 ## よくあるミス
 
