@@ -31,6 +31,18 @@ Next.jsのApp Routerでは、コンポーネントを大きく2つに分けて�
 - Server Component: サーバー側で実行される。DBや外部APIからデータを取得しやすい。
 - Client Component: ブラウザ側で実行される。クリック、入力、state、Effectを扱える。
 
+「どこで動くか」を図にすると、境界がイメージしやすくなります。
+
+```mermaid
+flowchart LR
+    DB[("DB / 外部API")] --> SC["Server Component<br>サーバーで実行<br>データ取得・HTML生成"]
+    SC -->|"HTML + 必要なJS"| CC["Client Component<br>ブラウザで実行<br>state・onClick・入力"]
+    style SC fill:#e8f5e9,stroke:#2e7d32
+    style CC fill:#e3f2fd,stroke:#1565c0
+```
+
+**図の読み方**: データ取得のような「サーバーでやると速い・安全な処理」はServer Componentが担当し、生成したHTMLをブラウザへ送ります。クリックや入力のような「ブラウザでしかできない処理」だけをClient Componentが担当します。
+
 クリックやフォーム入力を扱う場合は、ファイルの先頭に `"use client"` を書きます。
 
 ```tsx
