@@ -81,6 +81,47 @@ func TestDomain(t *testing.T) {
 - `t.Fatal` はテストを失敗させて止めます。
 - `got` と `want` を比べる書き方はGoでよく使われます。
 
+## interfaceの入口
+
+interface（インターフェース）は「どんなメソッドを持っているか」という**約束事**だけを決めた型です。中身の実装は問いません。約束したメソッドさえ持っていれば、どんな型でも「そのinterfaceを満たしている」とみなされます。
+
+通知を送る `Notifier` を例にします。
+
+```go
+package main
+
+import "fmt"
+
+// Notifier は「Send メソッドを持つ」という約束
+type Notifier interface {
+	Send(message string) error
+}
+
+// EmailNotifier は Notifier を満たす（Send を持っているため）
+type EmailNotifier struct{}
+
+func (e EmailNotifier) Send(message string) error {
+	fmt.Println("mail:", message)
+	return nil
+}
+
+// notify は「具体的な型」ではなく「Notifier」を受け取る
+func notify(n Notifier, message string) error {
+	return n.Send(message)
+}
+
+func main() {
+	if err := notify(EmailNotifier{}, "hello"); err != nil {
+		fmt.Println(err)
+	}
+}
+```
+
+- `type Notifier interface { ... }` は、持つべきメソッド（ここでは `Send`）だけを宣言します。
+- `func (e EmailNotifier) Send(...)` を定義すると、`EmailNotifier` は自動的に `Notifier` を満たします（`implements` のような宣言は不要です）。
+- `notify(n Notifier, ...)` は具体的な型に依存しません。`Send` を持つ型ならなんでも渡せます。
+- そのため、本番は `EmailNotifier`、テストでは「送ったふりをするダミー」に**差し替え**られます。依存を差し替えやすくするのがinterfaceの主な使いどころです。
+
 ## goroutineの入口
 
 ```go
