@@ -40,14 +40,19 @@ HTML/CSS/JavaScriptを書くと、ブラウザ上ですぐに結果が見えま�
 このセクションでは、以下の順序でフロントエンド技術を学んでいきます：
 
 1. **HTML/CSS基礎** - Webページの構造とデザインを学ぶ
-2. **JavaScript基礎** - Webページに動きをつける
+2. **HTML/CSS 練習問題** - 学んだHTML/CSSで実際に手を動かす
+3. **JavaScript基礎 / 基礎解説** - Webページに動きをつける
+4. **JavaScript 練習問題** - 学んだJavaScriptで実際に手を動かす
 
-それぞれ別ページとして用意しています。まずHTML/CSSで「画面の骨組みと見た目」を作れるようになり、その後JavaScriptで「ユーザー操作に反応する動き」を付けていきます。
+まずHTML/CSSで「画面の骨組みと見た目」を作れるようになり、その後JavaScriptで「ユーザー操作に反応する動き」を付けていきます。各トピックには練習問題ページを用意しているので、読んだあとは必ず手を動かして定着させましょう。
 
 | 教材 | 学ぶこと |
 | --- | --- |
 | [HTML/CSS基礎](/frontend/html_css/) | タグ、セレクタ、余白、Flexbox、レスポンシブ、開発者ツール |
-| [JavaScript基礎](/frontend/javascript/) | 変数、条件分岐、配列、オブジェクト、関数、DOM操作、非同期処理 |
+| [HTML/CSS 練習問題](/frontend/html_css_practice/) | 自己紹介ページなどを実際に作るハンズオン課題 |
+| [JavaScript基礎](/frontend/javascript/) | 変数、条件分岐、配列、オブジェクト、関数、DOM操作、非同期処理（教材まとめ） |
+| [JavaScript基礎解説](/frontend/javascript_basics/) | 上記の文法を、コード例つきでゼロから丁寧に解説 |
+| [JavaScript 練習問題](/frontend/javascript_practice/) | DOM操作や配列処理などを実際に書くハンズオン課題 |
 
 各ページで紹介している教材は、すべて**無料で質の高い日本語教材**です。初心者でも理解しやすく、実践的な内容になっています。
 
