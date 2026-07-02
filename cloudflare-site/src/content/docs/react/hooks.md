@@ -248,7 +248,7 @@ useStateとuseEffectを組み合わせたロジックは、しばしば複数の
 
 **`src/hooks/useCurrentTime.ts`**（新規作成。`src/hooks/` ディレクトリも作成）
 
-```tsx
+```ts
 import { useState, useEffect } from "react";
 
 export function useCurrentTime(): string {
