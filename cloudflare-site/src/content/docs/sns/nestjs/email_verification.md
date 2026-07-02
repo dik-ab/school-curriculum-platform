@@ -413,14 +413,8 @@ export default function VerifyEmailPage({ path }: Props) {
 **`frontend/src/pages/RegisterPage.tsx`**（変更箇所のみ）
 
 ```tsx
-type Props = {
-  navigate: (to: string) => void;
-};
-
-// 登録成功後は画面遷移せず案内文を表示するため navigate は使わないが、
-// 他のページとPropsの形を揃えて受け取っている
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function RegisterPage(_props: Props) {
+// 登録成功後は画面遷移せず案内文を表示するため、navigate などの props は受け取りません
+export default function RegisterPage() {
   // ...既存の useState 群はそのまま...
   const [registered, setRegistered] = useState(false); // 追加
 
@@ -464,7 +458,7 @@ export default function RegisterPage(_props: Props) {
 **コード解説**
 
 - `registered` state — 「登録が完了したか」を持ち、`true` なら案内文、`false` ならフォームを表示します。
-- `_props: Props` — 登録成功後は画面遷移しないため `navigate` は使いません。ただし `App.tsx` から他の認証ページと同じ形でPropsを渡しているので、互換のために受け取ります。未使用警告を避けるため、引数名を `_props` にし、必要に応じてESLintの未使用警告だけ抑えます。
+- props なし — 登録成功後は画面遷移しないため `navigate` を使いません。そこで `RegisterPage` は props を受け取らない形にします。他の認証ページ（`LoginPage` など）は `navigate` を受け取りますが、このページだけは不要なので、次の `App.tsx` でも `<RegisterPage />` と何も渡しません。
 
 ### App.tsx の変更 — ルートの追加
 
@@ -479,7 +473,7 @@ export default function App() {
   const { path, navigate } = useHashRoute();
 
   // 未ログインでもアクセスできるページ
-  if (path === "/register") return <RegisterPage navigate={navigate} />;
+  if (path === "/register") return <RegisterPage />;
   if (path === "/login") return <LoginPage navigate={navigate} />;
   if (path.startsWith("/verify-email")) return <VerifyEmailPage path={path} />; // 追加
 
@@ -491,7 +485,7 @@ export default function App() {
 
 - `path.startsWith("/verify-email")` — このパスはクエリ（`?token=...`）が付くため、完全一致ではなく前方一致で判定します。
 - 公開ページを先に返す — HttpOnly CookieはJavaScriptから読めないため、ブラウザ内の保存値を読んでログイン済みかどうかを事前判定する方法は使いません。ログインが必要なページでは、最初のAPI呼び出しが401を返したときに `apiFetch` がログイン画面へ戻します。
-- `<RegisterPage navigate={navigate} />` — RegisterPageは画面遷移には使いませんが、他の認証ページとPropsの形を揃えるために渡しておきます。
+- `<RegisterPage />` — RegisterPageは画面遷移に `navigate` を使わないため、props は何も渡しません。
 
 ## 動作確認
 
