@@ -60,7 +60,7 @@ flowchart LR
 ```typescript
 import { Memo } from '@prisma/client';
 // Memo型の中身（自動生成）:
-// { id: number; title: string; content: string; done: boolean;
+// { id: number; title: string; body: string; done: boolean;
 //   createdAt: Date; updatedAt: Date }
 ```
 
@@ -275,7 +275,7 @@ export class MemosService {
     return this.prisma.memo.create({
       data: {
         title: dto.title,
-        content: dto.content,
+        body: dto.body,
       },
     });
   }
@@ -387,13 +387,13 @@ sequenceDiagram
 ```bash
 curl -X POST http://localhost:3000/memos \
   -H "Content-Type: application/json" \
-  -d '{"title": "買い物", "content": "牛乳と卵を買う"}'
+  -d '{"title": "買い物", "body": "牛乳と卵を買う"}'
 ```
 
 実行結果の例:
 
 ```json
-{"id":1,"title":"買い物","content":"牛乳と卵を買う","done":false,"createdAt":"2026-06-12T01:05:00.123Z","updatedAt":"2026-06-12T01:05:00.123Z"}
+{"id":1,"title":"買い物","body":"牛乳と卵を買う","done":false,"createdAt":"2026-06-12T01:05:00.123Z","updatedAt":"2026-06-12T01:05:00.123Z"}
 ```
 
 `id` の自動採番、`done` の既定値、`createdAt`/`updatedAt` の自動設定が、すべてデータベース側で行われています。
@@ -407,7 +407,7 @@ curl http://localhost:3000/memos
 実行結果の例:
 
 ```json
-[{"id":1,"title":"買い物","content":"牛乳と卵を買う","done":false,"createdAt":"2026-06-12T01:05:00.123Z","updatedAt":"2026-06-12T01:05:00.123Z"}]
+[{"id":1,"title":"買い物","body":"牛乳と卵を買う","done":false,"createdAt":"2026-06-12T01:05:00.123Z","updatedAt":"2026-06-12T01:05:00.123Z"}]
 ```
 
 **更新（PATCH）**
@@ -421,7 +421,7 @@ curl -X PATCH http://localhost:3000/memos/1 \
 実行結果の例:
 
 ```json
-{"id":1,"title":"買い物","content":"牛乳と卵を買う","done":true,"createdAt":"2026-06-12T01:05:00.123Z","updatedAt":"2026-06-12T01:08:30.456Z"}
+{"id":1,"title":"買い物","body":"牛乳と卵を買う","done":true,"createdAt":"2026-06-12T01:05:00.123Z","updatedAt":"2026-06-12T01:08:30.456Z"}
 ```
 
 `done` だけが更新され、`updatedAt` も自動で進んでいます。
@@ -458,7 +458,7 @@ curl http://localhost:3000/memos
 実行結果の例:
 
 ```json
-[{"id":1,"title":"買い物","content":"牛乳と卵を買う","done":true,...}]
+[{"id":1,"title":"買い物","body":"牛乳と卵を買う","done":true,...}]
 ```
 
 **メモが残っています。** 配列実装ではここで必ず `[]` になっていました。データはNestJSのメモリではなくPostgreSQL（の[ボリューム](/docker/docker_compose/)）にあるので、アプリを何度再起動しても消えません。psqlやPrisma Studio（`pnpm exec prisma studio`）で `Memo` テーブルを覗けば、同じデータが見えるはずです。
