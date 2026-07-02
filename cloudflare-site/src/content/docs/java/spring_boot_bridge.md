@@ -185,6 +185,22 @@ System.out.println(response.name());
 - `controller.show(1)` で、ユーザー情報を取得します。
 - `response.name()` で、DTOの名前を表示します。
 
+この「入口→業務ロジック→データ取得」という責務の分け方を図にすると次のようになります。
+
+```mermaid
+flowchart LR
+    Ctrl["UserController<br>（入口）"] --> Svc["UserService<br>（業務ロジック）"]
+    Svc --> Repo["UserRepository<br>（データ取得）"]
+    Repo --> Entity["User Entity<br>（DBの生データ）"]
+    Svc -. "Entityを変換" .-> DTO["UserResponse DTO<br>（外部に返す形）"]
+    style Ctrl fill:#e3f2fd,stroke:#1565c0
+    style Svc fill:#e8f5e9,stroke:#2e7d32
+    style Repo fill:#fff3e0,stroke:#ef6c00
+    style DTO fill:#f3e5f5,stroke:#6a1b9a
+```
+
+**図の読み方**: リクエストは左から右へ、`Controller → Service → Repository` と流れます。`Repository` が取り出す `Entity` はDBの生データなので、そのまま外に返さず、`Service` で必要な項目だけの `DTO`（`UserResponse`）に**変換**してから返すのがポイントです。
+
 ## 練習問題
 
 ### 問題1: ProductResponseを作る
