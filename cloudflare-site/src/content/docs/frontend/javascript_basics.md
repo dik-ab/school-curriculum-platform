@@ -396,6 +396,8 @@ const add = (a, b) => a + b;
 console.log(add(5, 3));  // 8
 ```
 
+> 上の3つの `add` は「同じ処理の別の書き方」を並べたものです。実際に試すときは、どれか1つだけを書いてください。3つとも書くと `Identifier 'add' has already been declared`（`add` はすでに宣言済み）というエラーになります。
+
 ## DOM操作：HTMLを操作する
 
 JavaScriptの最大の特徴は、HTMLを動的に操作できることです。
