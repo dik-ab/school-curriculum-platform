@@ -89,7 +89,7 @@ exercise01/
   <h1>山田太郎</h1>
   <p>こんにちは！私はプログラミングを学んでいる学生です。</p>
   <p>好きなWebサイト：<a href="https://github.com">GitHub</a></p>
-  <img src="https://via.placeholder.com/300x200" alt="サンプル画像">
+  <img src="https://placehold.co/300x200" alt="サンプル画像">
 </body>
 </html>
 ```
@@ -165,7 +165,7 @@ exercise03/
 ```
 
 **ヒント：**
-- HTMLファイルの`<head>`内で`<link rel="stylesheet" href="/frontend/style.css/">`を使ってCSSを読み込みます
+- HTMLファイルの`<head>`内で`<link rel="stylesheet" href="style.css">`を使ってCSSを読み込みます
 - CSSでは、要素を選択して`color`や`background-color`、`font-size`などのプロパティを指定します
 
 **動作確認方法：**
@@ -186,7 +186,7 @@ exercise03/
 <head>
   <meta charset="UTF-8">
   <title>CSSスタイリング</title>
-  <link rel="stylesheet" href="/frontend/style.css/">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>私のページ</h1>
@@ -263,7 +263,7 @@ exercise04/
 <head>
   <meta charset="UTF-8">
   <title>カードレイアウト</title>
-  <link rel="stylesheet" href="/frontend/style.css/">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>サービス紹介</h1>
@@ -364,7 +364,7 @@ exercise05/
 <head>
   <meta charset="UTF-8">
   <title>ユーザー登録フォーム</title>
-  <link rel="stylesheet" href="/frontend/style.css/">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="form-container">
