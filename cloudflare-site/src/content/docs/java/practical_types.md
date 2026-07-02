@@ -174,7 +174,7 @@ public enum OrderStatus {
 
 文字列ではなく `enum` にすることで、`"padi"` のようなタイプミスを防げます。
 
-### 問題2: 税込み価格をBigDecimalで計算する
+### 問題2: 税額をBigDecimalで計算する
 
 `price = 1000`、`taxRate = 0.10` として、税額を計算してください。
 
