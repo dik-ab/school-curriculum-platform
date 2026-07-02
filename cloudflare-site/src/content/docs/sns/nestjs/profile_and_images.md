@@ -221,125 +221,95 @@ sequenceDiagram
 >
 > - S3には無料利用枠（アカウント作成から12か月間、ストレージ5GBなど）がありますが、**枠を超えると課金されます**。アイコン画像程度のサイズなら枠内に収まりますが、[AWSとは](/aws/what_is_aws/)で設定した予算アラートが有効なことを確認しておきましょう。
 > - このバケットの`avatars/`配下は、この後の設定で**インターネット全体に公開**されます。**個人が特定できる写真や、人に見られて困る画像は絶対にアップロードしないでください**。練習にはフリー素材やスクリーンショットを使いましょう。
-> - 練習が終わったら、バケットごと削除してください。`aws s3 rb s3://<バケット名> --force`（中のオブジェクトごと削除）で消せます。
+> - 練習が終わったら、`terraform destroy`でバケットごと削除してください。削除できない場合は、バケット内のオブジェクトが残っていないか確認します。
 
-### バケットを作る
+### Terraformリポジトリを使う
 
-バケット名は**世界中で一意**である必要があるため、自分の名前や適当な英数字を含めてください（以降の例では`sns-avatars-yourname-dev`を自分のバケット名に読み替えてください）。リージョンは、これまでのAWS章と同じ東京リージョン（`ap-northeast-1`）を使います。
-
-```bash
-aws s3api create-bucket \
-  --bucket sns-avatars-yourname-dev \
-  --region ap-northeast-1 \
-  --create-bucket-configuration LocationConstraint=ap-northeast-1
-```
-
-```json
-{
-    "Location": "http://sns-avatars-yourname-dev.s3.amazonaws.com/"
-}
-```
-
-**コード解説**
-
-- `aws s3api create-bucket` — S3バケットを作成するAWS CLIコマンドです。
-- `--create-bucket-configuration LocationConstraint=ap-northeast-1` — バージニア北部（us-east-1）以外のリージョンに作るときに必要な指定です。
-
-マネジメントコンソールで作る場合は、S3のページで「バケットを作成」を選び、バケット名とリージョン（東京）を指定すれば同じものが作れます。その場合、以降の「ブロックパブリックアクセス」もバケット作成画面のチェックボックスで設定できます。
-
-### ブロックパブリックアクセスの設定
-
-S3バケットは初期状態で「**ブロックパブリックアクセス**」という安全装置がすべて有効になっており、どんな設定をしても外部に公開されないようになっています。今回は「`avatars/`配下だけ公開読み取りを許可するバケットポリシー」を設定したいので、**バケットポリシーによる公開をブロックする2項目だけ**を無効にします。
+この教材では、S3バケットを手作業ではなくTerraformで作る方針にします。GUIやAWS CLIで1つずつ作ることもできますが、Terraformにしておくと「どんな公開範囲で、どんなCORS設定のバケットを作ったのか」がコードとして残ります。あとから消すときも、同じディレクトリで`terraform destroy`を実行できます。
 
 ```bash
-aws s3api put-public-access-block \
-  --bucket sns-avatars-yourname-dev \
-  --public-access-block-configuration \
-  BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=false,RestrictPublicBuckets=false
+git clone https://github.com/dik-ab/curriculum-sns-terraform-aws-infra-answer.git
+cd curriculum-sns-terraform-aws-infra-answer
+cp terraform.tfvars.example terraform.tfvars
 ```
 
-このコマンドは成功すると何も出力しません。
+`terraform.tfvars`を開き、`bucket_name`を自分だけの名前に変更します。S3バケット名は**世界中で一意**である必要があるため、例の`sns-avatars-yourname-dev`のままではほぼ確実に衝突します。
 
-**コード解説**
+**`terraform.tfvars`（例）**
 
-- `BlockPublicAcls=true,IgnorePublicAcls=true` — ACL（オブジェクト単位の古い公開設定の仕組み）による公開は引き続きブロックします。今回は使わないので有効のままにします。
-- `BlockPublicPolicy=false` — 「公開を許可するバケットポリシーの設定」をブロックしない、という意味です。これを無効にしないと、次の手順のバケットポリシーが拒否されます。
-- `RestrictPublicBuckets=false` — 公開ポリシーを持つバケットへの匿名アクセスの制限を解除します。
+```hcl
+project_name = "curriculum-sns"
+environment  = "dev"
+aws_region   = "ap-northeast-1"
 
-「ブロックを外す」操作なので慎重に行ってください。間違っても、仕事で使う本番アカウントの重要なバケットでこの設定を真似しないこと。**公開してよいのは、公開する前提で作った専用バケットだけ**です。
+bucket_name = "sns-avatars-taro-dev"
 
-### バケットポリシー: avatars/配下だけ公開する
+frontend_origins = [
+  "http://localhost:5173"
+]
 
-次に、「`avatars/`で始まるキーのオブジェクトは、誰でも読み取れる（ただし書き込みは不可）」というバケットポリシーを設定します。まずポリシーのJSONをファイルに保存します。
-
-**`bucket-policy.json`（作業用の一時ファイル。どこに置いてもよい）**
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "PublicReadAvatars",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::sns-avatars-yourname-dev/avatars/*"
-    }
-  ]
-}
+force_destroy = false
 ```
 
-**コード解説**
-
-- `"Effect": "Allow"` / `"Principal": "*"` — 「誰に対しても許可する」という意味です。これが「公開」の正体です。
-- `"Action": "s3:GetObject"` — 許可するのは**オブジェクトの読み取りだけ**です。書き込み（`s3:PutObject`）や一覧取得（`s3:ListBucket`）は含めません。書き込みはあくまでpresigned URL経由でのみ行わせます。
-- `"Resource": "arn:aws:s3:::.../avatars/*"` — 対象を`avatars/`で始まるキーに限定します。バケット全体（`/*`）にしないことで、万一バケットに別のファイルを置いても公開されません。
-
-このポリシーをバケットに適用します。
+準備できたら、作成内容を確認してから適用します。
 
 ```bash
-aws s3api put-bucket-policy \
-  --bucket sns-avatars-yourname-dev \
-  --policy file://bucket-policy.json
+terraform init
+terraform plan
+terraform apply
 ```
 
-このコマンドも成功すると何も出力しません。
+`terraform plan`では、S3バケット、公開設定、バケットポリシー、CORS設定が作られることを確認します。`terraform apply`で`yes`を入力すると、実際にAWS上へリソースが作成されます。
 
-### CORS設定
-
-もうひとつ必要なのが**CORS（コルス、オリジン間リソース共有）**の設定です。CORSは[つなぎ込みで起きること](/fullstack-todo/nestjs/integration/)で学んだとおり、「ブラウザ上のJavaScriptが、ページのオリジンと異なるオリジンへ通信すること」をサーバー側が許可する仕組みでした。
-
-今回、`http://localhost:5173`で動くReactのコードが、`https://sns-avatars-....amazonaws.com`というまったく別のオリジンへ`fetch`でPUTします。ブラウザはPUTの前に**プリフライトリクエスト**（OPTIONSメソッドでの事前確認）をS3に送り、S3が「そのオリジンからのPUTは許可済みです」と答えない限り、本番のPUTを実行しません。つまりS3側に「localhost:5173からのPUTを許可する」と教えておく必要があります。
-
-**`cors.json`（作業用の一時ファイル）**
-
-```json
-{
-  "CORSRules": [
-    {
-      "AllowedOrigins": ["http://localhost:5173"],
-      "AllowedMethods": ["PUT", "GET"],
-      "AllowedHeaders": ["*"],
-      "MaxAgeSeconds": 3000
-    }
-  ]
-}
-```
+作成後、NestJSの`.env`に入れる値を出力します。
 
 ```bash
-aws s3api put-bucket-cors \
-  --bucket sns-avatars-yourname-dev \
-  --cors-configuration file://cors.json
+terraform output -raw backend_env
 ```
 
-このコマンドも成功すると何も出力しません。
+```text
+AWS_REGION="ap-northeast-1"
+AVATAR_BUCKET="sns-avatars-taro-dev"
+```
 
-**コード解説**
+この2行を、この後のバックエンド実装で`backend/.env`へ追加します。
 
-- `AllowedOrigins` — 許可するオリジンです。開発中のフロントエンド（Viteの開発サーバー）だけを許可します。[AWSへの全体デプロイ](/sns/nestjs/deploy/)で本番公開するときは、ここにCloudFrontのURLを追加することになります。
-- `AllowedMethods` — presigned URLでのアップロードに使う`PUT`を許可します。`GET`も入れていますが、実は`<img>`タグでの画像表示にCORSは関係ありません（CORSが効くのはJavaScriptからの`fetch`等だけです）。将来JavaScriptから画像を読み込む加工処理などを書く場合に備えた指定です。
-- `AllowedHeaders: ["*"]` — アップロード時に付ける`Content-Type`などのヘッダーを許可します。
-- `MaxAgeSeconds` — プリフライトの結果をブラウザがキャッシュしてよい秒数です。毎回OPTIONSを送らずに済みます。
+### Terraformが作っているもの
+
+Terraformリポジトリの中心は、次の4つです。
+
+- `aws_s3_bucket` — アバター画像を保存するS3バケットです。`force_destroy = false`にしているため、誤って`destroy`したときに画像が残っているバケットは削除されません。
+- `aws_s3_bucket_public_access_block` — ACLによる公開は引き続きブロックし、バケットポリシーによる`avatars/*`の公開だけを許可します。バケット全体を雑に公開しないための設定です。
+- `aws_s3_bucket_policy` — `arn:aws:s3:::<バケット名>/avatars/*`に対して、匿名ユーザーの`s3:GetObject`だけを許可します。読み取りだけなので、誰でも書き込めるバケットにはなりません。
+- `aws_s3_bucket_cors_configuration` — `http://localhost:5173`で動くReactから、S3へ直接`PUT`できるようにします。ブラウザの`fetch`はCORSの制限を受けるため、ここを忘れるとpresigned URLが正しくてもアップロードに失敗します。
+
+さらに、`avatar_upload_policy_json`というoutputで、NestJS API側に必要なIAM権限の雛形を出しています。presigned URLは「署名した主体の権限」で有効になるため、ローカル開発なら`aws configure`で使っているIAMユーザー、本番ならECSタスクロールに`s3:PutObject`権限が必要です。
+
+```bash
+terraform output -raw avatar_upload_policy_json
+```
+
+この出力は「どの権限が必要か」を確認するためのものです。Terraformリポジトリ自体は、あなたのIAMユーザーやECSタスクロールに勝手に権限を付けません。学習環境のIAM設計まで自動化すると、利用者のAWSアカウント構成に強く依存してしまうからです。
+
+### AWS CLIで確認する場合
+
+Terraformで作られた結果は、AWS CLIでも確認できます。たとえば、公開読み取りのバケットポリシーは次のコマンドで見られます。
+
+```bash
+aws s3api get-bucket-policy \
+  --bucket sns-avatars-taro-dev \
+  --query Policy \
+  --output text
+```
+
+また、CORS設定は次のコマンドで確認できます。
+
+```bash
+aws s3api get-bucket-cors \
+  --bucket sns-avatars-taro-dev
+```
+
+バケット名は自分の`terraform.tfvars`に書いた名前に読み替えてください。もしTerraformが使えない環境で手作業したい場合も、必要な設定はこの4点（バケット、公開読み取りポリシー、CORS、API側のPutObject権限）です。手作業で作った場合でも、以降のNestJS実装は同じ環境変数`AWS_REGION`と`AVATAR_BUCKET`だけを見ます。
 
 これでバケットの準備は完了です。
 
@@ -365,12 +335,19 @@ Done in 6.2s
 
 ### 環境変数の追加
 
-バケット名はコードに直書きせず、環境変数にします。`backend/.env`に1行追加してください（リージョンを表す`AWS_REGION`は[メールアドレス確認（SES）](/sns/nestjs/email_verification/)で追加済みです）。
+バケット名はコードに直書きせず、環境変数にします。Terraformで作成した場合は、インフラリポジトリで次のコマンドを実行します。
+
+```bash
+terraform output -raw backend_env
+```
+
+出力された2行を`backend/.env`へ追加してください。リージョンを表す`AWS_REGION`は[メールアドレス確認（SES）](/sns/nestjs/email_verification/)でも使う値です。
 
 **`backend/.env`（追記）**
 
 ```text
-AVATAR_BUCKET="sns-avatars-yourname-dev"
+AWS_REGION="ap-northeast-1"
+AVATAR_BUCKET="sns-avatars-taro-dev"
 ```
 
 ### CreateAvatarUploadUrlDto
@@ -400,6 +377,7 @@ export class CreateAvatarUploadUrlDto {
 **`backend/src/users/users.service.ts`（import文とクラス内への追記）**
 
 ```typescript
+import { InternalServerErrorException } from '@nestjs/common';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 ```
@@ -413,6 +391,11 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
   ) {
     const bucket = process.env.AVATAR_BUCKET;
     const region = process.env.AWS_REGION;
+    if (!bucket || !region) {
+      throw new InternalServerErrorException(
+        'AVATAR_BUCKET と AWS_REGION を設定してください',
+      );
+    }
     const ext = contentType === 'image/png' ? 'png' : 'jpg';
     const key = `avatars/${userId}/${Date.now()}.${ext}`;
 
@@ -467,8 +450,8 @@ curl -X POST http://localhost:3000/users/me/avatar-upload-url \
 
 ```json
 {
-  "uploadUrl": "https://sns-avatars-yourname-dev.s3.ap-northeast-1.amazonaws.com/avatars/1/1765432100000.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA...%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20260612T120000Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=a1b2c3...",
-  "publicUrl": "https://sns-avatars-yourname-dev.s3.ap-northeast-1.amazonaws.com/avatars/1/1765432100000.png"
+  "uploadUrl": "https://sns-avatars-taro-dev.s3.ap-northeast-1.amazonaws.com/avatars/1/1765432100000.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA...%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20260612T120000Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=a1b2c3...",
+  "publicUrl": "https://sns-avatars-taro-dev.s3.ap-northeast-1.amazonaws.com/avatars/1/1765432100000.png"
 }
 ```
 
@@ -742,13 +725,13 @@ S3側も見ておきましょう。マネジメントコンソールのS3で自�
 バケットのCORS設定を忘れる（またはオリジンを書き間違える）と、S3へのPUTの段階で失敗します。このとき画面には「画像のアップロードに失敗しました」とだけ出ますが、ブラウザの開発者ツールのConsoleには次のようなエラーが表示されます。
 
 ```text
-Access to fetch at 'https://sns-avatars-yourname-dev.s3.ap-northeast-1.amazonaws.com/avatars/1/...'
+Access to fetch at 'https://sns-avatars-taro-dev.s3.ap-northeast-1.amazonaws.com/avatars/1/...'
 from origin 'http://localhost:5173' has been blocked by CORS policy:
 Response to preflight request doesn't pass access control check:
 No 'Access-Control-Allow-Origin' header is present on the requested resource.
 ```
 
-「preflight request」とあるとおり、ブラウザが事前確認のOPTIONSリクエストを送ったものの、S3が許可を返さなかったという意味です。[つなぎ込みで起きること](/fullstack-todo/nestjs/integration/)で見たAPIサーバーとのCORSエラーと同じ構図で、今回は「許可を返すべき相手」がS3だという点だけが違います。`cors.json`の`AllowedOrigins`のURL（ポート番号や`http/https`の違いに注意）を確認して、`put-bucket-cors`を再実行してください。
+「preflight request」とあるとおり、ブラウザが事前確認のOPTIONSリクエストを送ったものの、S3が許可を返さなかったという意味です。[つなぎ込みで起きること](/fullstack-todo/nestjs/integration/)で見たAPIサーバーとのCORSエラーと同じ構図で、今回は「許可を返すべき相手」がS3だという点だけが違います。`terraform.tfvars`の`frontend_origins`にフロントのオリジン（ポート番号や`http/https`の違いに注意）が正しく入っているかを確認して、`terraform apply`で再適用してください。
 
 このほか、presigned URLの取得から5分以上たってからPUTすると、S3が`403 Forbidden`（レスポンスボディに`Request has expired`）を返します。許可証の期限切れです。その場合はもう一度ファイルを選び直せば、新しいURLが発行されます。
 
@@ -817,7 +800,7 @@ CORSは**ブラウザが**JavaScriptによるオリジン間通信に対して�
 - [ ] アップロードの3ステップ（URL発行 → S3へPUT → avatarUrl保存）のシーケンスを図に描ける
 - [ ] バケットポリシーとCORS設定がそれぞれ何のためにあるかを説明できる
 - [ ] AWS SDKの認証情報をコードに書かない理由と、ローカル/本番それぞれでの解決方法を説明できる
-- [ ] 練習用バケットの削除手順（`aws s3 rb --force`）を知っており、不要になったら削除できる
+- [ ] 練習用バケットの削除手順（`terraform destroy`）を知っており、不要になったら削除できる
 
 ## 次のステップ
 
