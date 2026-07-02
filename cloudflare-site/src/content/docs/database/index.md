@@ -61,6 +61,18 @@ flowchart LR
 | [SQL応用構文](/database/sql_applied/) | `ORDER BY`、`LIMIT`、`LIKE`、`JOIN`、`GROUP BY`、集計を具体例で理解する |
 | [PostgreSQLでSQLを実行する](/database/postgresql_setup/) | 起動済みのPostgreSQLにpsqlで入り、学んだSQLを実際に実行する |
 
+### Prisma（NestJS + Prisma）編
+
+SQLの基礎を身につけたら、TypeScriptから型安全にデータベースを操作する **Prisma** に進みます。バックエンド章で作ったメモAPIを、実際のデータベースにつないでいきます。
+
+| ページ | 内容 |
+|---|---|
+| [Prismaの導入](/database/prisma_setup/) | メモAPIプロジェクトにPrismaを導入し、DBに接続する |
+| [スキーマ定義とマイグレーション](/database/schema_and_migration/) | モデルを定義し、マイグレーションでテーブルを作る |
+| [Prisma ClientでCRUD](/database/crud_with_prisma/) | Prisma Clientで作成・取得・更新・削除を実装する |
+| [リレーション](/database/relations/) | 1対多などのテーブル間の関係を定義し、クエリする |
+| [練習問題](/database/practice/) | 検索・絞り込み・多対多などを自分で実装する |
+
 ## このセクションの前提知識
 
 以下のセクションを修了していることを前提とします。
