@@ -169,6 +169,8 @@ public class Main {
 
 ## 登録処理
 
+`registerWord` と `startQuiz` は、`Main` クラスの中（`main` メソッドの外）に追加するメソッドです。先ほどの `Main` クラスの最後の `}` の**手前**に、続けて書き足してください。
+
 ```java
 private static void registerWord(Scanner scanner, WordBook wordBook) {
     System.out.println("英単語を入力してください:");
