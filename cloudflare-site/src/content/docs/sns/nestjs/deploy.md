@@ -342,7 +342,7 @@ export class SnsAppStack extends cdk.Stack {
 
 ### アバター画像用S3バケット
 
-[プロフィール編集と画像アップロード](/sns/nestjs/profile_and_images/)で手動作成した開発用バケットの本番版を、CDKで定義します。仕様は同じで、(1) `avatars/*` だけ公開読み取りを許可、(2) presigned PUT のためのCORS設定、の2点が必要でした。
+[プロフィール編集と画像アップロード](/sns/nestjs/profile_and_images/)でTerraformで作成した開発用バケットの本番版を、ここではCDKで定義します（開発用アバターバケットはTerraform、本番インフラ全体はCDKで管理する方針です）。仕様は同じで、(1) `avatars/*` だけ公開読み取りを許可、(2) presigned PUT のためのCORS設定、の2点が必要でした。
 
 **`infra/lib/sns-app-stack.ts`（その3: アバター用S3）**
 
