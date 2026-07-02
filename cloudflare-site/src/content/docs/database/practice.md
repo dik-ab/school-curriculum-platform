@@ -93,7 +93,7 @@ sequenceDiagram
 model Memo {
   id        Int      @id @default(autoincrement())
   title     String
-  content   String
+  body   String
   done      Boolean  @default(false)
   priority  Int      @default(0)  // ← 追加
   createdAt DateTime @default(now())
@@ -119,7 +119,7 @@ export class CreateMemoDto {
 
   @IsString()
   @IsNotEmpty()
-  content: string;
+  body: string;
 
   @IsOptional()
   @IsInt()
@@ -137,7 +137,7 @@ export class CreateMemoDto {
     return this.prisma.memo.create({
       data: {
         title: dto.title,
-        content: dto.content,
+        body: dto.body,
         priority: dto.priority, // undefinedなら既定値0が使われる
       },
     });
@@ -151,7 +151,7 @@ export class CreateMemoDto {
 ```bash
 curl -X POST http://localhost:3000/memos \
   -H "Content-Type: application/json" \
-  -d '{"title": "重要タスク", "content": "至急対応", "priority": 3}'
+  -d '{"title": "重要タスク", "body": "至急対応", "priority": 3}'
 ```
 
 </details>
@@ -195,7 +195,7 @@ import { Query } from '@nestjs/common'; // 既存のimportに追加
         ? {
             OR: [
               { title: { contains: keyword } },
-              { content: { contains: keyword } },
+              { body: { contains: keyword } },
             ],
           }
         : undefined,
@@ -207,7 +207,7 @@ import { Query } from '@nestjs/common'; // 既存のimportに追加
 **コード解説**
 
 - `keyword ? {...} : undefined` — キーワードがあるときだけ `where` を組み立てます。`where: undefined` は「条件なし＝全件」と同じ意味になります
-- `OR: [...]` — 配列内のいずれかの条件に一致する行を返します。SQLの `WHERE title LIKE '%...%' OR content LIKE '%...%'` に相当します
+- `OR: [...]` — 配列内のいずれかの条件に一致する行を返します。SQLの `WHERE title LIKE '%...%' OR body LIKE '%...%'` に相当します
 - `contains` — 部分一致です。前方一致なら `startsWith`、完全一致ならフィールドに値を直接書きます
 
 動作確認:
@@ -263,7 +263,7 @@ URLに日本語やクエリパラメータを含むときは、シェルの解�
           ? {
               OR: [
                 { title: { contains: keyword } },
-                { content: { contains: keyword } },
+                { body: { contains: keyword } },
               ],
             }
           : {}),
@@ -339,7 +339,7 @@ curl "http://localhost:3000/memos?done=false&keyword=買"
           ? {
               OR: [
                 { title: { contains: keyword } },
-                { content: { contains: keyword } },
+                { body: { contains: keyword } },
               ],
             }
           : {}),
@@ -399,7 +399,7 @@ model Category {
 model Memo {
   id         Int       @id @default(autoincrement())
   title      String
-  content    String
+  body    String
   done       Boolean   @default(false)
   priority   Int       @default(0)
   category   Category? @relation(fields: [categoryId], references: [id])
@@ -433,7 +433,7 @@ pnpm exec prisma migrate dev --name add_category
     return this.prisma.memo.create({
       data: {
         title: dto.title,
-        content: dto.content,
+        body: dto.body,
         priority: dto.priority,
         categoryId: dto.categoryId,
       },
@@ -521,7 +521,7 @@ curl -X POST http://localhost:3000/categories \
 
 curl -X POST http://localhost:3000/memos \
   -H "Content-Type: application/json" \
-  -d '{"title": "会議準備", "content": "資料を作る", "categoryId": 1}'
+  -d '{"title": "会議準備", "body": "資料を作る", "categoryId": 1}'
 
 curl http://localhost:3000/memos
 # → 各メモに "category": {"id":1,"name":"仕事"} が含まれる
