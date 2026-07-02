@@ -539,7 +539,7 @@ function TodoApp() {
 
 **`src/hooks/useTodos.ts`**（新規作成）
 
-```tsx
+```ts
 import { useState, useEffect } from "react";
 import { Task } from "../components/TodoItem";
 
