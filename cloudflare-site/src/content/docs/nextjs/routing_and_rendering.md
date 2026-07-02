@@ -53,6 +53,8 @@ export default function PostPage({ params }: PostPageProps) {
 - `PostPage({ params })` は、URLパラメータを受け取るページコンポーネントです。
 - `<h1>` で、受け取った投稿IDを画面に表示しています。
 
+> **バージョンについて**: このコードはNext.js 14系（App Router）を前提にしています。Next.js 15以降では `params` が「後で結果が返る値（Promise）」に変わり、`async function PostPage({ params }: { params: Promise<{ id: string }> })` として `const { id } = await params;` のように受け取ります。仕組み（URLの `[id]` を受け取る）は同じです。
+
 ## レンダリングとは
 
 レンダリングは、データやコンポーネントからHTMLや画面を作ることです。
