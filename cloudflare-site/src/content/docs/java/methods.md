@@ -10,6 +10,8 @@ description: メソッドの定義、引数、戻り値、void、オーバーロ
 
 メソッドは、処理に名前をつけて再利用するための仕組みです。
 
+なお、これから出てくる `public static` の意味は、次の[クラスとオブジェクト](/java/classes_and_objects/)で扱います。ここでは「メソッドを書くときの決まり文句」として、そのまま書いてください。
+
 ```java
 public static int add(int a, int b) {
     return a + b;
