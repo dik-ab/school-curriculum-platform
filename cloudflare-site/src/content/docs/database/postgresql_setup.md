@@ -30,7 +30,7 @@ PostgreSQLコンテナの立て方そのものは、[Docker Compose + PostgreSQL
 
 ```yaml
 services:
-  db:
+  postgres:
     image: postgres:16
     environment:
       POSTGRES_USER: postgres
@@ -39,10 +39,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  db-data:
+  postgres-data:
 ```
 
 **コード解説**
@@ -51,7 +51,7 @@ volumes:
 - `POSTGRES_USER` / `POSTGRES_PASSWORD` — データベースに接続するためのユーザー名とパスワードです。開発環境なので簡単な値にしていますが、本番環境では推測されない値を使います
 - `POSTGRES_DB: app_db` — 起動時に `app_db` という名前のデータベースを自動作成します。学習用の汎用的なDB名です
 - `ports: "5432:5432"` — PostgreSQLの標準ポート5432を、手元のPC（ホスト）にも公開します。psqlやDBクライアントはここに接続します
-- `volumes: db-data:...` — [ボリューム](/docker/docker_compose/)を使い、コンテナを削除してもデータが消えないようにしています。`/var/lib/postgresql/data` はPostgreSQLがデータファイルを置く場所です
+- `volumes: postgres-data:...` — [ボリューム](/docker/docker_compose/)を使い、コンテナを削除してもデータが消えないようにしています。`/var/lib/postgresql/data` はPostgreSQLがデータファイルを置く場所です
 
 ここでは練習用に、上記の内容だけを書いた `compose.yaml` を新しいディレクトリに用意しても構いませんし、Docker章で作ったプロジェクトをそのまま使っても構いません。
 
@@ -68,7 +68,7 @@ docker compose up -d
 ```
 [+] Running 2/2
  ✔ Network myapp_default  Created
- ✔ Container myapp-db-1   Started
+ ✔ Container myapp-postgres-1   Started
 ```
 
 `-d` はバックグラウンド実行のオプションでした（[Docker Compose](/docker/docker_compose/)の復習です）。起動できたか確認します。
@@ -81,7 +81,7 @@ docker compose ps
 
 ```
 NAME         IMAGE         COMMAND                  SERVICE   CREATED          STATUS          PORTS
-myapp-db-1   postgres:16   "docker-entrypoint.s…"   db        10 seconds ago   Up 9 seconds    0.0.0.0:5432->5432/tcp
+myapp-postgres-1   postgres:16   "docker-entrypoint.s…"   postgres        10 seconds ago   Up 9 seconds    0.0.0.0:5432->5432/tcp
 ```
 
 `STATUS` が `Up` になっていれば成功です。
@@ -98,7 +98,7 @@ flowchart LR
         Q["psql"]
         DBT["GUIのDBクライアント"]
     end
-    subgraph Cont["dbコンテナ（サーバー側）"]
+    subgraph Cont["postgresコンテナ（サーバー側）"]
         SV["PostgreSQL サーバー<br>ポート 5432 で待ち受け"]
         VOL[("ボリューム<br>データの保存先")]
     end
@@ -115,12 +115,12 @@ flowchart LR
 コンテナの中でpsqlを起動しましょう。[コンテナ内でコマンドを実行する](/docker/install_and_basics/) `docker compose exec` を使います。
 
 ```bash
-docker compose exec db psql -U postgres -d app_db
+docker compose exec postgres psql -U postgres -d app_db
 ```
 
 **コード解説**
 
-- `docker compose exec db` — `db` サービスのコンテナ内でコマンドを実行します
+- `docker compose exec postgres` — `postgres` サービスのコンテナ内でコマンドを実行します
 - `psql -U postgres` — ユーザー `postgres`（compose.yamlの `POSTGRES_USER`）として接続します
 - `-d app_db` — 接続先のデータベース名（compose.yamlの `POSTGRES_DB`）です
 
@@ -128,8 +128,8 @@ docker compose exec db psql -U postgres -d app_db
 
 ```mermaid
 flowchart TB
-    CMD["docker compose exec db psql -U postgres -d app_db"]
-    CMD --> A["docker compose exec db<br>（dbコンテナの中で実行）"]
+    CMD["docker compose exec postgres psql -U postgres -d app_db"]
+    CMD --> A["docker compose exec postgres<br>（postgresコンテナの中で実行）"]
     CMD --> B["psql<br>（クライアントを起動）"]
     CMD --> C["-U postgres<br>（接続ユーザー）"]
     CMD --> E["-d app_db<br>（接続先データベース）"]
@@ -553,17 +553,17 @@ docker compose stop
 
 ## 理解度チェック
 
-**Q1. `docker compose exec db psql -U postgres -d app_db` というコマンドの各部分は何をしていますか。**
+**Q1. `docker compose exec postgres psql -U postgres -d app_db` というコマンドの各部分は何をしていますか。**
 
 <details markdown="1">
 <summary>解答を見る</summary>
 
-- `docker compose exec db` — Composeで起動中の `db` サービスのコンテナ内でコマンドを実行する
+- `docker compose exec postgres` — Composeで起動中の `postgres` サービスのコンテナ内でコマンドを実行する
 - `psql` — PostgreSQLのコマンドラインクライアントを起動する
 - `-U postgres` — ユーザー `postgres` として接続する
 - `-d app_db` — データベース `app_db` に接続する
 
-つまり「dbコンテナの中でpsqlを起動し、postgresユーザーとしてapp_dbデータベースに接続する」コマンドです。
+つまり「postgresコンテナの中でpsqlを起動し、postgresユーザーとしてapp_dbデータベースに接続する」コマンドです。
 
 </details>
 
