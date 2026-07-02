@@ -169,6 +169,28 @@ public class NotificationService {
 
 この考え方は、Spring BootのDIで非常に重要です。実装を直接固定せず、インターフェースに依存すると、差し替えやテストがしやすくなります。
 
+### クラス関係の全体像
+
+このページで出てきた関係を1枚の図にまとめます。実線の白抜き矢印（`◁—`）が「継承（extends）」、点線の白抜き矢印が「実装（implements）」、実線の矢印が「利用（依存）」です。
+
+```mermaid
+classDiagram
+    class Payment {
+        <<abstract>>
+    }
+    class Notifier {
+        <<interface>>
+    }
+    Animal <|-- Dog : 継承
+    User <|-- AdminUser : 継承
+    Payment <|-- CreditCardPayment : 継承
+    Notifier <|.. EmailNotifier : 実装
+    Notifier <|.. LineNotifier : 実装
+    NotificationService --> Notifier : 利用
+```
+
+**図の読み方**: `Dog` は `Animal` を継承して機能を受け継ぎます。`EmailNotifier` と `LineNotifier` は `Notifier` という約束（インターフェース）を実装します。`NotificationService` は具体的な通知クラスではなく `Notifier`（インターフェース）だけに依存するので、中身を自由に差し替えられます。
+
 ## 継承より委譲を優先する
 
 継承は便利ですが、使いすぎるとクラス同士の結びつきが強くなります。
