@@ -107,6 +107,18 @@ if (scores.containsKey("Sato")) {
 | `Set` | 重複なし | タグ、権限、ユニークなID |
 | `Map` | キーと値 | IDからデータを引く、集計結果 |
 
+3つの構造を具体例でイメージすると、次のような違いです。
+
+```mermaid
+flowchart LR
+    List["List（順番あり・重複OK）<br>[りんご, みかん, りんご]"]
+    Set["Set（重複は消える）<br>{りんご, みかん}"]
+    Map["Map（キー→値）<br>tanaka→80点, sato→90点"]
+    style List fill:#e3f2fd,stroke:#1565c0
+    style Set fill:#e8f5e9,stroke:#2e7d32
+    style Map fill:#fff3e0,stroke:#ef6c00
+```
+
 最初は、一覧なら `List`、重複を避けたいなら `Set`、キーで取り出したいなら `Map` と覚えてください。
 
 ## オブジェクトのList
