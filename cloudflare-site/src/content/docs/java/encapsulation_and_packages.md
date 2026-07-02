@@ -123,10 +123,12 @@ public class User {
 
 ```text
 src/
-  com/
-    example/
-      user/
-        User.java
+  main/
+    java/
+      com/
+        example/
+          user/
+            User.java
 ```
 
 Spring Bootでは、パッケージによる整理が非常に重要です。
