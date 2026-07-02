@@ -119,7 +119,7 @@ docker compose ps
 
 ```
 NAME         IMAGE         COMMAND                  SERVICE   CREATED        STATUS        PORTS
-myapp-db-1   postgres:16   "docker-entrypoint.s…"   db        2 hours ago    Up 2 hours    0.0.0.0:5432->5432/tcp
+myapp-postgres-1   postgres:16   "docker-entrypoint.s…"   postgres        2 hours ago    Up 2 hours    0.0.0.0:5432->5432/tcp
 ```
 
 `Up` でなければ `docker compose up -d` で起動しておきましょう。
@@ -241,14 +241,14 @@ DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=pub
 **`.env`**（書き換え後）
 
 ```
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/memo?schema=public"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/app_db?schema=public"
 ```
 
 接続URLの構造は次のとおりです。
 
 ```
 postgresql://ユーザー名:パスワード@ホスト:ポート/データベース名?schema=public
-              postgres   postgres  localhost 5432  memo
+              postgres   postgres  localhost 5432  app_db
 ```
 
 1本のURLに見えますが、実は5つの情報が決まった順番で並んでいます。各部分が何を指すのかを図で分解してみましょう。
@@ -259,7 +259,7 @@ flowchart TB
     URL --> U["postgres<br>（ユーザー名）"]
     URL --> P["postgres<br>（パスワード）"]
     URL --> H["localhost:5432<br>（ホスト:ポート）"]
-    URL --> D["memo<br>（データベース名）"]
+    URL --> D["app_db<br>（データベース名）"]
     URL --> S["schema=public<br>（名前空間）"]
     style URL fill:#e3f2fd,stroke:#1565c0
     style D fill:#e8f5e9,stroke:#2e7d32
@@ -272,7 +272,7 @@ flowchart TB
 
 - `postgres:postgres` — compose.yamlの `POSTGRES_USER` と `POSTGRES_PASSWORD` に対応します
 - `localhost:5432` — composeで `ports: "5432:5432"` と公開したため、手元のPCからは `localhost:5432` で接続できます
-- `memo` — `POSTGRES_DB` で作成したデータベース名です
+- `app_db` — `POSTGRES_DB` で作成したデータベース名です
 - `?schema=public` — PostgreSQL内の名前空間の指定です。既定の `public` のままで構いません
 
 ### なぜ接続情報を.envに分けるのか
@@ -305,7 +305,7 @@ pnpm exec prisma db pull
 
 ```
 Prisma schema loaded from prisma/schema.prisma
-Datasource "db": PostgreSQL database "memo", schema "public" at "localhost:5432"
+Datasource "db": PostgreSQL database "app_db", schema "public" at "localhost:5432"
 
 ✔ Introspected 2 models and wrote them into prisma/schema.prisma in 234ms
 ```
@@ -352,7 +352,7 @@ Prismaの公式拡張機能「**Prisma**」（発行元: Prisma）をVS Codeに�
 **Q3. 次の接続URLの各部分は、compose.yamlのどの設定に対応していますか。**
 
 ```
-postgresql://postgres:postgres@localhost:5432/memo?schema=public
+postgresql://postgres:postgres@localhost:5432/app_db?schema=public
 ```
 
 <details markdown="1">
@@ -361,7 +361,7 @@ postgresql://postgres:postgres@localhost:5432/memo?schema=public
 - 最初の `postgres`（ユーザー名） — `POSTGRES_USER: postgres`
 - 2つ目の `postgres`（パスワード） — `POSTGRES_PASSWORD: postgres`
 - `localhost:5432` — `ports: "5432:5432"` でホストに公開されたポート
-- `memo` — `POSTGRES_DB: memo` で自動作成されたデータベース名
+- `memo` — `POSTGRES_DB: app_db` で自動作成されたデータベース名
 - `?schema=public` — PostgreSQLの既定の名前空間（composeとは無関係の固定値）
 
 </details>
