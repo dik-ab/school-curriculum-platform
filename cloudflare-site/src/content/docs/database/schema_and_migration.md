@@ -26,7 +26,7 @@ nav_order: 4
 interface Memo {
   id: number;
   title: string;
-  content: string;
+  body: string;
 }
 ```
 
@@ -47,7 +47,7 @@ datasource db {
 model Memo {
   id        Int      @id @default(autoincrement())
   title     String
-  content   String
+  body   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -57,7 +57,7 @@ model Memo {
 
 - `model Memo { ... }` — `Memo` というモデルを定義します。データベースには `Memo` という名前のテーブルが作られます
 - `id Int @id @default(autoincrement())` — `Int`（整数）型の `id` フィールド。`@id` は**主キー**の指定、`@default(autoincrement())` は「既定値として自動採番する」という意味です。SQLで書いた `SERIAL PRIMARY KEY` に相当します
-- `title String` / `content String` — 文字列型のフィールドです。Prismaでは何も指定しなければ `NOT NULL`（必須）になります
+- `title String` / `body String` — 文字列型のフィールドです。Prismaでは何も指定しなければ `NOT NULL`（必須）になります
 - `createdAt DateTime @default(now())` — 日時型。`@default(now())` で作成時に現在日時が自動で入ります
 - `updatedAt DateTime @updatedAt` — `@updatedAt` をつけると、**行が更新されるたびにPrismaが自動で現在日時を入れて**くれます。作成日時・更新日時の2つは、ほとんどのテーブルに付ける定番フィールドです
 
@@ -102,7 +102,7 @@ erDiagram
     MEMO {
         int id PK "主キー（自動採番）"
         string title "タイトル"
-        string content "本文"
+        string body "本文"
         datetime createdAt "作成日時（自動設定）"
         datetime updatedAt "更新日時（自動更新）"
     }
@@ -115,13 +115,13 @@ flowchart LR
     subgraph S["schema.prisma の model Memo"]
         F1["id Int @id"]
         F2["title String"]
-        F3["content String"]
+        F3["body String"]
         F4["createdAt DateTime"]
     end
     subgraph T["Memo テーブルの列"]
         C1["id SERIAL PRIMARY KEY"]
         C2["title TEXT NOT NULL"]
-        C3["content TEXT NOT NULL"]
+        C3["body TEXT NOT NULL"]
         C4["createdAt TIMESTAMP"]
     end
     F1 --> C1
@@ -202,7 +202,7 @@ pnpm exec prisma migrate dev --name init
 
 ```
 Prisma schema loaded from prisma/schema.prisma
-Datasource "db": PostgreSQL database "memo", schema "public" at "localhost:5432"
+Datasource "db": PostgreSQL database "app_db", schema "public" at "localhost:5432"
 
 Applying migration `20260612090000_init`
 
@@ -234,7 +234,7 @@ Your database is now in sync with your schema.
 CREATE TABLE "Memo" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
+    "body" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -249,7 +249,7 @@ CREATE TABLE "Memo" (
 本当にテーブルができたか、psqlでも確認してみましょう。
 
 ```bash
-docker compose exec db psql -U postgres -d memo -c "\dt"
+docker compose exec postgres psql -U postgres -d app_db -c "\dt"
 ```
 
 実行結果の例:
@@ -278,7 +278,7 @@ docker compose exec db psql -U postgres -d memo -c "\dt"
 model Memo {
   id        Int      @id @default(autoincrement())
   title     String
-  content   String
+  body   String
   done      Boolean  @default(false)  // ← 追加
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
