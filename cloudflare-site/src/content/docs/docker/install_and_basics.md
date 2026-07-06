@@ -1,5 +1,6 @@
 ---
 title: Dockerのインストールと基本操作
+description: Docker Desktopを導入し、docker run・ps・logs・execなどコンテナの起動から片付けまでの基本操作を身につける
 parent: Docker基礎
 section_key: docker
 section_title: Docker基礎
@@ -45,7 +46,7 @@ Windowsでは、Docker Desktopは **WSL 2（Windows Subsystem for Linux 2）** �
 2. [Docker Desktop公式サイト](https://www.docker.com/products/docker-desktop/) から「Download for Windows」でインストーラをダウンロードし、実行します。途中の「Use WSL 2 instead of Hyper-V」のチェックは入れたままにします。
 3. インストール後にサインアウト/再起動を求められたら従い、Docker Desktopを起動します。タスクトレイにクジラのアイコンが表示されれば完了です。
 
-以降の `docker` コマンドはMacもWindowsも共通です。WindowsではPowerShellまたはWSL 2のターミナルから実行してください。
+以降の `docker` コマンドはMacもWindowsも共通です。WindowsではWSL（Ubuntu）のターミナルから実行してください。PowerShellでも動きますが、本カリキュラムではWSL（Ubuntu）に統一します。
 
 ### 動作確認
 

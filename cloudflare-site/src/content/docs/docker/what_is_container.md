@@ -1,5 +1,6 @@
 ---
 title: コンテナとは何か
+description: 環境差分の問題をコンテナがどう解決するかを仮想マシンとの比較で理解し、イメージとコンテナの関係を押さえる
 parent: Docker基礎
 section_key: docker
 section_title: Docker基礎

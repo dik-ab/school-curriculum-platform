@@ -1,5 +1,6 @@
 ---
 title: Docker Composeで複数コンテナを動かす
+description: compose.yamlの基本構造とservices・ports・volumesの意味を学び、docker composeコマンドで複数コンテナを管理する
 parent: Docker基礎
 section_key: docker
 section_title: Docker基礎

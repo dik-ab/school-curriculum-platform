@@ -1,5 +1,6 @@
 ---
 title: Dockerfileを書く
+description: FROM・COPY・CMDなどDockerfileの命令を理解し、静的HTMLをnginxで配信するイメージを自分でビルドする
 parent: Docker基礎
 section_key: docker
 section_title: Docker基礎

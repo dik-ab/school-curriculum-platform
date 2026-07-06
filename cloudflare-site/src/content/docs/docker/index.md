@@ -1,5 +1,6 @@
 ---
 title: Docker基礎
+description: コンテナ技術Dockerの概念からDocker Composeまで、どこでも同じように動く開発環境を作るためのセクションの概要
 section_key: docker
 section_title: Docker基礎
 nav_order: 9
@@ -78,8 +79,8 @@ flowchart TB
         Browser["ブラウザ"]
     end
     subgraph docker["Docker上で動くもの"]
-        App["Webサーバー<br>nginxコンテナ"]
-        Nginx["nginxコンテナ"]
+        App["アプリ用コンテナ<br>（例: Node.js）"]
+        Nginx["Webサーバー用コンテナ<br>（例: nginx）"]
     end
     CLI -->|"起動・停止・ログ確認"| docker
     Browser -->|"localhost:3000 など"| App

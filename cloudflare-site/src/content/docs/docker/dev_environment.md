@@ -1,5 +1,6 @@
 ---
 title: PostgreSQLコンテナの運用
+description: PostgreSQLコンテナの状態確認・ログ・healthcheck・初期化など、開発で日常的に使うDBコンテナ運用の操作を整理する
 parent: Docker Compose + DB
 section_key: docker-compose-db
 section_title: Docker Compose + DB

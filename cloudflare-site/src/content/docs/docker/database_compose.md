@@ -1,5 +1,6 @@
 ---
 title: Docker Compose + PostgreSQL / MySQL
+description: Docker ComposeでPostgreSQLとMySQLを起動し、環境変数・ポート・ボリュームによるデータ永続化とpsql接続を学ぶ
 parent: Docker Compose + DB
 section_key: docker-compose-db
 section_title: Docker Compose + DB
@@ -529,6 +530,6 @@ docker compose down -v
 
 ## 次のステップ
 
-PostgreSQLを起動できたら、次は[PostgreSQLでSQLを実行する](/database/postgresql_setup/)で、`psql` を使ってSQLを実行します。
+PostgreSQLを起動できたら、次は[PostgreSQLコンテナの運用](/docker/dev_environment/)で、DBコンテナの状態確認・ログ・初期化といった日常的な操作を身につけます。その後、[PostgreSQLでSQLを実行する](/database/postgresql_setup/)で、`psql` を使ってSQLを実行します。
 
 MySQLを使う言語・フレームワークに進む場合も、ここで学んだComposeの考え方は同じです。DBの種類が変わっても、`image`、`environment`、`ports`、`volumes` を読む力があれば対応できます。
