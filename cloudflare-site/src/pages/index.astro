@@ -5,12 +5,41 @@ import { phases } from '../data/courses';
 
 <BaseLayout>
   <main class="home-main">
-    <section class="hero">
-      <p class="eyebrow">Fullstack / Backend / Cloud / AI</p>
-      <h1>順番に積み上げる実装カリキュラム</h1>
-      <p class="lead">
-        入門、フロントエンド、バックエンド言語、データベース、フレームワーク、実践準備、Todo、SNS、クラウド運用と拡張へ進みます。
-      </p>
+    <section class="hero home-hero">
+      <div class="hero-content">
+        <p class="eyebrow">Fullstack / Backend / Cloud / AI</p>
+        <h1>順番に積み上げる実装カリキュラム</h1>
+        <p class="lead">
+          入門、フロントエンド、バックエンド言語、データベース、フレームワーク、実践準備、Todo、SNS、クラウド運用、そして実務プロジェクト応用編へ進みます。
+        </p>
+        <div class="hero-actions" aria-label="主要導線">
+          <a class="primary-action" href="#sns-project">SNS開発へ</a>
+          <a class="secondary-action" href="#todo-project">Todoから始める</a>
+        </div>
+      </div>
+
+      <div class="hero-board" aria-label="カリキュラムの到達点">
+        <div>
+          <span>React共通UI</span>
+          <strong>1 frontend</strong>
+        </div>
+        <div>
+          <span>Todo実践</span>
+          <strong>NestJS / Spring</strong>
+        </div>
+        <div>
+          <span>SNS実践</span>
+          <strong>6 backend stacks</strong>
+        </div>
+        <div>
+          <span>運用と拡張</span>
+          <strong>AWS / CI / AI</strong>
+        </div>
+        <div>
+          <span>実務プロジェクト</span>
+          <strong>3 products</strong>
+        </div>
+      </div>
     </section>
 
     <section id="path" class="path-panel" aria-label="推奨学習順">
@@ -35,10 +64,13 @@ import { phases } from '../data/courses';
             </div>
           </div>
           <div class:list={['course-grid', phase.grid === 'wide' && 'wide', phase.grid === 'featured' && 'featured']}>
-            {phase.cards.map((card) => (
+            {phase.cards.map((card, cardIndex) => (
               card.prerequisites ? (
                 <div class:list={['course-card', 'with-prerequisites', card.project && 'project']} data-accent={card.accent}>
-                  <span>{card.label}</span>
+                  <div class="course-card-top">
+                    <span>{card.label}</span>
+                    <em>{phase.number}.{String(cardIndex + 1).padStart(2, '0')}</em>
+                  </div>
                   {card.href ? <h3><a href={card.href}>{card.title}</a></h3> : <h3>{card.title}</h3>}
                   <p>{card.description}</p>
                   <div class="prerequisite-links" aria-label={`${card.title}の前提教材`}>
@@ -48,15 +80,23 @@ import { phases } from '../data/courses';
                 </div>
               ) : card.href ? (
                 <a class:list={['course-card', card.project && 'project']} data-accent={card.accent} href={card.href}>
-                  <span>{card.label}</span>
+                  <div class="course-card-top">
+                    <span>{card.label}</span>
+                    <em>{phase.number}.{String(cardIndex + 1).padStart(2, '0')}</em>
+                  </div>
                   <h3>{card.title}</h3>
                   <p>{card.description}</p>
+                  <strong class="course-card-cta">開く</strong>
                 </a>
               ) : (
                 <div class:list={['course-card', 'locked', card.project && 'project']} data-accent={card.accent} aria-disabled="true">
-                  <span>{card.label}</span>
+                  <div class="course-card-top">
+                    <span>{card.label}</span>
+                    <em>{phase.number}.{String(cardIndex + 1).padStart(2, '0')}</em>
+                  </div>
                   <h3>{card.title}</h3>
                   <p>{card.description}</p>
+                  <strong class="course-card-cta">準備中</strong>
                 </div>
               )
             ))}
