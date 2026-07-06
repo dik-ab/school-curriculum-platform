@@ -1,43 +1,41 @@
 # プログラミング学習カリキュラム
 
-このリポジトリは、プログラミング未経験から半年でフルスタックのSNSアプリケーションを開発・デプロイできるようになるための学習カリキュラムです。入門編（環境構築〜TypeScript）とマスターコース（Git/React/NestJS/Prisma/Docker/テスト/CI/CD/AWS/リアルタイム通信/AI開発/SNS開発）で構成されています。
+このリポジトリは、プログラミング未経験から半年でフルスタックのSNSアプリケーションを開発・デプロイできるようになるための学習カリキュラムです。入門編（環境構築〜TypeScript）とマスターコース（Git/React/NestJS/Prisma/Docker/テスト/CI/CD/AWS/リアルタイム通信/AI開発）に加え、最終プロジェクトとしてマルチスタックSNS（NestJS / Spring Boot / FastAPI / Laravel / Gin / Rails）とTodoアプリ（NestJS / Spring Boot）を扱います。
 
-## GitHub Pagesでの表示
-
-/
+サイトはAstroでビルドし、Cloudflare Pagesで配信しています。
 
 ## ローカルでプレビューする方法
+
+`cloudflare-site/` ディレクトリで実行します。
 
 ### 初回セットアップ
 
 ```bash
-# 1. Rubyがインストールされているか確認
-ruby -v
-
-# 2. Bundlerをインストール（まだの場合）
-gem install bundler
-
-# 3. 依存関係をインストール
-bundle install
+npm install
 ```
 
-### サーバーの起動
+### 開発サーバーの起動
 
 ```bash
-# 簡単な方法（推奨）
-./serve.sh
-
-# または手動で
-bundle exec jekyll serve
+npm run dev
 ```
 
-ブラウザで http://localhost:4000 にアクセスしてください。
+Astroの開発サーバーが起動します。表示されたURL（既定では http://localhost:4321 ）にアクセスしてください。
+
+### ビルドと本番相当のプレビュー
+
+```bash
+npm run build
+npx wrangler pages dev dist
+```
+
+ビルド成果物を http://localhost:8787 でCloudflare Pages相当の環境として確認できます。
 
 ## ファイル構成
 
-- `_config.yml` - Jekyll設定（GitHub PagesとローカルPagesで共通）
-- `serve.sh` - ローカルプレビュー起動スクリプト
-- `Gemfile` - ローカル用の依存関係（jekyll-remote-themeは除外）
+- `astro.config.mjs` - Astro設定
+- `src/content/docs/` - 教材のMarkdown本体
+- `src/pages/` `src/styles/` - サイトのページとスタイル
 
 ### 入門編
 
@@ -50,12 +48,11 @@ bundle exec jekyll serve
 ### マスターコース（中級編）
 
 - `git/` `react/` `backend/` `docker/` `database/` - 開発スキルの基礎
-- `fullstack-todo/` - 実践: フルスタックTodoアプリ
+- `fullstack-todo/` - 実践: フルスタックTodoアプリ（NestJS / Spring Boot）
 - `tooling/` `testing/` `cicd/` `aws/` `realtime/` - 品質・インフラ・運用
 - `ai/` `ai-chat/` - AI開発入門とRAGチャット開発
-- `sns/` - SNS開発（最終プロジェクト）
+- `sns/` - SNS開発（最終プロジェクト。NestJS / Spring Boot / FastAPI / Laravel / Gin / Rails）
 
 ### その他
 
 - `.authoring/` - 教材執筆規約とTOC（サイトには公開されない）
-- `../master-course/` - 同内容の静的HTML版（Jekyll非依存）
