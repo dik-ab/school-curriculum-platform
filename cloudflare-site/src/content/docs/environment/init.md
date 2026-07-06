@@ -1,5 +1,6 @@
 ---
 title: 初期設定
+description: 寿司打やUntypingなどのタイピング練習サイトで、プログラミングに必要な記号入力を含むタイピングスキルを鍛える
 parent: 環境構築
 nav_order: 4
 ---

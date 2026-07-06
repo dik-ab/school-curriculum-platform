@@ -1,5 +1,6 @@
 ---
 title: 拡張機能のセットアップ
+description: VS Codeの日本語化とLive Preview拡張機能のインストールで、HTMLをリアルタイムにブラウザ表示できる環境を整える
 parent: 環境構築
 nav_order: 3
 ---

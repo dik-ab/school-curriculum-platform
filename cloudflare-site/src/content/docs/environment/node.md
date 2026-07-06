@@ -1,5 +1,6 @@
 ---
 title: Node.jsのインストール
+description: JavaScriptとTypeScriptを実行するためのNode.jsとnpmをインストールし、動作確認を行うまでの手順を解説
 parent: 環境構築
 nav_order: 7
 ---
@@ -104,6 +105,6 @@ npm --version
 
 ## 次のステップ
 
-Node.jsのインストールが完了したら、いよいよTypeScriptの学習を始める準備が整いました。
+Node.jsのインストールが完了したら、いよいよ[TypeScript](/typescript/)の学習を始める準備が整いました。
 
 TypeScriptを使って、より安全で保守しやすいコードを書けるようになりましょう！

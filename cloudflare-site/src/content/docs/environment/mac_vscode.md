@@ -1,5 +1,6 @@
 ---
 title: Mac版 VS Code セットアップ
+description: MacにVisual Studio Codeをインストールし、快適な開発環境を整えるためのセットアップ手順とエディタ活用の心構えを紹介
 parent: 環境構築
 nav_order: 1
 ---

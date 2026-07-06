@@ -1,5 +1,6 @@
 ---
 title: ターミナル基本操作
+description: ターミナルとは何かから基本コマンド・ショートカットまで、文字だけでコンピュータを操作する方法を身につける
 parent: 環境構築
 nav_order: 6
 ---
@@ -217,4 +218,4 @@ rm -r terminal_practice
 
 ## 次のステップ
 
-ターミナルの基本操作に慣れたら、次は**Node.js**をインストールして、JavaScriptやTypeScriptを実行できる環境を整えましょう。
+ターミナルの基本操作に慣れたら、次は[Node.jsのインストール](/environment/node/)に進んで、JavaScriptやTypeScriptを実行できる環境を整えましょう。

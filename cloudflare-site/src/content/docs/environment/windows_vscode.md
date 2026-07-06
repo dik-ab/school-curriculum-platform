@@ -1,5 +1,6 @@
 ---
 title: Windows版 VS Code セットアップ
+description: WindowsにWSL（Ubuntu）とVS Codeをインストールし、Macと同様のターミナル環境で開発できるようにする手順を紹介
 parent: 環境構築
 nav_order: 2
 ---

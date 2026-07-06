@@ -1,5 +1,6 @@
 ---
 title: 環境構築
+description: VS Code・ターミナル・Node.jsなど、プログラミング学習を始めるための開発環境を整えるセットアップガイドの一覧
 nav_order: 99
 has_children: true
 permalink: /environment/
@@ -13,16 +14,16 @@ permalink: /environment/
 
 ### 基本的な開発環境
 
-- **Mac版 VS Code セットアップガイド** - MacでVS Codeをインストールする
-- **Windows版 VS Code セットアップガイド** - WindowsでVS CodeとWSL（Ubuntu）をインストールする
-- **拡張機能のセットアップ** - Live Previewなどの便利な拡張機能をインストールする
-- **初期設定** - タイピング練習で基礎スキルを身につける
+- [**Mac版 VS Code セットアップガイド**](/environment/mac_vscode/) - MacでVS Codeをインストールする
+- [**Windows版 VS Code セットアップガイド**](/environment/windows_vscode/) - WindowsでVS CodeとWSL（Ubuntu）をインストールする
+- [**拡張機能のセットアップ**](/environment/live_preview/) - Live Previewなどの便利な拡張機能をインストールする
+- [**初期設定**](/environment/init/) - タイピング練習で基礎スキルを身につける
 
 ### TypeScript開発の準備
 
-- **ファイルとフォルダの基礎** - ディレクトリ構造やパスの概念を理解する
-- **ターミナル基本操作** - コマンドラインの使い方を学ぶ
-- **Node.jsのインストール** - TypeScript実行環境を整える
+- [**ファイルとフォルダの基礎**](/environment/file_directory/) - ディレクトリ構造やパスの概念を理解する
+- [**ターミナル基本操作**](/environment/terminal/) - コマンドラインの使い方を学ぶ
+- [**Node.jsのインストール**](/environment/node/) - TypeScript実行環境を整える
 
 ## 学習の流れ
 
