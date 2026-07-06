@@ -1,5 +1,6 @@
 ---
 title: ルーティングとレンダリング
+description: Nuxtのpagesディレクトリによるファイルベースルーティングと、レンダリング方式・データ取得の基本を学ぶ
 parent: Nuxt入門
 section_key: nuxt
 section_title: Nuxt入門

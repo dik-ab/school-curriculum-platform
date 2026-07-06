@@ -1,5 +1,6 @@
 ---
 title: サーバー機能とAPI
+description: Nuxtのserver routesで同じプロジェクト内に軽いAPIを作る方法と、Nitroによるサーバー機能の使いどころを学ぶ
 parent: Nuxt入門
 section_key: nuxt
 section_title: Nuxt入門

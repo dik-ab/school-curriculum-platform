@@ -1,5 +1,6 @@
 ---
 title: ルーティングとレンダリング
+description: Next.jsのApp Routerによるファイルベースルーティングと、SSR・SSGなどレンダリング方式の基本を学ぶ
 parent: Next.js入門
 section_key: nextjs
 section_title: Next.js入門

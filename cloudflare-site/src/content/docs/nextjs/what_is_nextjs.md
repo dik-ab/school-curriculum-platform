@@ -1,5 +1,6 @@
 ---
 title: Next.jsとは何か
+description: Reactで作ったUIをルーティングやSSRを備えたWebアプリに広げるフレームワークNext.jsの役割と使いどころを学ぶ
 parent: Next.js入門
 section_key: nextjs
 section_title: Next.js入門
@@ -86,6 +87,8 @@ Reactだけで作るTodo画面に対して、Next.jsを使うと追加で扱い�
 
 <details>
 <summary>答え例</summary>
+
+次のうち2つ挙げられていれば十分です。
 
 - `/todos` や `/todos/1` のようなURLごとのページを作りやすくなる。
 - サーバー側でTodoデータを取得してから画面を表示する構成を考えやすくなる。

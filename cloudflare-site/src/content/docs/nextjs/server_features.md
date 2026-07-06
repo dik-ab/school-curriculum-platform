@@ -1,5 +1,6 @@
 ---
 title: サーバー機能とAPI
+description: Next.jsのRoute Handlerで軽いAPIを作る方法と、サーバー側処理の得意分野・バックエンドとの分担を学ぶ
 parent: Next.js入門
 section_key: nextjs
 section_title: Next.js入門

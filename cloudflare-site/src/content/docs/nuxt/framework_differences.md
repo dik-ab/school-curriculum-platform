@@ -1,5 +1,6 @@
 ---
 title: Vue・React・Next.jsとの違い
+description: NuxtをVue.js・React・Next.jsと比較し、UIライブラリとフルスタックフレームワークの層の違いを整理する
 parent: Nuxt入門
 section_key: nuxt
 section_title: Nuxt入門

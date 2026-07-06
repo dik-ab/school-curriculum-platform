@@ -1,5 +1,6 @@
 ---
 title: このカリキュラムでの扱い
+description: React基準で進む本カリキュラムにおけるNuxt入門の位置づけと、Nuxtで押さえておくべき到達目標を整理する
 parent: Nuxt入門
 section_key: nuxt
 section_title: Nuxt入門

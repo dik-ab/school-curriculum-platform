@@ -1,5 +1,6 @@
 ---
 title: Reactとの違い
+description: ReactとNext.jsの役割の違いを整理し、Server ComponentとClient Componentの境界を理解する
 parent: Next.js入門
 section_key: nextjs
 section_title: Next.js入門

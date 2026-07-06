@@ -1,5 +1,6 @@
 ---
 title: このカリキュラムでの扱い
+description: React基準で進む本カリキュラムにおけるNext.js入門の位置づけと、App RouterやRoute Handlerの到達目標を整理する
 parent: Next.js入門
 section_key: nextjs
 section_title: Next.js入門
@@ -89,4 +90,4 @@ React、Next.js、Vue.js、Nuxtのすべてで同じアプリを作ると、学�
 
 ## 次に進む
 
-Next.jsの入門を読んだら、React基礎に戻ってTodoアプリを作る流れを確認してください。
+Next.jsの入門を読んだら、[React基礎](/react/)に戻って[Todoアプリ実践](/fullstack-todo/)へ進む流れを確認してください。

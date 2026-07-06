@@ -1,5 +1,6 @@
 ---
 title: Nuxtとは何か
+description: Vue.jsを土台にルーティングやSSR、サーバーAPIまで扱えるフレームワークNuxtの役割と使いどころを学ぶ
 parent: Nuxt入門
 section_key: nuxt
 section_title: Nuxt入門
@@ -76,6 +77,8 @@ NuxtがVue.jsに追加する役割を2つ書いてください。
 
 <details>
 <summary>答え例</summary>
+
+次のうち2つ挙げられていれば十分です。
 
 - ファイル構成からURLを作るルーティング。
 - SSRや静的生成など、ページの表示方法を選ぶ仕組み。
