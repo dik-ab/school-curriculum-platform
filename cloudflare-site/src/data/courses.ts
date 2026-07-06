@@ -154,13 +154,15 @@ export const phases: Phase[] = [
     id: 'advanced-projects',
     number: '10',
     title: '実務プロジェクト応用編',
-    summary: '架空企業の開発チームに参加した想定で、要件定義書とGitHub Issuesを渡され、AI駆動で実務と同じ流れの開発を経験する。',
+    summary: '架空企業Luminaに入社した想定で、要件定義書とGitHub Issuesを渡され、AI駆動で実務と同じ流れの開発を経験する。',
     grid: 'featured',
     cards: [
       { label: 'Guide', title: '応用編の進め方', description: '仕様リポジトリの読み方、issue駆動の開発フロー、AIスキルの使い方をまず押さえる。', href: '/advanced/', accent: 'green', project: true, prerequisites: [{ title: 'SNS開発', href: '/sns/' }, { title: 'AI開発', href: '/ai/' }] },
-      { label: 'Project 01', title: '美容室予約システム', description: '空き枠計算、二重予約の防止、ロール別権限、予約ボード。ドメインロジックの本丸を作る。', href: '/advanced/salon_reservation/', accent: 'blue', project: true },
+      { label: 'Project 01', title: '美容室予約管理システム', description: '空き枠計算、二重予約の防止、ロール別権限、予約ボード。ドメインロジックの本丸を作る。', href: '/advanced/salon_reservation/', accent: 'blue', project: true },
       { label: 'Project 02', title: '共通認証基盤', description: 'Amazon CognitoとOIDCで認証を共通化し、既存ユーザー移行と2アプリSSOまでやり切る。', href: '/advanced/auth_platform/', accent: 'amber', project: true },
-      { label: 'Project 03', title: 'メッセージ配信基盤', description: 'SQSと非同期ワーカー、リトライとDLQ、冪等性、キャンペーン一斉配信。運用に耐える基盤を作る。', href: '/advanced/notification_platform/', accent: 'purple', project: true }
+      { label: 'Project 03', title: 'メッセージ配信基盤', description: 'SQSと非同期ワーカー、リトライとDLQ、冪等性、キャンペーン一斉配信。運用に耐える基盤を作る。', href: '/advanced/notification_platform/', accent: 'purple', project: true },
+      { label: 'Project 04', title: '請求・入金管理SaaS', description: '消費税の端数処理、請求書採番、入金消込、月次レポート。お金を扱うコードの基礎体力を作る選択プロジェクト。', href: '/advanced/billing_saas/', accent: 'rose', project: true },
+      { label: 'Project 05', title: 'リアルタイムオークション', description: '同時入札の整合性、WebSocket配信、自動延長、締切処理。デモ映えする選択プロジェクト。', href: '/advanced/realtime_auction/', accent: 'teal', project: true }
     ]
   }
 ];

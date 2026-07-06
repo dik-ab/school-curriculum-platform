@@ -11,7 +11,7 @@ section_title: 実務プロジェクト応用編
 Lumina Reserveが軌道に乗り、会社は会員向けポータル「Lumina Members」(予約履歴とポイントの確認)を追加することにしました。アプリごとに認証を別々に持つと、パスワードもユーザー情報も二重管理になります。そこでAmazon Cognitoを使った共通認証基盤「Lumina ID」を作り、ReserveとMembersをSSOでつなぎます。
 
 - 仕様リポジトリ: [curriculum-project-auth-platform](https://github.com/dik-ab/curriculum-project-auth-platform)
-- 目安: 3〜5週(AI駆動前提)
+- 目安: 4〜5週(AI駆動前提)
 - 必要なもの: AWSアカウント(Cognitoは50,000 MAUまで無料、Lambdaも実質無料)
 
 ## このプロジェクトで身につくこと
@@ -43,10 +43,10 @@ Lumina Reserveが未完成でも進められるよう、最小認証アプリで
 
 | マイルストーン | 内容 | issue数 |
 | --- | --- | --- |
-| M1 OIDCを理解する + IaC | フロー読解(座学issue)、Terraformで User Pool構築、curlでtoken取得 | 4 |
-| M2 認証統合 | PKCEフロー実装、JWT検証middleware、自動プロビジョニング | 4 |
-| M3 Reserve移行 | cognito_sub追加、User Migration Lambda、ログイン切替、移行検証 | 4 |
-| M4 SSOとMembers | Members SPA、SSO確認、ログアウト伝播、Googleログイン | 4 |
+| M1: OIDCを理解する + IaC | フロー読解(座学issue)、Terraformで User Pool構築、curlでtoken取得 | 4 |
+| M2: 認証統合 | PKCEフロー実装、JWT検証middleware、自動プロビジョニング | 4 |
+| M3: Reserve移行 | cognito_sub追加、User Migration Lambda、ログイン切替、移行検証 | 4 |
+| M4: SSOとMembers | Members SPA、SSO確認、ログアウト伝播、Googleログイン | 4 |
 
 M1の最初のissueは「フローを図で説明できるようになる」座学課題です。ここを飛ばすと後半で必ず詰まるので、AIに書かせず自分の言葉でまとめてください。
 
@@ -59,6 +59,10 @@ M1の最初のissueは「フローを図で説明できるようになる」座�
 ## 注意
 
 AWSリソースを作ります。Cognito・Lambdaは無料枠内ですが、**学習が終わったら `terraform destroy` で削除**してください。手順は `docs/infra.md` にあります。
+
+## 発展課題(advancedラベル)
+
+MFA(TOTP)の有効化と、Pre Token Generation Lambdaによるカスタムクレーム追加がissueとして入っています。
 
 ## 次のステップ
 

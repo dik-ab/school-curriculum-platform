@@ -20,21 +20,32 @@ section_title: 実務プロジェクト応用編
 | Git/GitHubでのPR運用 | [Git/GitHub基礎](/git/) |
 | CI/CDの基本 | [GitHub Actions](/cicd/) |
 
-## 3つのプロジェクト
+## プロジェクト一覧
 
 | 順序 | プロジェクト | 仕様リポジトリ | 主なテーマ | 目安 |
 | --- | --- | --- | --- | --- |
-| 1 | [美容室予約システム](/advanced/salon_reservation/) | [curriculum-project-salon-reservation](https://github.com/dik-ab/curriculum-project-salon-reservation) | 空き枠計算、二重予約防止、ロール別権限 | 6〜8週 |
-| 2 | [共通認証基盤](/advanced/auth_platform/) | [curriculum-project-auth-platform](https://github.com/dik-ab/curriculum-project-auth-platform) | Cognito、OIDC、SSO、ユーザー移行 | 3〜5週 |
+| 1 | [美容室予約管理システム](/advanced/salon_reservation/) | [curriculum-project-salon-reservation](https://github.com/dik-ab/curriculum-project-salon-reservation) | 空き枠計算、二重予約防止、ロール別権限 | 6〜8週 |
+| 2 | [共通認証基盤](/advanced/auth_platform/) | [curriculum-project-auth-platform](https://github.com/dik-ab/curriculum-project-auth-platform) | Cognito、OIDC、SSO、ユーザー移行 | 4〜5週 |
 | 3 | [メッセージ配信基盤](/advanced/notification_platform/) | [curriculum-project-notification-platform](https://github.com/dik-ab/curriculum-project-notification-platform) | SQS、非同期ワーカー、冪等性、大量配信 | 5〜7週 |
+
+さらに、興味に合わせて選べる**選択プロジェクト**が2つあります。前提はSNS開発+AI開発だけなので、01〜03の合間や後に、好きなタイミングで着手できます。
+
+| 選択 | プロジェクト | 仕様リポジトリ | 主なテーマ | 目安 |
+| --- | --- | --- | --- | --- |
+| 04 | [請求・入金管理SaaS](/advanced/billing_saas/) | [curriculum-project-billing-saas](https://github.com/dik-ab/curriculum-project-billing-saas) | 金額計算、採番、入金消込、月次レポート | 5〜6週 |
+| 05 | [リアルタイムオークション](/advanced/realtime_auction/) | [curriculum-project-realtime-auction](https://github.com/dik-ab/curriculum-project-realtime-auction) | 同時入札の整合性、WebSocket、締切処理 | 4〜6週 |
 
 ```mermaid
 flowchart LR
     SNS["SNS開発<br/>(Phase 08)"] --> A["Project 01<br/>美容室予約システム"]
     A --> B["Project 02<br/>共通認証基盤"]
     A --> C["Project 03<br/>メッセージ配信基盤"]
-    B --> D["ポートフォリオ<br/>3プロダクト + 設計ドキュメント"]
+    B --> D["ポートフォリオ<br/>複数プロダクト + 設計ドキュメント"]
     C --> D
+    A -.選択.-> E["Project 04<br/>請求・入金管理SaaS"]
+    A -.選択.-> F["Project 05<br/>リアルタイムオークション"]
+    E -.-> D
+    F -.-> D
     style SNS fill:#e3f2fd,stroke:#1565c0
     style A fill:#e8f5e9,stroke:#2e7d32
     style D fill:#fff3e0,stroke:#ef6c00
