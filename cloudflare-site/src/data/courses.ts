@@ -3,7 +3,7 @@ export type CourseCard = {
   title: string;
   description: string;
   href?: string;
-  accent: 'green' | 'blue' | 'amber' | 'ink' | 'purple';
+  accent: 'green' | 'blue' | 'amber' | 'ink' | 'purple' | 'teal' | 'rose';
   project?: boolean;
   prerequisites?: { title: string; href: string }[];
 };
@@ -35,9 +35,10 @@ export const phases: Phase[] = [
     summary: '開発環境とWebの土台。',
     cards: [
       { label: 'Environment', title: '環境構築', description: 'まずMac/Windowsの開発環境を整え、VS Codeとターミナルを使える状態にする。', href: '/environment/', accent: 'green' },
-      { label: 'HTML / CSS', title: 'HTML / CSS', description: 'HTML構造、CSSセレクタ、余白、Flexbox、レスポンシブ基礎。', href: '/frontend/html_css/', accent: 'green' },
-      { label: 'JavaScript', title: 'JavaScript', description: '変数、条件分岐、関数、配列、DOM操作、イベント処理。', href: '/frontend/javascript/', accent: 'green' },
-      { label: 'TypeScript', title: 'TypeScript基礎', description: '型、関数、オブジェクト、コンパイル、実践演習。', href: '/typescript/', accent: 'green' }
+      { label: 'HTML / CSS', title: 'HTML / CSS', description: 'HTML構造、CSSセレクタ、余白、Flexbox、レスポンシブ基礎。', href: '/frontend/html_css/', accent: 'teal' },
+      { label: 'JavaScript', title: 'JavaScript', description: '変数、条件分岐、関数、配列、DOM操作、イベント処理。', href: '/frontend/javascript/', accent: 'rose' },
+      { label: 'TypeScript', title: 'TypeScript基礎', description: '型、関数、オブジェクト、コンパイル、実践演習。', href: '/typescript/', accent: 'green' },
+      { label: 'Capstone', title: '入門編最終問題', description: 'タイピングゲームや電卓など5つの課題から選び、入門編の総仕上げとして作り切る。', href: '/final_project/', accent: 'amber' }
     ]
   },
   {
@@ -84,7 +85,8 @@ export const phases: Phase[] = [
     summary: '言語別にAPI、ORM、Migration、軽いテストまで実装する。',
     grid: 'wide',
     cards: [
-      { label: 'NestJS', title: 'NestJS + Prisma', description: 'NestJS APIにPrismaを接続し、Migration、CRUD、基本的なテストまで実装。', href: '/database/prisma_setup/', accent: 'ink', prerequisites: [{ title: 'TypeScript基礎', href: '/typescript/' }] },
+      { label: 'NestJS', title: 'NestJS基礎', description: 'HTTPとREST、Controller、Service、DI、DTOとバリデーション、CRUD実装をNestJSで学ぶ。', href: '/backend/', accent: 'ink', prerequisites: [{ title: 'TypeScript基礎', href: '/typescript/' }] },
+      { label: 'NestJS', title: 'NestJS + Prisma', description: 'NestJS APIにPrismaを接続し、Migration、CRUD、基本的なテストまで実装。', href: '/database/prisma_setup/', accent: 'ink', prerequisites: [{ title: 'NestJS基礎', href: '/backend/' }] },
       { label: 'Spring', title: 'Spring Boot + JPA', description: 'Spring MVC、JPA/Hibernate、Flyway、JUnit。', accent: 'ink', prerequisites: [{ title: 'Java基礎', href: '/java/' }] },
       { label: 'FastAPI', title: 'FastAPI + SQLAlchemy', description: 'API、Pydantic、SQLAlchemy、Alembic、pytest。', accent: 'ink', prerequisites: [{ title: 'Python基礎', href: '/python/' }] },
       { label: 'Laravel', title: 'Laravel + Eloquent', description: 'MVC、Eloquent、Laravel Migrations、Pest/PHPUnit。', accent: 'ink', prerequisites: [{ title: 'PHP基礎', href: '/php/' }] },
@@ -100,6 +102,8 @@ export const phases: Phase[] = [
     grid: 'wide',
     cards: [
       { label: 'Git / GitHub', title: 'Git/GitHub基礎', description: 'commit、push、Pull Request、ブランチ、レビュー、コンフリクト解消。', href: '/git/', accent: 'green', project: true },
+      { label: 'Tooling', title: 'コード品質ツール', description: 'Prettier、ESLint、エディタ設定とスクリプトで、読みやすいコードを機械的に保つ。', href: '/tooling/', accent: 'teal', project: true },
+      { label: 'Testing', title: 'テスト基礎', description: '単体テストとE2Eテストの考え方を押さえ、Todo/SNSの品質確認につなげる。', href: '/testing/', accent: 'amber', project: true },
       { label: 'CI/CD', title: 'GitHub Actions', description: 'PR時に単体テストとbuildを自動実行する流れを作る。Todo/SNSの品質確認で使う。', href: '/cicd/', accent: 'purple', project: true },
       { label: 'Realtime', title: 'リアルタイム通信', description: 'WebSocketとSocket.IOを理解し、SNSのDMチャット実装につなげる。', href: '/realtime/', accent: 'purple', project: true },
       { label: 'AI', title: 'AI開発', description: '仕様書や既存コードをAIに読ませ、巨大な実践課題を安全に進める準備をする。', href: '/ai/', accent: 'purple', project: true }
@@ -144,6 +148,19 @@ export const phases: Phase[] = [
       { label: 'AWS', title: 'AWSデプロイ', description: 'ECS、RDS、S3、CloudFront、SESを使い、実践課題を本番構成へ載せる。', href: '/aws/', accent: 'purple' },
       { label: 'RAG', title: 'RAGチャット', description: 'Embeddings、pgvector、教材検索、AI回答生成。', href: '/ai-chat/', accent: 'purple' },
       { label: 'Architecture', title: 'アーキテクチャ基礎', description: '責務分離、設計判断、保守しやすい構成。', accent: 'purple' }
+    ]
+  },
+  {
+    id: 'advanced-projects',
+    number: '10',
+    title: '実務プロジェクト応用編',
+    summary: '架空企業の開発チームに参加した想定で、要件定義書とGitHub Issuesを渡され、AI駆動で実務と同じ流れの開発を経験する。',
+    grid: 'featured',
+    cards: [
+      { label: 'Guide', title: '応用編の進め方', description: '仕様リポジトリの読み方、issue駆動の開発フロー、AIスキルの使い方をまず押さえる。', href: '/advanced/', accent: 'green', project: true, prerequisites: [{ title: 'SNS開発', href: '/sns/' }, { title: 'AI開発', href: '/ai/' }] },
+      { label: 'Project 01', title: '美容室予約システム', description: '空き枠計算、二重予約の防止、ロール別権限、予約ボード。ドメインロジックの本丸を作る。', href: '/advanced/salon_reservation/', accent: 'blue', project: true },
+      { label: 'Project 02', title: '共通認証基盤', description: 'Amazon CognitoとOIDCで認証を共通化し、既存ユーザー移行と2アプリSSOまでやり切る。', href: '/advanced/auth_platform/', accent: 'amber', project: true },
+      { label: 'Project 03', title: 'メッセージ配信基盤', description: 'SQSと非同期ワーカー、リトライとDLQ、冪等性、キャンペーン一斉配信。運用に耐える基盤を作る。', href: '/advanced/notification_platform/', accent: 'purple', project: true }
     ]
   }
 ];
