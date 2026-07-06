@@ -21,7 +21,7 @@ const previous = currentIndex > 0 ? sectionEntries[currentIndex - 1] : undefined
 const next = currentIndex >= 0 && currentIndex < sectionEntries.length - 1 ? sectionEntries[currentIndex + 1] : undefined;
 ---
 
-<BaseLayout title={`${item.title} | School Curriculum`}>
+<BaseLayout title={`${item.title} | School Curriculum`} description={item.entry.data.description}>
   <main
     class="docs-layout"
     style={sectionEntries.length <= 1 ? 'grid-template-columns: minmax(0, 960px); justify-content: center;' : undefined}
