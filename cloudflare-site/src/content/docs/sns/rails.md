@@ -1,5 +1,6 @@
 ---
 title: Rails + Active Record版
+description: Ruby on RailsのAPIモードとActive RecordでSNSのバックエンドを実装し、共通Reactフロントエンドと接続するルート
 parent: SNS Rails + Active Record版
 nav_order: 0
 section_key: sns-rails
@@ -13,7 +14,7 @@ Ruby on RailsでSNS APIを作るルートです。RailsはRouting、Active Recor
 Rails版の解答コードは、共通Reactフロントエンドと接続して、投稿、いいね、フォロー、プロフィール、メール確認、DMチャットまで動作確認しています。
 
 - 解答リポジトリ: [curriculum-sns-rails-answer](https://github.com/dik-ab/curriculum-sns-rails-answer)
-- 共通React: [curriculum-react-projects-answer](https://github.com/dik-ab/curriculum-react-projects-answer)
+- 共通React: [curriculum-react-projects-answer](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/sns)
 
 ## 前提知識
 
@@ -119,7 +120,7 @@ end
 
 ローカルで次を確認済みです。
 
-- `bin/rails test`（2 runs / 27 assertions）
+- `bin/rails test`（2 runs / 31 assertions）
 - `bin/rails zeitwerk:check`
 - `bin/rails routes`
 - Playwright MCPで、Alice/Bobの2セッションを使った画面検証
@@ -153,3 +154,10 @@ end
 3. `params[:before_id]` がある場合だけ `where("id < ?", params[:before_id])` を追加し、`order(id: :desc).limit(50)` で返します。
 
 </details>
+
+## 次のステップ
+
+SNSが完成したら、[実務プロジェクト応用編](/advanced/)に進んでください。要件定義書とGitHub Issuesだけを渡されて、AIと一緒に実務と同じ流れで開発する応用フェーズです。
+
+- 他のスタックで同じSNSを作り直して比較するのも良い訓練です。[SNS共通仕様](/sns/)から選べます
+- [RAGチャット](/ai-chat/)や[AWSデプロイ](/aws/)への拡張もここから進められます

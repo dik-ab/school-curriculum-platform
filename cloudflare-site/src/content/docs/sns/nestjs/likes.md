@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: いいね機能"
+description: UserとPostの多対多を中間テーブルと複合主キーで設計し、二重いいねを防ぐ堅牢ないいね機能を実装する
 parent: SNS NestJS + Prisma版
 nav_order: 34
 section_key: sns-nestjs

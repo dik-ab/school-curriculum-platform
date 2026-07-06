@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: 投稿機能とタイムライン"
+description: PrismaにPostモデルを追加し、投稿の作成・削除と全体タイムラインのAPIをReactの画面とあわせて実装する
 parent: SNS NestJS + Prisma版
 nav_order: 33
 section_key: sns-nestjs

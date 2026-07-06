@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: AWSへの全体デプロイ"
+description: S3 + CloudFront、ECS Fargate、RDS、SESをCDKで組み合わせ、SNSアプリをAWSの本番環境へデプロイする
 parent: SNS NestJS + Prisma版
 nav_order: 39
 section_key: sns-nestjs

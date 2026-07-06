@@ -1,5 +1,6 @@
 ---
 title: Laravel + Eloquent版
+description: PHPのLaravelとEloquentでSNSのAPIを実装し、投稿、いいね、フォロー、DMチャットまで共通React仕様に合わせて作るルート
 parent: SNS Laravel + Eloquent版
 nav_order: 0
 section_key: sns-laravel
@@ -13,7 +14,7 @@ PHPでSNS APIを作るルートです。LaravelはRouting、Validation、Migrati
 Laravel版の解答コードは、共通Reactフロントエンドと接続して、投稿、いいね、フォロー、プロフィール、メール確認、DMチャットまで動作確認しています。
 
 - 解答リポジトリ: [curriculum-sns-laravel-answer](https://github.com/dik-ab/curriculum-sns-laravel-answer)
-- 共通React: [curriculum-react-projects-answer](https://github.com/dik-ab/curriculum-react-projects-answer)
+- 共通React: [curriculum-react-projects-answer](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/sns)
 
 ## 前提知識
 
@@ -144,7 +145,7 @@ return response()
 ローカルで次を確認済みです。
 
 - `composer validate --strict`
-- `php artisan test`（4 tests / 32 assertions）
+- `php artisan test`（4 tests / 37 assertions）
 - `npm run build`
 - `php artisan route:list --except-vendor`
 - 共通React `pnpm run build`
@@ -165,3 +166,10 @@ return response()
 1. Migrationにnullableな `user_agent`、`ip_address` を追加し、`SessionToken::$fillable` とログイン処理を更新します。
 2. `requireUser()` で現在ユーザーを取得し、`SessionToken::where('user_id', $user->id)->delete()` を実行します。
 3. Laravel側は `cursorPaginate(20)` を返し、React側は `next_cursor` を保持して追加読み込みします。最初はAPIだけ先に実装し、curlでレスポンス形を固定すると進めやすいです。
+
+## 次のステップ
+
+SNSが完成したら、[実務プロジェクト応用編](/advanced/)に進んでください。要件定義書とGitHub Issuesだけを渡されて、AIと一緒に実務と同じ流れで開発する応用フェーズです。
+
+- 他のスタックで同じSNSを作り直して比較するのも良い訓練です。[SNS共通仕様](/sns/)から選べます
+- [RAGチャット](/ai-chat/)や[AWSデプロイ](/aws/)への拡張もここから進められます

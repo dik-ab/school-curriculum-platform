@@ -1,5 +1,6 @@
 ---
 title: FastAPI + SQLAlchemy版
+description: PythonのFastAPIとSQLAlchemyでSNSのAPIを実装し、Pydantic検証やpython-socketioのリアルタイムDMまで作るルート
 parent: SNS FastAPI + SQLAlchemy版
 nav_order: 0
 section_key: sns-fastapi
@@ -73,7 +74,7 @@ VITE_SOCKET_URL="http://localhost:8000"
 - MigrationはAlembicではなく `Base.metadata.create_all()` で作成しています。Alembic導入は発展課題です。
 - パスワードハッシュは標準ライブラリのPBKDF2実装です。bcrypt/Argon2idへ差し替える課題を残しています。
 - メール送信はconsole出力です。SES、再送、期限切れ処理は発展課題です。
-- プロフィール画像はReact互換の簡易upload URLを返します。S3 presigned URLは発展課題です。
+- プロフィール画像はReact互換の簡易upload URLを返し、ローカルファイルとして保存・配信します。S3 presigned URLは発展課題です。
 - ページネーション、通知、Dockerfile、AWSデプロイは未収録です。
 
 ## 動作確認済みの範囲
@@ -91,3 +92,10 @@ VITE_SOCKET_URL="http://localhost:8000"
 - [FastAPI + SQLAlchemy バックエンド](https://github.com/dik-ab/curriculum-sns-fastapi-answer)
 
 FastAPI版は、薄く書ける一方でファイル分割の正解が複数あります。現在の解答コードでは、まず動く全体像を優先して `app/main.py` にrouteを集約しています。発展課題として分割する場合は、「ルーターはHTTP、サービスは業務ロジック、モデルはDB」という方針で `auth/`、`posts/`、`chat/` へ切り出すと、他スタックとの比較もしやすくなります。
+
+## 次のステップ
+
+SNSが完成したら、[実務プロジェクト応用編](/advanced/)に進んでください。要件定義書とGitHub Issuesだけを渡されて、AIと一緒に実務と同じ流れで開発する応用フェーズです。
+
+- 他のスタックで同じSNSを作り直して比較するのも良い訓練です。[SNS共通仕様](/sns/)から選べます
+- [RAGチャット](/ai-chat/)や[AWSデプロイ](/aws/)への拡張もここから進められます

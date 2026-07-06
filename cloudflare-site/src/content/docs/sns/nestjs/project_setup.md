@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: プロジェクトセットアップ"
+description: モノレポ構成のsns-appを作成し、PostgreSQLコンテナ、NestJSバックエンド、Vite + Reactの雛形を整えるセットアップ回
 parent: SNS NestJS + Prisma版
 nav_order: 30
 section_key: sns-nestjs
@@ -122,7 +123,7 @@ branch 'main' set up to track 'origin/main'.
 
 ## 開発用データベース
 
-次に、開発用のPostgreSQLを用意します。[セクションの入口](/sns/)で確認した通り、開発環境ではデータベースだけをDockerコンテナで動かします（→ [開発環境をcomposeで組む](/docker/dev_environment/)で確立した標準形です）。
+次に、開発用のPostgreSQLを用意します。[セクションの入口](/sns/)で確認した通り、開発環境ではデータベースだけをDockerコンテナで動かします（→ [PostgreSQLコンテナの運用](/docker/dev_environment/)で確立した標準形です）。
 
 リポジトリのルートに `compose.yaml` を作成します。
 
@@ -654,7 +655,7 @@ git push
 <details markdown="1">
 <summary>解答を見る</summary>
 
-データベースは自分で書き換えるものではなく「決まったバージョンが動いていればよい」ソフトウェアなので、コンテナで起動するのが手軽で確実です（PCを汚さず、バージョンも固定できます）。一方、NestJSとReactは自分が編集し続けるコードなので、ローカル実行の方がホットリロードが速く開発しやすいためです。アプリのコンテナ化は本番デプロイのために行います（→ [開発環境をcomposeで組む](/docker/dev_environment/)、[AWSへの全体デプロイ](/sns/nestjs/deploy/)）。
+データベースは自分で書き換えるものではなく「決まったバージョンが動いていればよい」ソフトウェアなので、コンテナで起動するのが手軽で確実です（PCを汚さず、バージョンも固定できます）。一方、NestJSとReactは自分が編集し続けるコードなので、ローカル実行の方がホットリロードが速く開発しやすいためです。アプリのコンテナ化は本番デプロイのために行います（→ [PostgreSQLコンテナの運用](/docker/dev_environment/)、[AWSへの全体デプロイ](/sns/nestjs/deploy/)）。
 
 </details>
 

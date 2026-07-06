@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: フォローとフォロー中タイムライン"
+description: 自己参照多対多のFollowテーブルを設計し、フォローAPIとフォロー中タイムライン、プロフィールページを実装する
 parent: SNS NestJS + Prisma版
 nav_order: 35
 section_key: sns-nestjs

@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: ユーザー登録とログイン（JWT認証）"
+description: bcryptによるパスワードハッシュ化、JWT、NestJSのGuardを使い、HttpOnly Cookie方式のユーザー登録とログインを実装する
 parent: SNS NestJS + Prisma版
 nav_order: 31
 section_key: sns-nestjs

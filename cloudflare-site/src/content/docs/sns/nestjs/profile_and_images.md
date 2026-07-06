@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: プロフィール編集と画像アップロード"
+description: プロフィール編集のPATCH APIと、presigned URLでブラウザからS3へ画像を直接アップロードする仕組みを実装する
 parent: SNS NestJS + Prisma版
 nav_order: 37
 section_key: sns-nestjs

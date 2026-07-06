@@ -1,5 +1,6 @@
 ---
 title: NestJS + Prisma版
+description: NestJSとPrismaでSNSのバックエンドを実装する標準ルートの入口で、HttpOnly Cookie認証の方針と章構成を案内する
 parent: SNS NestJS + Prisma版
 nav_order: 0
 section_key: sns-nestjs
@@ -50,10 +51,10 @@ TypeScriptでバックエンドまで統一したい場合の標準ルートで�
 |---|---|
 | メール確認 | MailModule、SES SDK、確認トークン |
 | DMチャット | `@nestjs/websockets`、Socket.IO、Cookie認証のhandshake検証 |
-| プロフィール画像 | `avatarUrl` の保存、S3 presigned URL発行処理 |
+| プロフィール画像 | `avatarUrl` の保存、S3 presigned URL発行処理、Terraformで作るアバター用S3バケット |
 | CI/CD | pnpm、Prisma migrate、Jest |
 
-ページネーション、AWSデプロイ、S3実バケットを使った画像アップロード完了確認は発展課題です。詳細チュートリアルには設計と手順を残していますが、解答リポジトリの標準確認範囲はローカルで投稿・いいね・フォロー・プロフィール・メール確認・リアルタイムDM・CIが動くところまでです。
+ページネーション、AWS全体デプロイ、通知機能は発展課題です。画像アップロードはNestJS詳細チュートリアルでS3実バケットまで扱いますが、AWSリソース作成はAPIリポジトリとは分け、Terraform用の解答リポジトリを使います。API解答リポジトリの標準確認範囲は、ローカルで投稿・いいね・フォロー・プロフィール・メール確認・リアルタイムDM・CIが動くところまでです。
 
 ## 動作確認済みの範囲
 
@@ -67,6 +68,7 @@ TypeScriptでバックエンドまで統一したい場合の標準ルートで�
 
 - [React共通フロントエンド](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/sns)
 - [NestJS + Prisma バックエンド](https://github.com/dik-ab/curriculum-sns-nestjs-answer)
+- [SNS AWS Terraform インフラ](https://github.com/dik-ab/curriculum-sns-terraform-aws-infra-answer)
 
 ## 次のステップ
 

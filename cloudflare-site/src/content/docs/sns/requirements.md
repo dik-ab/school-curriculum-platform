@@ -1,5 +1,6 @@
 ---
 title: 共通要件定義・仕様書
+description: SNS開発の全バックエンドスタックで共通となる画面、API、データ設計、HttpOnly Cookie認証、テスト観点を固定した仕様書
 parent: SNS 共通仕様
 nav_order: 1
 section_key: sns-common
@@ -283,6 +284,8 @@ erDiagram
     }
 ```
 
+このER図では第1段階のテーブル（users、posts、likes、follows）のみカラムを記載しています。第2段階のテーブル（email_verification_tokens、conversations、messages）のカラムは、前述の各テーブル説明を参照してください。
+
 ## 第1段階の完成条件
 
 第1段階は、次の確認がすべて通れば完了です。
@@ -324,9 +327,10 @@ erDiagram
 | `curriculum-sns-laravel-answer` | Laravel + Eloquent版 |
 | `curriculum-sns-gin-gorm-answer` | Gin + GORM版 |
 | `curriculum-sns-rails-answer` | Rails + Active Record版 |
+| `curriculum-sns-terraform-aws-infra-answer` | SNS画像アップロード用AWSインフラ（S3、CORS、バケットポリシー） |
 
 モノレポ1つに全スタックを入れる方法もありますが、依存関係、起動手順、CI、Dockerfileが大きく異なるため、受講者には独立リポジトリの方が扱いやすいです。比較用にまとめたい場合は、別途 `sns-answer-index` のような案内リポジトリを作り、各解答リポジトリへリンクします。
 
 ## 次のステップ
 
-次は自分が実装するバックエンドスタックの個別ページへ進みます。TypeScriptで進める場合は [SNS NestJS + Prisma版](/sns/nestjs/)、Javaで進める場合は [SNS Spring Boot + JPA版](/sns/spring_boot/) から始めてください。FastAPI、Laravel、Gin + GORM、Rails版は、ホームのSNS開発カードから各ページへ直接入れます。
+次は自分が実装するバックエンドスタックの個別ページへ進みます。TypeScriptで進める場合は [SNS NestJS + Prisma版](/sns/nestjs/)、Javaで進める場合は [SNS Spring Boot + JPA版](/sns/spring_boot/) から始めてください。その他のスタックは [FastAPI版](/sns/fastapi/)、[Laravel版](/sns/laravel/)、[Gin + GORM版](/sns/gin_gorm/)、[Rails版](/sns/rails/) から進めます。

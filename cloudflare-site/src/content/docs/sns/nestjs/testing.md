@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: SNSのテストを書く"
+description: 認証つきSNSアプリを題材に、PostsServiceの単体テストとフォローAPIのE2Eテストを書き、CIで自動実行する方法を学ぶ
 parent: SNS NestJS + Prisma版
 nav_order: 38
 section_key: sns-nestjs
@@ -232,12 +233,12 @@ pnpm exec dotenv -e .env.test -- prisma migrate deploy
 ```text
 6 migrations found in prisma/migrations
 
-Applying migration `20260601000000_add_user`
-Applying migration `20260601000001_add_email_verification_token`
-Applying migration `20260601000002_add_post`
-Applying migration `20260601000003_add_like`
-Applying migration `20260601000004_add_follow`
-Applying migration `20260601000005_add_conversation_and_message`
+Applying migration `20260612090000_add_user`
+Applying migration `20260612100000_add_email_verification_token`
+Applying migration `20260612120000_add_post`
+Applying migration `20260612130000_add_like`
+Applying migration `20260612140000_add_follow`
+Applying migration `20260612150000_add_conversation_and_message`
 
 All migrations have been successfully applied.
 ```

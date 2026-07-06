@@ -1,5 +1,6 @@
 ---
 title: "NestJS版: DMチャット（リアルタイム）"
+description: NestJSのGatewayとSocket.IOで1対1のDMチャットを実装し、JWT認証つきWebSocket接続とメッセージの永続化を学ぶ
 parent: SNS NestJS + Prisma版
 nav_order: 36
 section_key: sns-nestjs

@@ -1,5 +1,6 @@
 ---
 title: Gin + GORM版
+description: Go言語のGinとGORMでSNSのAPIを実装し、JWT Cookie認証やWebSocketによるDMまで最小構成で作るルート
 parent: SNS Gin + GORM版
 nav_order: 0
 section_key: sns-gin-gorm
@@ -108,7 +109,7 @@ func (a *App) requireUser(c *gin.Context) {
 - handler、service、repositoryはまだ分割していません。責務分離は発展課題として、動く状態を確認した後に行います。
 - MigrationはGORM `AutoMigrate` です。Atlas、golang-migrate、Gooseなどによる厳密なMigration管理は発展課題です。
 - メール確認は確認URLをconsoleへ出力するローカル実装です。SES SDK、再送、期限切れ処理は発展課題です。
-- 画像アップロードはローカル疑似URLの発行までです。S3 presigned URL、S3 CORS、ファイル検証は現在の解答コードには含めていません。
+- 画像アップロードはReact互換のローカルURLを発行し、ローカルファイルとして保存・配信します。S3 presigned URL、S3 CORS、厳密な画像内容検証は現在の解答コードには含めていません。
 - CSRF対策はCORS許可オリジンと `SameSite=Lax` が中心です。状態変更APIごとの明示的なOrigin検証は発展課題です。
 - Cookie内のJWTでセッションを管理します。DBセッション、失効リスト、refresh tokenは発展課題です。
 
@@ -160,3 +161,10 @@ r.GET("/auth/me", a.requireUser, func(c *gin.Context) {
 
 - [React共通フロントエンド](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/sns)
 - [Gin + GORM バックエンド](https://github.com/dik-ab/curriculum-sns-gin-gorm-answer)
+
+## 次のステップ
+
+SNSが完成したら、[実務プロジェクト応用編](/advanced/)に進んでください。要件定義書とGitHub Issuesだけを渡されて、AIと一緒に実務と同じ流れで開発する応用フェーズです。
+
+- 他のスタックで同じSNSを作り直して比較するのも良い訓練です。[SNS共通仕様](/sns/)から選べます
+- [RAGチャット](/ai-chat/)や[AWSデプロイ](/aws/)への拡張もここから進められます

@@ -1,5 +1,6 @@
 ---
 title: Spring Boot + JPA版
+description: JavaのSpring BootとJPAでSNSのAPIを実装し、Controller、Repository、DTO、例外処理の責務分離を学ぶルート
 parent: SNS Spring Boot + JPA版
 nav_order: 0
 section_key: sns-spring-boot
@@ -85,3 +86,10 @@ VITE_SOCKET_URL="http://localhost:8001"
 
 - [React共通フロントエンド](https://github.com/dik-ab/curriculum-react-projects-answer/tree/main/apps/sns)
 - [Spring Boot + JPA バックエンド](https://github.com/dik-ab/curriculum-sns-spring-answer)
+
+## 次のステップ
+
+SNSが完成したら、[実務プロジェクト応用編](/advanced/)に進んでください。要件定義書とGitHub Issuesだけを渡されて、AIと一緒に実務と同じ流れで開発する応用フェーズです。
+
+- 他のスタックで同じSNSを作り直して比較するのも良い訓練です。[SNS共通仕様](/sns/)から選べます
+- [RAGチャット](/ai-chat/)や[AWSデプロイ](/aws/)への拡張もここから進められます
