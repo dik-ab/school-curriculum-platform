@@ -1,5 +1,6 @@
 ---
 title: 実践練習
+description: 基本型・関数・オブジェクト・例外処理など、TypeScript基礎の知識を実際にコードを書いて定着させる練習問題
 parent: TypeScript基礎
 nav_order: 7
 ---

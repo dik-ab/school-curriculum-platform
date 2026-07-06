@@ -1,5 +1,6 @@
 ---
 title: TypeScript基礎
+description: 型・関数・コンパイルなど、React開発と他言語学習の土台になるTypeScriptの基礎を学ぶセクションの導入
 nav_order: 4
 has_children: true
 permalink: /typescript/
@@ -63,12 +64,11 @@ TypeScriptを理解できれば：
 **応用編に回すとよい内容:**
 
 - Generics
-- Intersection型
+- Utility Types（`Partial`、`Pick` など）
 - mapped types、conditional types
 - 型ガードの設計
 - `as const`、`satisfies`
 - `keyof`、`typeof`、indexed access types
-- APIレスポンスの実行時バリデーション
 - `Result` 型による例外を使わないエラー設計
 
 これらは重要ですが、最初に詰め込みすぎると手が止まりやすい内容です。基礎編では「型を読める・書ける・エラーに対応できる」状態を先に作り、応用編ではReactやNestJS、型定義ライブラリを読む力を伸ばします。

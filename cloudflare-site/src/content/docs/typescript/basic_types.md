@@ -1,5 +1,6 @@
 ---
 title: TypeScriptの基本型
+description: string・number・booleanから配列・オブジェクトまで、TypeScriptの基本型の使い方を豊富な例で学ぶ
 parent: TypeScript基礎
 nav_order: 3
 ---
@@ -203,6 +204,40 @@ let user2: { name: string; age?: number } = {
 };
 ```
 
+## 型エイリアス（type）
+
+オブジェクトの型を毎回インラインで書くと、同じ型定義を何度も繰り返すことになります。`type`キーワードを使うと、**型に名前を付けて再利用**できます。
+
+```typescript
+// User という名前の型を定義
+type User = { name: string; age: number };
+
+// 定義した型を使って変数を宣言
+let user1: User = { name: "太郎", age: 25 };
+let user2: User = { name: "花子", age: 20 };
+
+// 関数の引数にも使える
+function greet(user: User) {
+  console.log(`こんにちは、${user.name}さん！`);
+}
+
+greet(user1);  // "こんにちは、太郎さん！"
+```
+
+型定義が1箇所にまとまるので、プロパティを変更したいときも`type User`の定義を直すだけで済みます。
+
+**ユニオン型にも名前を付けられる：**
+
+```typescript
+type Status = "todo" | "done";
+
+let taskStatus: Status = "todo";  // OK
+taskStatus = "done";              // OK
+taskStatus = "pending";           // エラー！ "todo"か"done"しか許可されていない
+```
+
+このように、「決まった値しか入らない」ことを型の名前で表現できます。今後のページでも`type`は頻繁に登場するので、ここで覚えておきましょう。
+
 ## 特殊な型
 
 ### any（何でもOK）
@@ -402,6 +437,7 @@ let book: { title: string; author: string; pages: number } = {
 - **基本型**：`string`（文字列）、`number`（数値）、`boolean`（真偽値）
 - **配列型**：`number[]`または`Array<number>`
 - **オブジェクト型**：`{ name: string; age: number }`
+- **型エイリアス**：`type User = { name: string; age: number }`（型に名前を付けて再利用）
 - **ユニオン型**：`string | number`（AまたはB）
 - **any**：何でもOKだが、使わない方が良い
 - **型推論**：値から型を自動推測してくれる（でも明示的に書く練習も大切）

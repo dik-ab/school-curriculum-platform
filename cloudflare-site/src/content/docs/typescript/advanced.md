@@ -1,5 +1,6 @@
 ---
 title: "TypeScript応用: ライブラリの型を読めるようになる"
+description: keyofやGenerics、satisfiesなどの応用型を知り、ReactやNestJSのライブラリ型定義を読めるようになる
 parent: TypeScript基礎
 nav_order: 8
 ---

@@ -1,5 +1,6 @@
 ---
 title: 関数と型
+description: JavaScriptの関数を復習しながら、引数と戻り値に型をつけるTypeScriptの関数の書き方を学ぶ
 parent: TypeScript基礎
 nav_order: 4
 ---

@@ -1,5 +1,6 @@
 ---
 title: 例外処理とエラーハンドリング
+description: throwとtry-catchによるTypeScriptの例外処理を学び、API失敗などの実行時エラーへの対応方法を身につける
 parent: TypeScript基礎
 nav_order: 6
 ---

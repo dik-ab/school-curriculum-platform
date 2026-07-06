@@ -1,5 +1,6 @@
 ---
 title: TypeScriptとは？
+description: TypeScriptがJavaScriptに型を加えた言語であることを、両者のコード比較を通して具体的に理解する
 parent: TypeScript基礎
 nav_order: 1
 ---

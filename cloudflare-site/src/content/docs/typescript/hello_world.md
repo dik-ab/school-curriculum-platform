@@ -1,5 +1,6 @@
 ---
 title: Hello World プロジェクト
+description: npmとtscを使ってTypeScriptプロジェクトを作成し、Hello Worldの実行までを手順つきで体験する
 parent: TypeScript基礎
 nav_order: 5
 ---

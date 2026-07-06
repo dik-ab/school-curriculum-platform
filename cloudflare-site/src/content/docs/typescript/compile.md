@@ -1,5 +1,6 @@
 ---
 title: コンパイルとは？
+description: TypeScriptがブラウザで動くJavaScriptに変換される「コンパイル」の仕組みを、翻訳のたとえと実例で理解する
 parent: TypeScript基礎
 nav_order: 2
 ---
@@ -246,15 +247,17 @@ npx tsc --init
   "compilerOptions": {
     "target": "ES2020",           // どのバージョンのJavaScriptに変換するか
     "module": "commonjs",          // モジュールの形式
-    "outDir": "./dist",            // 出力先（distフォルダに出力）
-    "rootDir": "./src",            // ソースコードの場所（srcフォルダ）
+    "outDir": "dist",              // 出力先（distフォルダに出力）
+    "rootDir": "src",              // ソースコードの場所（srcフォルダ）
     "strict": true,                // 厳格な型チェックを有効化
     "esModuleInterop": true
   },
-  "include": ["src/**/*"],         // コンパイル対象（srcフォルダ内の全ファイル）
+  "include": ["src"],              // コンパイル対象（srcフォルダ内の全ファイル）
   "exclude": ["node_modules"]      // コンパイル対象外
 }
 ```
+
+これは[実践的なプロジェクト](/typescript/hello_world/)で作成したtsconfig.jsonと同じ構成に、`exclude`を足したものです。
 
 この設定があれば、単に`npx tsc`と入力するだけで、設定に従ってコンパイルされます。
 
