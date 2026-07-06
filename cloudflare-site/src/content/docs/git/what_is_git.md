@@ -1,5 +1,6 @@
 ---
 title: Gitとは何か
+description: バージョン管理の必要性と、リポジトリ・コミット・ステージングエリアなどGitの基本の仕組みを理解する
 parent: Git/GitHub基礎
 nav_order: 1
 ---

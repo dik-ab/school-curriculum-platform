@@ -1,5 +1,6 @@
 ---
 title: AWSデプロイ
+description: S3・CloudFront・ECS・RDSなどを使い、アプリをAWS上に公開してCI/CDから自動デプロイするまでを学ぶセクションの概要
 nav_order: 15
 has_children: true
 permalink: /aws/

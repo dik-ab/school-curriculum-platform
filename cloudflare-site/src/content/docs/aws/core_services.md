@@ -1,5 +1,6 @@
 ---
 title: 主要サービスの全体像
+description: VPC・S3・CloudFront・ECS・RDS・SESなど、SNSアプリのデプロイで使う10個のAWSサービスの役割を1枚の図で整理する
 parent: AWSデプロイ
 nav_order: 2
 ---

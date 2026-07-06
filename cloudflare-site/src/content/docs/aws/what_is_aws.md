@@ -1,5 +1,6 @@
 ---
 title: AWSとは何か
+description: クラウドの概念、リージョンとAZ、アカウント作成とIAM、従量課金と予算アラートなどAWSを安全に使い始める土台を作る
 parent: AWSデプロイ
 nav_order: 1
 ---

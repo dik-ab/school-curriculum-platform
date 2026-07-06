@@ -1,5 +1,6 @@
 ---
 title: CDK入門
+description: AWS CDKをセットアップし、アプリ・スタック・コンストラクトの概念とsynth・diff・deploy・destroyのサイクルを体験する
 parent: AWSデプロイ
 nav_order: 4
 ---

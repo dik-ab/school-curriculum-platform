@@ -1,5 +1,6 @@
 ---
 title: WebSocketの基礎
+description: WebSocketのハンドシェイクの仕組みを理解し、Node.jsのwsパッケージとブラウザ標準APIでエコーアプリを動かす
 parent: リアルタイム通信
 nav_order: 2
 ---

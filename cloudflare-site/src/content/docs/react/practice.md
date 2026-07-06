@@ -1,5 +1,6 @@
 ---
 title: 練習問題
+description: 素のDOM操作で作ったTodoアプリをReactで作り直し、props・state・useEffect・API通信の総合力を確認する練習問題
 parent: React基礎
 nav_order: 8
 ---

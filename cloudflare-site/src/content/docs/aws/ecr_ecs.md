@@ -1,5 +1,6 @@
 ---
 title: ECR + ECS Fargate
+description: NestJSのDockerイメージをECRにpushし、ECS FargateとALBで公開するコンテナデプロイの王道構成をCDKで構築する
 parent: AWSデプロイ
 nav_order: 6
 ---

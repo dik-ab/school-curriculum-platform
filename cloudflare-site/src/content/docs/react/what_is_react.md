@@ -1,5 +1,6 @@
 ---
 title: Reactとは何か
+description: 素のDOM操作の問題点と対比しながら、宣言的UI・SPA・仮想DOMというReactの3つの考え方を理解する
 parent: React基礎
 nav_order: 1
 ---

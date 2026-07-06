@@ -1,5 +1,6 @@
 ---
 title: RDS
+description: RDS for PostgreSQLをプライベートサブネットに構築し、Secrets Managerで接続情報を安全に管理してECSのAPIと接続する
 parent: AWSデプロイ
 nav_order: 7
 ---

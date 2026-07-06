@@ -1,5 +1,6 @@
 ---
 title: GitHubとPull Request
+description: GitHubへのpush・pullによるリモート同期と、ブランチ作成からPull Requestのマージまでの流れを実践する
 parent: Git/GitHub基礎
 nav_order: 4
 ---

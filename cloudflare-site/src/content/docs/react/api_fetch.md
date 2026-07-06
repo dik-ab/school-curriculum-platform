@@ -1,5 +1,6 @@
 ---
 title: fetchでAPI通信
+description: fetchとasync/awaitでAPIからデータを取得し、ローディング・エラー・成功の3状態をReactで管理する方法を学ぶ
 parent: React基礎
 nav_order: 7
 ---

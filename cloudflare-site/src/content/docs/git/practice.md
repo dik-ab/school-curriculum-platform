@@ -1,5 +1,6 @@
 ---
 title: 練習問題
+description: リポジトリ作成からブランチ、コンフリクト解消、Pull Requestまで、Gitの一連の操作を自力で行う総仕上げの練習問題
 parent: Git/GitHub基礎
 nav_order: 5
 ---

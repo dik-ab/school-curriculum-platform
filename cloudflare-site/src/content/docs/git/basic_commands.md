@@ -1,5 +1,6 @@
 ---
 title: 基本コマンド
+description: git init・add・commit・log・diffと.gitignoreまで、変更を記録するGitの日常操作をコマンドで身につける
 parent: Git/GitHub基礎
 nav_order: 2
 ---

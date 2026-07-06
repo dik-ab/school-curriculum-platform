@@ -1,5 +1,6 @@
 ---
 title: S3 + CloudFront
+description: ReactアプリのビルドをS3に置きCloudFrontで配信する定石構成をCDKで構築し、OACやキャッシュ無効化も学ぶ
 parent: AWSデプロイ
 nav_order: 5
 ---

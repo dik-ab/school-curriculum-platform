@@ -1,5 +1,6 @@
 ---
 title: フック（useEffect）
+description: 副作用とは何かを理解し、useEffectの依存配列3パターンとクリーンアップ関数の動きを実験しながら学ぶ
 parent: React基礎
 nav_order: 5
 ---

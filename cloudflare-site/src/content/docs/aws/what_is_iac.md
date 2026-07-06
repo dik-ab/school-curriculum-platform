@@ -1,5 +1,6 @@
 ---
 title: IaCとは何か
+description: インフラをコードで管理するIaCの利点と、AWS CDKとTerraformの仕組みの違い、本カリキュラムがCDKを選ぶ理由を解説
 parent: AWSデプロイ
 nav_order: 3
 ---

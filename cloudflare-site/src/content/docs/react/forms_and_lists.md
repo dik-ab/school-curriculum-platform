@@ -1,5 +1,6 @@
 ---
 title: フォームとリスト
+description: 制御コンポーネントによるフォーム入力、mapとkeyでのリスト表示、条件付きレンダリングをReactで身につける
 parent: React基礎
 nav_order: 6
 ---

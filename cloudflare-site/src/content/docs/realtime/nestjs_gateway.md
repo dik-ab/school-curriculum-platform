@@ -1,5 +1,6 @@
 ---
 title: NestJSのGatewayでチャットを作る
+description: Socket.IOとNestJSのGatewayで複数人チャットを実装し、room機能によるグループ配信までReactと合わせて学ぶ
 parent: リアルタイム通信
 nav_order: 3
 ---

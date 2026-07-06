@@ -1,5 +1,6 @@
 ---
 title: ブランチとマージ
+description: git branchとswitchによるブランチ操作、2種類のマージ、コンフリクトの解消までを手を動かして学ぶ
 parent: Git/GitHub基礎
 nav_order: 3
 ---

@@ -1,5 +1,6 @@
 ---
 title: propsとstate
+description: 親から子へ値を渡すpropsと、useStateによる状態管理を学び、Reactの単方向データフローを理解する
 parent: React基礎
 nav_order: 4
 ---

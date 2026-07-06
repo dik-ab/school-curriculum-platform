@@ -1,5 +1,6 @@
 ---
 title: SESでメール送信
+description: SESのサンドボックスとメールアドレス検証を理解し、AWS SDK v3でNestJSからメールを送信する実装とIAM権限設定を学ぶ
 parent: AWSデプロイ
 nav_order: 8
 ---

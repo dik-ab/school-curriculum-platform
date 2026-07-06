@@ -1,5 +1,6 @@
 ---
 title: CI/CDから自動デプロイ
+description: GitHub ActionsからOIDCでAWSに認証し、mainへのpushでフロントエンドとAPIを自動デプロイする仕組みを構築する
 parent: AWSデプロイ
 nav_order: 9
 ---

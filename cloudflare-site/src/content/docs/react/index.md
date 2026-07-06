@@ -1,5 +1,6 @@
 ---
 title: React基礎
+description: コンポーネント・state・フォーム・API通信までを1つの流れで学ぶReact基礎セクションの概要と学習の進め方
 nav_order: 7
 has_children: true
 permalink: /react/

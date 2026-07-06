@@ -1,5 +1,6 @@
 ---
 title: JSXとコンポーネント
+description: JSXの基本ルールと関数コンポーネントの作り方を学び、画面を再利用可能な部品に分ける考え方を身につける
 parent: React基礎
 nav_order: 3
 ---

@@ -1,5 +1,6 @@
 ---
 title: 開発環境の構築
+description: pnpmとViteでReact + TypeScriptプロジェクトを作成し、生成された各ファイルの役割と起動の流れを確認する
 parent: React基礎
 nav_order: 2
 ---

@@ -1,5 +1,6 @@
 ---
 title: 入門編最終問題
+description: HTML/CSS、JavaScript、TypeScriptの基礎知識を総動員して実践的なアプリを自作する入門編の最終問題集
 nav_order: 5
 ---
 

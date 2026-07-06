@@ -1,5 +1,6 @@
 ---
 title: リアルタイム通信
+description: HTTPの限界を越えてサーバーから即時にデータを届けるリアルタイム通信を学び、NestJSとSocket.IOでチャットを作るセクション
 nav_order: 16
 has_children: true
 permalink: /realtime/

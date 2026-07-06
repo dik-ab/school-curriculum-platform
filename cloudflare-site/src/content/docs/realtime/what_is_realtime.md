@@ -1,5 +1,6 @@
 ---
 title: リアルタイム通信とは
+description: ポーリング、ロングポーリング、SSE、WebSocketの4方式を比較し、リアルタイム通信の仕組みと使い分けを理解する
 parent: リアルタイム通信
 nav_order: 1
 ---

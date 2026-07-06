@@ -1,5 +1,6 @@
 ---
 title: Git/GitHub基礎
+description: バージョン管理システムGitと共有サービスGitHubを、概念からPull Requestまで順に学ぶセクションの概要
 nav_order: 6
 has_children: true
 permalink: /git/
