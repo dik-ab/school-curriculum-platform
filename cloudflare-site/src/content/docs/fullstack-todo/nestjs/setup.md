@@ -1,5 +1,6 @@
 ---
 title: プロジェクトのセットアップ
+description: pnpmの復習からDocker ComposeによるPostgreSQL起動、NestJSとReactのプロジェクト作成、Prisma初期化までを行う
 parent: Todo NestJS + Prisma版
 nav_order: 3
 section_key: todo-nestjs
@@ -90,7 +91,7 @@ Initialized empty Git repository in /Users/yourname/dev/fullstack-todo/.git/
 
 ## PostgreSQLをDocker Composeで起動する
 
-データベースから準備します。[開発環境をcomposeで組む](/docker/dev_environment/)・[PostgreSQLを起動して触ってみる](/database/postgresql_setup/)で学んだ構成とほぼ同じです。
+データベースから準備します。[PostgreSQLコンテナの運用](/docker/dev_environment/)・[PostgreSQLを起動して触ってみる](/database/postgresql_setup/)で学んだ構成とほぼ同じです。
 
 `fullstack-todo/` 直下に `compose.yaml` を作成します。
 
@@ -125,7 +126,7 @@ volumes:
 - `POSTGRES_DB: todoapp` — 起動時に `todoapp` という名前のデータベースを自動作成します
 - `ports: "5432:5432"` — コンテナの5432番ポートを手元のPCに公開します。後でPrismaが `localhost:5432` に接続します
 - `volumes: db-data:...` — [ボリューム](/docker/docker_compose/)でデータを永続化し、コンテナを作り直してもTodoのデータが消えないようにします
-- `healthcheck:` — PostgreSQLが接続を受け付けられる状態かを `pg_isready` で確認します（→ [開発環境をcomposeで組む](/docker/dev_environment/)）
+- `healthcheck:` — PostgreSQLが接続を受け付けられる状態かを `pg_isready` で確認します（→ [PostgreSQLコンテナの運用](/docker/dev_environment/)）
 
 起動します。
 

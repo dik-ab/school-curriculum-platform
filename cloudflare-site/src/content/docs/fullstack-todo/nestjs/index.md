@@ -1,5 +1,6 @@
 ---
 title: Todo NestJS + Prisma版
+description: NestJS + Prisma + PostgreSQLのバックエンドと共通ReactフロントエンドでTodoアプリを作るルートの概要と章構成
 parent: Todo NestJS + Prisma版
 nav_order: 0
 section_key: todo-nestjs
@@ -9,6 +10,15 @@ section_title: Todo NestJS + Prisma版
 # Todo NestJS + Prisma版
 
 React共通フロントエンドと、NestJS + Prisma + PostgreSQLのバックエンドでTodoアプリを作るルートです。
+
+## 前提知識
+
+- [TypeScript基礎](/typescript/)
+- [React基礎](/react/)
+- [NestJS + Prisma](/database/prisma_setup/)
+- [Docker Compose](/docker/database_compose/)
+- [Git](/git/)
+- [Todo共通要件定義・仕様書](/fullstack-todo/requirements/)
 
 ## この版で作るもの
 

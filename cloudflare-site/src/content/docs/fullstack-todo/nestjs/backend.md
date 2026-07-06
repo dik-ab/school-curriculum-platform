@@ -1,5 +1,6 @@
 ---
 title: "バックエンド: Todo APIの実装"
+description: NestJSのModule / Controller / Service構成とPrismaでTodoのCRUD APIを設計どおりのステータスコードで実装する
 parent: Todo NestJS + Prisma版
 nav_order: 4
 section_key: todo-nestjs

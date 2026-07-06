@@ -1,5 +1,6 @@
 ---
 title: 練習問題
+description: 完成したTodoアプリに期限や絞り込みなどの機能を、DB・API・画面の3層に分解しながら自力で追加する練習問題
 parent: Todo NestJS + Prisma版
 nav_order: 7
 section_key: todo-nestjs

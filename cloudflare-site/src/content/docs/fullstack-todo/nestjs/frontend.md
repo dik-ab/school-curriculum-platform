@@ -1,5 +1,6 @@
 ---
 title: "フロントエンド: 画面の実装"
+description: useState / useEffect / fetchを組み合わせ、Todoの一覧表示・追加・完了切替・削除を行うReactの画面を実装する
 parent: Todo NestJS + Prisma版
 nav_order: 5
 section_key: todo-nestjs

@@ -1,5 +1,6 @@
 ---
 title: "つなぎ込み: CORSとエラーハンドリング"
+description: 同一オリジンポリシーとCORSの仕組みを理解し、NestJSのenableCorsでReactとAPIをつないで通しで動作確認する
 parent: Todo NestJS + Prisma版
 nav_order: 6
 section_key: todo-nestjs

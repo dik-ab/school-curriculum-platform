@@ -1,5 +1,6 @@
 ---
 title: "実践: フルスタックTodoアプリ"
+description: Reactフロントエンドを共通にし、NestJS版とSpring Boot版のバックエンドで同じTodoアプリを作る実践プロジェクトの入口
 nav_order: 11
 has_children: true
 permalink: /fullstack-todo/

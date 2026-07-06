@@ -1,5 +1,6 @@
 ---
 title: 共通要件定義・仕様書
+description: Todoアプリの画面、API、データモデル、エラー処理、完成条件をバックエンドの実装によらず固定する共通仕様書
 parent: Todoアプリ 共通仕様
 nav_order: 1
 section_key: todo-common

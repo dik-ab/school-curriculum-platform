@@ -1,5 +1,6 @@
 ---
 title: Todo Spring Boot + JPA版
+description: Spring Boot + JPA + PostgreSQLでTodoアプリのバックエンドを実装し、共通Reactフロントエンドと接続するルート
 parent: Todo Spring Boot + JPA版
 nav_order: 0
 section_key: todo-spring-boot
