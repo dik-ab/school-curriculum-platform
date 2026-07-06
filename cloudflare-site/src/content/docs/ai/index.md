@@ -1,5 +1,6 @@
 ---
 title: AI開発入門
+description: LLMの仕組みからClaude Codeの活用まで、AIを自分の能力を拡張する道具として使いこなすためのAI開発入門セクション
 nav_order: 17
 has_children: true
 permalink: /ai/

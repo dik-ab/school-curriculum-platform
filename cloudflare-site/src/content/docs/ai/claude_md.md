@@ -1,5 +1,6 @@
 ---
 title: CLAUDE.mdでプロジェクトの文脈を伝える
+description: CLAUDE.mdでプロジェクトの規約や文脈をAIに常時伝える仕組みと、効果的な書き方・置き場所ごとのスコープを学ぶ
 parent: AI開発入門
 nav_order: 3
 ---

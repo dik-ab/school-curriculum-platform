@@ -1,5 +1,6 @@
 ---
 title: AIチャット開発（RAG）
+description: NestJS・pgvector・Claude APIを組み合わせ、カリキュラム本文に質問できるQ&AボットをRAGで開発するセクションの概要
 nav_order: 18
 has_children: true
 permalink: /ai-chat/

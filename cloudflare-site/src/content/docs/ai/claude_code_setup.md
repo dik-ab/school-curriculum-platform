@@ -1,5 +1,6 @@
 ---
 title: Claude Codeの導入
+description: AIコーディングエージェントClaude Codeのインストールから基本操作、許可モードによる安全な使い方までを解説
 parent: AI開発入門
 nav_order: 2
 ---

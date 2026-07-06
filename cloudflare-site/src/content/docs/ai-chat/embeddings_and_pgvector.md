@@ -1,5 +1,6 @@
 ---
 title: embeddingとpgvector
+description: Voyage AIのembeddings APIで文章をベクトル化し、pgvector入りPostgreSQLで類似検索を行う方法を実践する
 parent: AIチャット開発（RAG）
 nav_order: 3
 ---

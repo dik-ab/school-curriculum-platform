@@ -1,5 +1,6 @@
 ---
 title: CI/CDとは何か
+description: CI（継続的インテグレーション）とCD（継続的デリバリー／デプロイ）の違いと、手作業の開発フローの問題をどう解決するかを学ぶ
 parent: CI/CD
 nav_order: 1
 ---

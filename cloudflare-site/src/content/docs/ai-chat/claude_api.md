@@ -1,5 +1,6 @@
 ---
 title: Claude APIの基礎
+description: Anthropic SDKでClaude Messages APIをTypeScriptから呼び出し、システムプロンプトやストリーミングを実装する基礎を学ぶ
 parent: AIチャット開発（RAG）
 nav_order: 2
 ---

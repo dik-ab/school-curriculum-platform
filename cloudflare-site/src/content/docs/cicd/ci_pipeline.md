@@ -1,5 +1,6 @@
 ---
 title: CIパイプラインを作る
+description: NestJSとReactが同居するリポジトリに、lint・test・buildを自動実行するCIパイプラインをジョブ分割で構築する
 parent: CI/CD
 nav_order: 3
 ---

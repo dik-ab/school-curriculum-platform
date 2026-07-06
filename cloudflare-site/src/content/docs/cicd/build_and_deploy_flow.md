@@ -1,5 +1,6 @@
 ---
 title: ビルドとデプロイの流れ
+description: tsc・vite build・docker buildの成果物が何かを確かめ、デプロイとCD（自動デプロイ）の全体像を地図として整理する
 parent: CI/CD
 nav_order: 4
 ---
@@ -148,7 +149,7 @@ docker build -t sns-backend .
 ```dockerfile
 FROM node:20
 WORKDIR /app
-RUN corepack enable pnpm && corepack prepare pnpm@9 --activate
+RUN corepack enable pnpm && corepack prepare pnpm@10 --activate
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY . .
@@ -156,7 +157,7 @@ RUN pnpm run build         # ← この中でtscが動き、dist/ が作られ�
 CMD ["node", "dist/main.js"]
 ```
 
-なお `corepack prepare pnpm@9 --activate` は、pnpmを9系に固定するためのものです。Corepackは固定しないと最新のpnpmを取得し、Node.js 20非対応のバージョンが入ることがあります（→ [Dockerfile](/docker/dockerfile/)）。
+なお `corepack prepare pnpm@10 --activate` は、pnpmを10系に固定するためのものです。Corepackは固定しないと最新のpnpmを取得し、Node.js 20非対応のバージョンが入ることがあります（→ [Dockerfile](/docker/dockerfile/)）。固定するバージョンは、`pnpm-lock.yaml` を作ったpnpmのメジャーバージョンと合わせる必要があります（このセクションのCI例はすべてpnpm 10を使っています）。
 
 つまりDockerイメージとは、「`dist/`（tscの成果物）+ node_modules + Node.js 20本体 + OSの最小構成」を**1つの箱に固めた成果物**です。
 

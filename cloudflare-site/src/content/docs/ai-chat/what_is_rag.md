@@ -1,5 +1,6 @@
 ---
 title: RAGとは何か
+description: LLMの知識の限界を補うRAGの仕組みを、embeddingとコサイン類似度による検索から生成までの流れで図解して理解する
 parent: AIチャット開発（RAG）
 nav_order: 1
 ---

@@ -1,5 +1,6 @@
 ---
 title: LLMとは何か
+description: LLMが次のトークンを予測する仕組みを直感的に解説し、得意・不得意やハルシネーションが起きる理由と検証の姿勢を学ぶ
 parent: AI開発入門
 nav_order: 1
 ---

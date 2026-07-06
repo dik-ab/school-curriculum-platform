@@ -1,5 +1,6 @@
 ---
 title: CI/CD
+description: pushをきっかけにチェックとデプロイを自動化するCI/CDを、GitHub Actionsで実践的に学ぶセクションの概要
 nav_order: 14
 has_children: true
 permalink: /cicd/

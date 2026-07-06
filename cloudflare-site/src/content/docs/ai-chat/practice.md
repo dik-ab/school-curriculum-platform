@@ -1,5 +1,6 @@
 ---
 title: 練習問題
+description: 完成したRAGのQ&Aボットを題材に、類似度による足切りやプロンプト改善など検索・生成品質を磨く練習問題に取り組む
 parent: AIチャット開発（RAG）
 nav_order: 5
 ---
@@ -84,6 +85,40 @@ async ask(question: string): Promise<{ answer: string; sources: string[] }> {
 - `ChatService.ask()`の戻り値の型を変えます。例: `sources: { source: string; content: string; similarity: number }[]`
 - フロント側は、HTMLの`<details>`と`<summary>`タグを使うとJavaScriptなしで開閉UIが作れます
 - 「回答の根拠を人間が検証できること」はRAGの大きな利点です（→ [RAGとファインチューニングの違い](/ai-chat/what_is_rag/)）。それをUIとして形にする課題です
+
+</details>
+
+<details markdown="1">
+<summary>解答例（骨格）を見る</summary>
+
+**`src/chat/chat.service.ts`（戻り値の変更）**
+
+```typescript
+// 戻り値の型を { answer: string; sources: { source: string; content: string; similarity: number }[] } に変更
+return {
+  answer: message.content[0].type === 'text' ? message.content[0].text : '',
+  sources: chunks.map((c) => ({
+    source: c.source,
+    content: c.content,
+    similarity: c.similarity,
+  })),
+};
+```
+
+**フロント側（出典表示部分の変更イメージ）**
+
+```tsx
+{msg.sources?.map((s, i) => (
+  <details key={i}>
+    <summary>
+      {s.source}（類似度: {s.similarity.toFixed(2)}）
+    </summary>
+    <pre>{s.content}</pre>
+  </details>
+))}
+```
+
+出典をクリックすると、該当チャンクの本文がその場で開きます。確認の手順は「回答を読む → 出典を開く → 回答の記述が本文に本当に書いてあるかを見比べる」です。回答が本文と食い違っていれば、ハルシネーションか検索ミスのサインです。根拠を人間が検証できる状態にしておくことが、RAGを安心して使ってもらうための土台になります。
 
 </details>
 
@@ -295,6 +330,34 @@ while (true) {
 - 比較のために、変更前の検索結果（質問・ヒットしたチャンク・類似度）をメモしておくこと。改善は「測ってから」が鉄則です
 - 見出しの引き継ぎは効果が出やすい改善です。「依存配列」とだけ書かれたチャンクより、「react/hooks.md > 依存配列」が付いたチャンクのほうが、質問とのマッチに使える手がかりが増えるからです
 - 再取り込みにはembedding費用がかかります。まず一部のファイルで効果を確かめましょう
+
+</details>
+
+<details markdown="1">
+<summary>解答例（方針とコード断片）を見る</summary>
+
+方針は「見出し単位で分割したうえで、(1) 長すぎるチャンクを切るときは末尾100文字を次のチャンクの先頭に重複させ、(2) ベクトル化する前に各チャンクへ『ファイル名 > 見出し』を付与する」です。
+
+**取り込みスクリプト（分割部分の変更イメージ）**
+
+```typescript
+const OVERLAP = 100;
+
+function splitWithOverlap(text: string, maxLength: number): string[] {
+  const chunks: string[] = [];
+  let start = 0;
+  while (start < text.length) {
+    chunks.push(text.slice(start, start + maxLength));
+    start += maxLength - OVERLAP; // 100文字ぶん重ねて次のチャンクへ
+  }
+  return chunks;
+}
+
+// 見出しの引き継ぎ：本文の先頭に出どころを付けてからベクトル化する
+const textForEmbedding = `${fileName} > ${heading}\n\n${chunkBody}`;
+```
+
+変更後は取り込みスクリプトを再実行し、変更前にメモしておいた質問で検索し直します。例えば「依存配列とは？」という質問に対して、見出し付きチャンクの類似度が上がり、境界で切れていた説明が1つのチャンクに収まっていれば改善成功です。
 
 </details>
 

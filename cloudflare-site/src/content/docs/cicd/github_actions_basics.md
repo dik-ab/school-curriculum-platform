@@ -1,5 +1,6 @@
 ---
 title: GitHub Actions入門
+description: workflow・job・step・runnerの関係を理解し、GitHub ActionsのYAMLを1行ずつ読み解いて最小のワークフローを動かす
 parent: CI/CD
 nav_order: 2
 ---

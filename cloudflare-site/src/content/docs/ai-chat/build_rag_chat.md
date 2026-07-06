@@ -1,5 +1,6 @@
 ---
 title: Q&Aボットを構築する
+description: 取り込みスクリプト・NestJSのチャットAPI・ReactのチャットUIを実装し、RAGによるQ&Aボットをエンドツーエンドで完成させる
 parent: AIチャット開発（RAG）
 nav_order: 4
 ---
