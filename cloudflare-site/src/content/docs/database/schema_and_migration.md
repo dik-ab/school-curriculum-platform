@@ -1,9 +1,10 @@
 ---
 title: スキーマ定義とマイグレーション
+description: schema.prismaにモデルを定義し、マイグレーションでデータベースにテーブルを作成・変更するサイクルを実践する
 parent: NestJS + Prisma
 section_key: nestjs-prisma
 section_title: NestJS + Prisma
-nav_order: 4
+nav_order: 2
 ---
 
 # スキーマ定義とマイグレーション

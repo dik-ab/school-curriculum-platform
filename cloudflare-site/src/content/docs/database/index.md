@@ -1,5 +1,6 @@
 ---
 title: データベース基礎
+description: RDBとSQLの基礎からPostgreSQL・Prismaまで、Webアプリのデータを保存し操作するデータベースを学ぶセクションの概要
 section_key: database
 section_title: データベース基礎
 nav_order: 10
@@ -63,7 +64,7 @@ flowchart LR
 
 ### Prisma（NestJS + Prisma）編
 
-SQLの基礎を身につけたら、TypeScriptから型安全にデータベースを操作する **Prisma** に進みます。バックエンド章で作ったメモAPIを、実際のデータベースにつないでいきます。
+SQLの基礎を身につけたら、TypeScriptから型安全にデータベースを操作する **Prisma** に進みます。バックエンド章で作ったメモAPIを、実際のデータベースにつないでいきます。なお、このPrisma編はサイドバー上では「NestJS + Prisma」という独立したグループとして表示されます。
 
 | ページ | 内容 |
 |---|---|

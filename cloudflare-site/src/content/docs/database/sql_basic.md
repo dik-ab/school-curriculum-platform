@@ -1,5 +1,6 @@
 ---
 title: SQL基本構文
+description: SELECT・INSERT・UPDATE・DELETEなどSQLの基本構文を、実際の表と取得結果のイメージを見ながら学ぶ
 parent: データベース基礎
 section_key: database
 section_title: データベース基礎

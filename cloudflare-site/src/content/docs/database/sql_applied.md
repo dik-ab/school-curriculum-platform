@@ -1,5 +1,6 @@
 ---
 title: SQL応用構文
+description: ORDER BY・LIKE・JOIN・GROUP BYなど、一覧画面や検索機能で使うSQLの応用構文を実際の表と結果を見ながら学ぶ
 parent: データベース基礎
 section_key: database
 section_title: データベース基礎

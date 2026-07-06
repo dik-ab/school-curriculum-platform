@@ -1,5 +1,6 @@
 ---
 title: PostgreSQLでSQLを実行する
+description: Docker Composeで起動したPostgreSQL 16にpsqlで接続し、テーブル作成からSQLを一通り実行して書ける力を身につける
 parent: データベース基礎
 section_key: database
 section_title: データベース基礎
@@ -636,4 +637,5 @@ JOIN users ON posts.user_id = users.id;
 生のSQLでデータベースを操作する感覚がつかめました。ここで学んだ `SELECT`、`INSERT`、`UPDATE`、`DELETE`、`JOIN` は、この後どの言語・フレームワークでDBを扱う場合でも前提になります。
 
 - 前のページ: [SQL応用構文](/database/sql_applied/)
+- 次のページ: [Prismaの導入](/database/prisma_setup/) — TypeScriptから型安全にデータベースを操作する方法を学びます
 - このページで学んだSQLの知識は、各言語・フレームワークからDBを扱うときの土台になります。また[SNS開発](/sns/)でパフォーマンスを考えるときにも役立ちます

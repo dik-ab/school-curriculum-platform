@@ -1,9 +1,10 @@
 ---
 title: Prisma ClientでCRUD
+description: Prisma Clientの基本メソッドとPrismaServiceの組み込みを学び、メモAPIを配列実装からデータベース永続化へ移行する
 parent: NestJS + Prisma
 section_key: nestjs-prisma
 section_title: NestJS + Prisma
-nav_order: 5
+nav_order: 3
 ---
 
 # Prisma ClientでCRUD

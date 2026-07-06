@@ -1,9 +1,10 @@
 ---
 title: リレーション
+description: ユーザーと投稿・いいねを題材に、1対多と多対多のリレーションをPrismaスキーマで定義しクエリする方法を学ぶ
 parent: NestJS + Prisma
 section_key: nestjs-prisma
 section_title: NestJS + Prisma
-nav_order: 6
+nav_order: 4
 ---
 
 # リレーション

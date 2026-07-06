@@ -1,5 +1,6 @@
 ---
 title: データベースとは
+description: データの永続化と検索という観点からデータベースの必要性を理解し、RDBのテーブル構造や主キー・外部キーを学ぶ
 parent: データベース基礎
 section_key: database
 section_title: データベース基礎

@@ -1,9 +1,10 @@
 ---
 title: Prismaの導入
+description: ORMを使う理由とPrismaの3つの構成要素を理解し、NestJSプロジェクトへの導入とschema.prisma・.envの設定を行う
 parent: NestJS + Prisma
 section_key: nestjs-prisma
 section_title: NestJS + Prisma
-nav_order: 3
+nav_order: 1
 ---
 
 # Prismaの導入
@@ -361,7 +362,7 @@ postgresql://postgres:postgres@localhost:5432/app_db?schema=public
 - 最初の `postgres`（ユーザー名） — `POSTGRES_USER: postgres`
 - 2つ目の `postgres`（パスワード） — `POSTGRES_PASSWORD: postgres`
 - `localhost:5432` — `ports: "5432:5432"` でホストに公開されたポート
-- `memo` — `POSTGRES_DB: app_db` で自動作成されたデータベース名
+- `app_db` — `POSTGRES_DB: app_db` で自動作成されたデータベース名
 - `?schema=public` — PostgreSQLの既定の名前空間（composeとは無関係の固定値）
 
 </details>

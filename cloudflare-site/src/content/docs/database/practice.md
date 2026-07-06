@@ -1,9 +1,10 @@
 ---
 title: 練習問題
+description: スキーマ変更・マイグレーション・検索クエリ・リレーションまで、Prismaで永続化したメモAPIを育てる練習問題
 parent: NestJS + Prisma
 section_key: nestjs-prisma
 section_title: NestJS + Prisma
-nav_order: 7
+nav_order: 5
 ---
 
 # 練習問題
