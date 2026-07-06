@@ -11,6 +11,8 @@ description: 算術演算、比較、論理演算、文字列結合、equalsに�
 演算子は、計算や比較をするための記号です。
 
 ```java
+int age = 20;
+
 int total = 100 + 50;
 boolean adult = age >= 18;
 ```
@@ -98,7 +100,7 @@ System.out.println(age < 18);  // false
 | 演算子 | 意味 |
 | --- | --- |
 | `&&` | かつ |
-| `||` | または |
+| `\|\|` | または |
 | `!` | 否定 |
 
 ```java

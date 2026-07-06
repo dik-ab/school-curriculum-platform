@@ -125,40 +125,9 @@ DTOのような、値をまとめて運ぶ用途で便利です。
 
 ## JUnitの入口
 
-Javaでは、JUnitを使って単体テストを書くことが多いです。
+Javaでは、JUnitを使って単体テストを書くことが多いです。テストとは「メソッドの入力と出力を確認するコード」で、Spring Bootに入ってからさらに重要になります。
 
-例えば、次のようなクラスがあるとします。
-
-```java
-public class PriceCalculator {
-    public int total(int price, int quantity) {
-        if (price < 0 || quantity < 0) {
-            throw new IllegalArgumentException("price and quantity must be positive");
-        }
-        return price * quantity;
-    }
-}
-```
-
-JUnitでは、期待する結果をテストとして書きます。
-
-```java
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
-
-class PriceCalculatorTest {
-    @Test
-    void totalReturnsPriceTimesQuantity() {
-        PriceCalculator calculator = new PriceCalculator();
-
-        int result = calculator.total(100, 3);
-
-        assertEquals(300, result);
-    }
-}
-```
-
-テストは、Spring Bootに入ってからさらに重要になります。まずは「メソッドの入力と出力を確認するコード」として理解してください。
+書き方と実際のコード例は、次の章の[テストとデバッグ](/java/testing_and_debugging/)でまとめて扱います。
 
 ## 使いすぎに注意する
 
