@@ -1,5 +1,6 @@
 ---
 title: Vue.jsとは何か
+description: 状態が変わると画面が変わるフロントエンドフレームワークVue.jsの役割と、.vueファイルの基本の書き方を学ぶ
 parent: Vue.js入門
 section_key: vue
 section_title: Vue.js入門

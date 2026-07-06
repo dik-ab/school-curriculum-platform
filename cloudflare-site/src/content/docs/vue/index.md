@@ -29,7 +29,7 @@ Reactと同じようにコンポーネントでUIを作りますが、Vue.jsは 
 | [Vue.jsとは何か](/vue/what_is_vue/) | Vue.jsの役割、どんな場面で使うか、Reactと同じ目的 |
 | [Reactとの違い](/vue/vue_vs_react/) | JSXとtemplate、stateとref、イベントやフォームの違い |
 | [リアクティブとコンポーネント](/vue/reactivity_and_components/) | `ref`、props、emit、`.vue` ファイルの読み方 |
-| [フォーム・一覧・API通信](/vue/directives_forms_api/) | `v-model`、`v-for`、`useFetch`ではなく通常のfetchで考える入口 |
+| [フォーム・一覧・API通信](/vue/directives_forms_api/) | `v-model`、`v-for`、標準の `fetch` で行うAPI通信の入口 |
 | [このカリキュラムでの扱い](/vue/curriculum_scope/) | React中心で実践する理由、Vueは比較知識として学ぶ範囲 |
 
 ```mermaid

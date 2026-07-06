@@ -1,5 +1,6 @@
 ---
 title: リアクティブとコンポーネント
+description: refによるリアクティブな状態管理と、画面を部品に分けるVue.jsのコンポーネントの基本を学ぶ
 parent: Vue.js入門
 section_key: vue
 section_title: Vue.js入門
@@ -94,6 +95,22 @@ const todo = {
 > よくあるミスは、scriptの中で `ref` の値を読むときに `.value` を忘れることです。templateの中では自動で展開されますが、scriptの中では `keyword.value` のように書きます。
 
 もう1つのミスは、子コンポーネントのpropsを直接書き換えようとすることです。親から受け取った値は、基本的に親が管理します。子から親に変更を伝えるときは、emitを使います。
+
+```vue
+<script setup lang="ts">
+// 子コンポーネント側: 発火できるイベントを宣言する
+const emit = defineEmits<{
+  (e: "toggle", id: number): void;
+}>();
+</script>
+
+<template>
+  <!-- クリックで親に「toggleして」と伝える -->
+  <button @click="emit('toggle', 1)">完了にする</button>
+</template>
+```
+
+親側は `<TodoItem @toggle="handleToggle" />` のように受け取り、データの書き換えは親が行います。Reactで「propsは読み取り専用、変更はコールバック関数で親に依頼する」と学んだ考え方と同じです。
 
 ## 練習問題
 

@@ -1,5 +1,6 @@
 ---
 title: このカリキュラムでの扱い
+description: React基準で進む本カリキュラムにおけるVue.js入門の位置づけと、refやv-forなど理解しておく範囲を整理する
 parent: Vue.js入門
 section_key: vue
 section_title: Vue.js入門

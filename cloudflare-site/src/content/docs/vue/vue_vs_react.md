@@ -1,5 +1,6 @@
 ---
 title: Reactとの違い
+description: JSX中心のReactとtemplate中心のVue.jsの書き方の違いを、同じUIのコード比較を通して理解する
 parent: Vue.js入門
 section_key: vue
 section_title: Vue.js入門

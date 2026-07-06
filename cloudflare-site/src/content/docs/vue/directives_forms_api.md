@@ -1,5 +1,6 @@
 ---
 title: フォーム・一覧・API通信
+description: v-modelによるフォーム入力、v-forでの一覧表示、API通信まで、Vue.jsで実用画面を作る基本パターンを学ぶ
 parent: Vue.js入門
 section_key: vue
 section_title: Vue.js入門
