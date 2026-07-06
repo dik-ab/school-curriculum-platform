@@ -20,28 +20,23 @@ const {
   <body>
     <SiteHeader />
     <slot />
-    <script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
-    <script is:inline>
-      if (window.mermaid) {
-        window.mermaid.initialize({
-          startOnLoad: false,
-          securityLevel: 'loose',
-          theme: 'default',
-          flowchart: { htmlLabels: true, useMaxWidth: true },
-          themeVariables: { fontSize: '15px' }
+    <script>
+      // mermaidは自前バンドル(CDN障害時に図が生テキストのまま残るのを防ぐ)。
+      // 図があるページだけdynamic importでチャンクを読み込む。
+      const blocks = document.querySelectorAll('pre.mermaid');
+      if (blocks.length > 0) {
+        import('mermaid').then(({ default: mermaid }) => {
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            flowchart: { htmlLabels: true, useMaxWidth: true },
+            themeVariables: { fontSize: '15px' }
+          });
+          return mermaid.run({ nodes: Array.from(blocks) });
+        }).catch((e) => {
+          console.error('mermaid render failed', e);
         });
-        var runMermaid = function () {
-          try {
-            window.mermaid.run({ querySelector: 'pre.mermaid' });
-          } catch (e) {
-            console.error('mermaid render failed', e);
-          }
-        };
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', runMermaid);
-        } else {
-          runMermaid();
-        }
       }
     </script>
   </body>
