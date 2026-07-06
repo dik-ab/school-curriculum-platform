@@ -1,5 +1,6 @@
 ---
 title: JavaScript 練習問題
+description: JavaScript基礎で学んだ変数・関数・DOM操作を、段階的な練習問題で手を動かしながら定着させる
 parent: フロントエンド基礎
 nav_order: 5
 ---

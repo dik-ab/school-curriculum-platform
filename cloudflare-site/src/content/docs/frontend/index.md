@@ -1,5 +1,6 @@
 ---
 title: フロントエンド基礎
+description: HTML/CSS/JavaScriptを順に学ぶフロントエンド基礎セクションの概要と、学習の進め方を案内
 nav_order: 3
 has_children: true
 permalink: /frontend/

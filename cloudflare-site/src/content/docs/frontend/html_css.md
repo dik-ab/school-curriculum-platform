@@ -1,5 +1,6 @@
 ---
 title: HTML/CSS基礎
+description: HTMLでページ構造を作りCSSで装飾する基礎を学び、Flexboxや開発者ツールの使い方まで身につける
 parent: フロントエンド基礎
 nav_order: 1
 ---

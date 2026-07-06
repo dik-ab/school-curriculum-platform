@@ -1,7 +1,8 @@
 ---
 title: JavaScript基礎
+description: 変数・配列・関数からDOM操作、fetchやasync/awaitまで、ReactとTypeScriptに進むためのJavaScriptの要点を整理
 parent: フロントエンド基礎
-nav_order: 2
+nav_order: 3
 ---
 
 # JavaScript基礎
@@ -10,7 +11,7 @@ HTML/CSSでWebページの構造とデザインを学んだら、次は**JavaScr
 
 このページでは、外部教材で文法を補いながら、このカリキュラム内でも**ReactとTypeScriptへ進むために必ず必要なJavaScriptの考え方**を整理します。
 
-> 文法をコード例つきでゼロから説明した [JavaScript基礎解説](/frontend/javascript_basics/) も用意しています。「まず動く例で1つずつ理解したい」人はそちらを先に読み、このページは要点の整理として使うのがおすすめです。
+> 文法をコード例つきでゼロから説明した [JavaScript基礎解説](/frontend/javascript_basics/) も用意しています。このページを読み進めて分からない箇所が出てきたら、[JavaScript基礎解説](/frontend/javascript_basics/)で該当する文法を確認しながら進めるのがおすすめです。
 
 ## このページのゴール
 

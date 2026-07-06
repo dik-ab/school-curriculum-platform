@@ -1,7 +1,8 @@
 ---
 title: JavaScript基礎解説
+description: 変数・条件分岐・配列・関数などJavaScriptの基本文法を、コード例つきでゼロから丁寧に解説
 parent: フロントエンド基礎
-nav_order: 3
+nav_order: 4
 ---
 
 # JavaScript基礎解説

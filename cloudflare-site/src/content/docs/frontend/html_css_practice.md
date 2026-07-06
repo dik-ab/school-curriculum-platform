@@ -1,7 +1,8 @@
 ---
 title: HTML/CSS 練習問題
+description: 見出しやリストからFlexboxレイアウトまで、HTML/CSSの基礎を実際に手を動かして確認する練習問題集
 parent: フロントエンド基礎
-nav_order: 4
+nav_order: 2
 ---
 
 # HTML/CSS 練習問題
