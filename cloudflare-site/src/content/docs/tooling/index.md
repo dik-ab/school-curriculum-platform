@@ -1,5 +1,6 @@
 ---
 title: コード品質と開発ツール
+description: フォーマッタのPrettierとリンタのESLintでコードの見た目と品質を自動的に守る方法を学ぶセクション
 nav_order: 12
 has_children: true
 permalink: /tooling/
@@ -70,8 +71,8 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    A["prettier.html<br>見た目を自動で整える"] --> B["eslint.html<br>問題を自動で見つける"]
-    B --> C["editor_and_scripts.html<br>エディタとコマンドに組み込む"]
+    A["フォーマッタとPrettier<br>見た目を自動で整える"] --> B["リンタとESLint<br>問題を自動で見つける"]
+    B --> C["エディタ連携とpnpm scripts<br>エディタとコマンドに組み込む"]
     C --> D["後の章: CI/CD<br>プッシュのたびに自動チェック"]
     style A fill:#e3f2fd,stroke:#1565c0
     style B fill:#e3f2fd,stroke:#1565c0

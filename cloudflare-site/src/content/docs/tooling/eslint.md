@@ -1,5 +1,6 @@
 ---
 title: リンタとESLint
+description: 静的解析ツールESLintの役割と設定ファイルの読み方を学び、ReactとNestJSの両プロジェクトで使えるようにする
 parent: コード品質と開発ツール
 nav_order: 2
 ---

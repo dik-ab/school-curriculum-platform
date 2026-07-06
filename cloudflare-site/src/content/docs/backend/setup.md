@@ -1,5 +1,6 @@
 ---
 title: 環境構築とプロジェクト作成
+description: Nest CLIでプロジェクトを作成し、main.tsやapp.module.tsなど生成されたファイルの役割と開発サーバーの起動を確認する
 parent: バックエンド基礎（NestJS）
 nav_order: 3
 ---

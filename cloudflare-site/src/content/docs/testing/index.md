@@ -1,5 +1,6 @@
 ---
 title: バックエンドテスト
+description: 自動テストの必要性とテストピラミッドを理解し、単体テストとE2EテストをNestJSでどう書き分けるかを学ぶセクション
 nav_order: 13
 has_children: true
 permalink: /testing/

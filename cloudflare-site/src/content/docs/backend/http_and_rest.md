@@ -1,5 +1,6 @@
 ---
 title: HTTPとREST
+description: HTTPのリクエスト・レスポンス構造、主要メソッドとステータスコード、RESTに沿ったURL設計の考え方を学ぶ
 parent: バックエンド基礎（NestJS）
 nav_order: 1
 ---

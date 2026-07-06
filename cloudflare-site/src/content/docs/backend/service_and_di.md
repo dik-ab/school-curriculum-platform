@@ -1,5 +1,6 @@
 ---
 title: ServiceとDI
+description: ビジネスロジックをServiceに分離し、NestJSの依存性注入（DI）とModuleのproviders設定の仕組みを理解する
 parent: バックエンド基礎（NestJS）
 nav_order: 5
 ---

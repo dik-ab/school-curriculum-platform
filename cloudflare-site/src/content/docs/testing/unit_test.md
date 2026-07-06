@@ -1,5 +1,6 @@
 ---
 title: 単体テスト
+description: Jestのdescribe / it / expectとモックの使い方を学び、NestJSのPostsServiceに対する単体テストを書く
 parent: バックエンドテスト
 nav_order: 1
 ---

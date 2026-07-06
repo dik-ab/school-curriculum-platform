@@ -1,5 +1,6 @@
 ---
 title: Controllerとルーティング
+description: NestJSのControllerでルーティングを定義し、@Param・@Query・@Bodyでリクエストの情報を受け取る方法を学ぶ
 parent: バックエンド基礎（NestJS）
 nav_order: 4
 ---

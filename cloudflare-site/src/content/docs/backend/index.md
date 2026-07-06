@@ -1,5 +1,6 @@
 ---
 title: バックエンド基礎（NestJS）
+description: TypeScript製フレームワークNestJSでAPIサーバーを作れるようになる、バックエンド基礎セクションの概要と学習の流れ
 nav_order: 8
 has_children: true
 permalink: /backend/

@@ -1,5 +1,6 @@
 ---
 title: E2Eテスト
+description: supertestで実際のHTTPリクエストを送り、テスト用DBを分離しながらNestJSの投稿・いいねAPIをE2Eテストで検証する
 parent: バックエンドテスト
 nav_order: 2
 ---
@@ -59,17 +60,17 @@ E2Eテストには重要な前提があります。テストは毎回**まっさ
 
 ### 手順1: テスト用データベースを作る
 
-[Docker基礎](/docker/docker_compose/)で作ったcomposeのPostgreSQLコンテナの中に、テスト専用のデータベース`sns_test`を追加で作ります。コンテナを増やす必要はありません。
+[Docker基礎](/docker/database_compose/)で作ったcomposeのPostgreSQLコンテナの中に、テスト専用のデータベース`sns_test`を追加で作ります。コンテナを増やす必要はありません。
 
 ```bash
-docker compose exec db psql -U postgres -c 'CREATE DATABASE sns_test;'
+docker compose exec postgres psql -U postgres -c 'CREATE DATABASE sns_test;'
 ```
 
 ```text
 CREATE DATABASE
 ```
 
-`db`の部分は、自分の`compose.yaml`で定義したPostgreSQLのサービス名に合わせてください。
+`postgres`の部分は、自分の`compose.yaml`で定義したPostgreSQLのサービス名に合わせてください。
 
 ### 手順2: .env.testを作る
 

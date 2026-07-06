@@ -1,5 +1,6 @@
 ---
 title: DTOとバリデーション
+description: DTOをclassで定義し、class-validatorとValidationPipeで不正なリクエストを自動的に400エラーにする方法を学ぶ
 parent: バックエンド基礎（NestJS）
 nav_order: 6
 ---

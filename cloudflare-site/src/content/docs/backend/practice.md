@@ -1,5 +1,6 @@
 ---
 title: 練習問題
+description: REST設計の確認からメモAPIの拡張、別題材のAPIをゼロから作る課題まで、NestJSの理解を固める練習問題
 parent: バックエンド基礎（NestJS）
 nav_order: 8
 ---

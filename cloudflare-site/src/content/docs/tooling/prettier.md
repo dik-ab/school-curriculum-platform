@@ -1,5 +1,6 @@
 ---
 title: フォーマッタとPrettier
+description: フォーマッタの必要性を理解し、Prettierの導入と.prettierrcによる整形ルールの設定をReactとNestJSで実践する
 parent: コード品質と開発ツール
 nav_order: 1
 ---

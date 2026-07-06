@@ -1,5 +1,6 @@
 ---
 title: NestJSとは
+description: フレームワークを使う理由とNestJSの特徴、Module・Controller・Serviceの役割分担とデコレータの読み方を俯瞰する
 parent: バックエンド基礎（NestJS）
 nav_order: 2
 ---

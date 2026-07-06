@@ -1,5 +1,6 @@
 ---
 title: エディタ連携とpnpm scripts
+description: VS Codeの保存時フォーマット設定とpnpm scriptsを整備し、エディタ・コマンド・CIの三段構えでコード品質を守る方法を学ぶ
 parent: コード品質と開発ツール
 nav_order: 3
 ---
