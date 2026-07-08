@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers Builds(GitHub連携)用のデプロイ設定。
+  // ビルド成果物 dist/ を静的アセットとして配信する。
+  "name": "school-curriculum-platform",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
