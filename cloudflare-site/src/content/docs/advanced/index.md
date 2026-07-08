@@ -59,9 +59,25 @@ Project 01が土台です。Project 02と03は01の成果物と連携します�
 | --- | --- | --- |
 | 手順 | 章ごとに解説とコードがある | 仕様とissueだけ。実装手順は自分で決める |
 | 言語 | 章ごとに固定 | 自由(学んだ6スタックのどれでも) |
+| フロントエンド | 共通Reactフロントが配布される(Todo/SNS) | **自作**。画面定義書に従って自分とAIで作る |
 | 正解コード | 解答リポジトリあり | なし。受入条件を満たせばすべて正解 |
 | 進捗管理 | ページを読み進める | GitHub Issuesとマイルストーン |
 | AIの使い方 | 補助 | 主戦力。ただしレビューと判断は自分 |
+
+## 事前準備(初回のみ)
+
+issueの複製に GitHub CLI(gh)と jq を使います。未導入なら先に入れておいてください。
+
+```bash
+# macOS
+brew install gh jq
+# Windows(PowerShell)
+winget install GitHub.cli jqlang.jq
+# WSL / Ubuntu
+sudo apt install gh jq
+```
+
+初回は `gh auth login` を実行し、「GitHub.com → HTTPS → ブラウザで認証」を選べばOKです。
 
 ## 進め方(全プロジェクト共通)
 
