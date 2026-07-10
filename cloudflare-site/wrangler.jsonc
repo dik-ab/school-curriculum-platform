@@ -1,10 +1,13 @@
 {
   // Cloudflare Workers Builds(GitHub連携)用のデプロイ設定。
-  // ビルド成果物 dist/ を静的アセットとして配信する。
+  // worker/index.js がBasic認証(Secrets設定時のみ有効)を挟んで dist/ を配信する。
   "name": "school-curriculum-platform",
+  "main": "worker/index.js",
   "compatibility_date": "2026-07-01",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": true
   }
 }
